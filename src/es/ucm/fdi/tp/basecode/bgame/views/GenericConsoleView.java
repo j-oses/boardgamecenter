@@ -66,12 +66,10 @@ public class GenericConsoleView implements GameObserver {
 
 	@Override
 	public void onMoveStart(Board board, Piece turn) {
-		
 	}
 
 	@Override
 	public void onMoveEnd(Board board, Piece turn, boolean success) {
-		
 	}
 
 	@Override
