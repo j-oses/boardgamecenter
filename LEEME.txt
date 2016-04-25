@@ -1,0 +1,10 @@
+Jorge Osés Grijalba
+Álvaro Rodríguez García
+
+2o D.G. Informática - Matemáticas
+
+Changes in the practica4 package:
+- Now a counter isn't set to null but to 0 if the piece count reaches 0.
+- Some whitespacing fixed.
+- 'Professionalified' some method names.
+- Some parameter name changes like i,j->row,col.
