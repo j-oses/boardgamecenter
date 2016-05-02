@@ -1,22 +1,6 @@
 package es.ucm.fdi.tp.practica5;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.DefaultParser;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Option;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
-
-import es.ucm.fdi.tp.basecode.bgame.control.ConsoleCtrl;
-import es.ucm.fdi.tp.basecode.bgame.control.ConsoleCtrlMVC;
-import es.ucm.fdi.tp.basecode.bgame.control.Controller;
-import es.ucm.fdi.tp.basecode.bgame.control.GameFactory;
-import es.ucm.fdi.tp.basecode.bgame.control.Player;
+import es.ucm.fdi.tp.basecode.bgame.control.*;
 import es.ucm.fdi.tp.basecode.bgame.model.AIAlgorithm;
 import es.ucm.fdi.tp.basecode.bgame.model.Game;
 import es.ucm.fdi.tp.basecode.bgame.model.GameError;
@@ -26,6 +10,11 @@ import es.ucm.fdi.tp.practica5.attt.AdvancedTTTFactoryExt;
 import es.ucm.fdi.tp.practica5.bgame.control.VisualController;
 import es.ucm.fdi.tp.practica5.connectn.ConnectNFactoryExt;
 import es.ucm.fdi.tp.practica5.ttt.TicTacToeFactoryExt;
+import org.apache.commons.cli.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 /**
  * This is the class with the main method for the board games application.
