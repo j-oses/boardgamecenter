@@ -38,7 +38,7 @@ public class Main {
 	 * <p>
 	 * Vistas disponibles.
 	 */
-	enum ViewInfo {
+	 enum ViewInfo {
 		WINDOW("window", "Swing"), CONSOLE("console", "Console");
 
 		private String id;
@@ -124,7 +124,33 @@ public class Main {
 			return id;
 		}
 	}
+	/**
+	 * App modes (server,client and normal).
+	 *
+	 */
+	enum AppMode{
+		SERVER("server", "Server mode"), CLIENT("client", "Client mode"), NORMAL("normal","Normal");
+		private String id;
+		private String desc;
 
+		AppMode(String id, String desc) {
+			this.id = id;
+			this.desc = desc;
+		}
+
+		public String getId() {
+			return id;
+		}
+
+		public String getDesc() {
+			return desc;
+		}
+
+		@Override
+		public String toString() {
+			return id;
+		}
+	}
 	/**
 	 * Algorithms for automatic players. The 'none' option means that the
 	 * default behavior is used (i.e., a player that waits for some time and
@@ -184,6 +210,19 @@ public class Main {
 	final private static AlgorithmForAIPlayer DEFAULT_AIALG = AlgorithmForAIPlayer.NONE;
 
 	/**
+	 * Default app mode to use.
+	 */
+	final private static AppMode DEFAULT_APPMODE = AppMode.NORMAL;
+
+	/*
+	 * Default port to use in server or client mode;
+	 */
+	final private static Integer DEFAULT_SERVERPORT = 2000;
+	/*
+	 * Default server ID to use in server or client mode;
+	 */
+	final private static String DEFAULT_SERVERHOST = "localhost";
+	/**
 	 * This field includes a game factory that is constructed after parsing the
 	 * command-line arguments. Depending on the game selected with the -g option
 	 * (by default {@link #DEFAULT_GAME}).
@@ -217,7 +256,10 @@ public class Main {
 	 * la opcion -p (o el valor por defecto {@link #DEFAULT_PLAYERMODE}).
 	 */
 	private static List<PlayerMode> playerModes;
-
+	/**
+	 * The appMode to use. Depending on the selected game mode using the -am or -app-mode
+	 */
+	private static AppMode appMode;
 	/**
 	 * The view to use. Depending on the selected view using the -v option or
 	 * the default value {@link #DEFAULT_VIEW} if this option was not provided.
@@ -280,7 +322,14 @@ public class Main {
 	 * La profundidad máxima del árbol MinMax
 	 */
 	private static Integer minmaxTreeDepth;
-
+	/**
+	 * The port used in server or client mode.
+	 */
+	private static Integer serverPort ;
+	/**
+	 * The IP used in
+	 */
+	private static String serverHost;
 	/**
 	 * Processes the command-line arguments and modify the fields of this class
 	 * with corresponding values. E.g., the factory, the pieces, etc.
@@ -313,6 +362,9 @@ public class Main {
 		cmdLineOptions.addOption(constructDimensionOption()); // -d or --dim
 		cmdLineOptions.addOption(constructMinMaxDepathOption()); // -md or
 		// --minmax-depth
+		cmdLineOptions.addOption(constructAppModeOption()); //<3// -am or --app-mode
+		cmdLineOptions.addOption(constructServerPortOption()); // -sp or --server-port
+		cmdLineOptions.addOption(constructServerHostOption()); //-sh or --server-host
 		cmdLineOptions.addOption(constructAIAlgOption()); // -aialg ...
 		cmdLineOptions.addOption(constructObstaclesOption()); // -o n
 		// --obstacles
@@ -329,6 +381,9 @@ public class Main {
 			parsePlayersOptions(line);
 			parseMixMaxDepthOption(line);
 			parseAIAlgOption(line);
+			parseAppModeOption(line);
+			parseServerPortOption(line);
+			parseServerHostOption(line);
 
 			// if there are some remaining arguments, then something wrong is
 			// provided in the command line!
@@ -792,6 +847,99 @@ public class Main {
 	}
 
 	/**
+	 * Builds the app mode (-am or --app-mode) CLI option.
+	 *
+	 * @return CLI {@link {@link Option} for the app mode option
+	 */
+	private static Option constructAppModeOption(){
+		return new Option("am","app-mode", true, "The way the app is started : 'normal', 'server' or 'client'");
+
+	}
+
+	/**
+	 * Parses the app mode(-am or --app-mode). It sets the appMode value for the game.
+	 *
+	 * @param line
+	 *            * CLI {@link CommandLine} object;
+	 *
+	 */
+	private static void parseAppModeOption(CommandLine line) throws ParseException{
+
+		if(line.hasOption("am")) {
+			appMode = null;
+			String modesVal = line.getOptionValue("am");
+			for (AppMode mode : AppMode.values()) {
+				if (modesVal == mode.getId()) {
+					appMode = mode;
+					break;
+				}
+			}
+			if(appMode == null) {
+				throw new ParseException("The selected App Mode doesn't exist, please enter 'normal','server'" +
+						" or 'client'");
+			}
+		} else{
+			appMode = DEFAULT_APPMODE;
+		}
+
+	}
+
+	/**
+	 * Builds the server port (-sp or --server-port) CLI option.
+	 *
+	 * @return CLI {@link {@link Option} for the server port option
+	 */
+	private static Option constructServerPortOption(){
+		return new Option("sp","-server-port", true, "the port the app listens to if server or talks to if client.");
+
+	}
+
+	/**
+	 * Parses the server port (-sp or --server-port). It sets the serverPort for the game
+	 *
+	 * @param line
+	 *            * CLI {@link CommandLine} object;
+	 *
+	 */
+	private static void parseServerPortOption(CommandLine line) throws ParseException{
+		try {
+			if (!line.hasOption("sp")) {
+				serverPort = DEFAULT_SERVERPORT;
+			} else {
+				serverPort = Integer.parseInt(line.getOptionValue("sp"));
+			}
+		} catch(NumberFormatException e){
+			throw new ParseException("Invalid port number : " + serverPort);
+		}
+
+
+
+	}
+
+	/**
+	 * Builds the server host (-sh or --server-host) CLI option.
+	 *
+	 * @return CLI {@link {@link Option} for the help option.
+	 *         <p>
+	 *         Objeto {@link Option} de esta opcion.
+	 */
+	private static Option constructServerHostOption(){
+		return new Option("sh","-server-host", true, "the name for the host of the game in server or client mode");
+
+	}
+	/**
+	 * Parses the help option (-sh or --server-host).It sets the serverHost option for the game.
+	 * @param line
+	 *            * CLI {@link CommandLine} object.
+	 */
+	private static void parseServerHostOption(CommandLine line){
+		if(!line.hasOption("sh")){
+			serverHost = line.getOptionValue("sh");
+		} else{
+			serverHost = DEFAULT_SERVERHOST;
+		}
+	}
+	/**
 	 * Starts a game using a {@link ConsoleCtrl} which is not based on MVC. Is
 	 * used only for teaching the difference from the MVC one.
 	 *
@@ -872,6 +1020,7 @@ public class Main {
 				}
 				c = new ConsoleCtrlMVC(g, pieces, players, new Scanner(System.in));
 				gameFactory.createConsoleView(g, c);
+				c.start();
 				break;
 			case WINDOW:
 				VisualController v = null;
@@ -898,7 +1047,7 @@ public class Main {
 				throw new UnsupportedOperationException("Something went wrong! This program point should be unreachable!");
 		}
 
-		c.start();
+
 	}
 
 	/**
