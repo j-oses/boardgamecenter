@@ -1,7 +1,7 @@
-Jorge OsÈs Grijalba
-¡lvaro RodrÌguez GarcÌa
+Jorge Os√©s Grijalba
+√Ålvaro Rodr√≠guez Garc√≠a
 
-2o D.G. Inform·tica - Matem·ticas
+2o D.G. Inform√°tica - Matem√°ticas
 
 Changes in the practica4 package:
 - Now a counter isn't set to null but to 0 if the piece count reaches 0.
