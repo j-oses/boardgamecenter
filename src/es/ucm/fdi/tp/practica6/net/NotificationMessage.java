@@ -1,4 +1,4 @@
-package es.ucm.fdi.tp.practica6.bgame.net;
+package es.ucm.fdi.tp.practica6.net;
 
 import es.ucm.fdi.tp.basecode.bgame.model.Board;
 import es.ucm.fdi.tp.basecode.bgame.model.Game;
@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by Álvaro on 02/05/2016.
  */
-public abstract class GameMessage implements Serializable {
+public abstract class NotificationMessage implements Serializable {
 	public void notifyObservers(ArrayList<GameObserver> observers) {
 		for (GameObserver o : observers) {
 			notifyObserver(o);
@@ -21,13 +21,13 @@ public abstract class GameMessage implements Serializable {
 
 	protected abstract void notifyObserver(GameObserver observer);
 
-	public class GameStartMessage extends GameMessage {
+	public class GameStartNotificationMessage extends NotificationMessage {
 		private Board board;
 		private String gameDesc;
 		private List<Piece> pieces;
 		private Piece turn;
 
-		public GameStartMessage(Board board, String gameDesc, List<Piece> pieces, Piece turn) {
+		public GameStartNotificationMessage(Board board, String gameDesc, List<Piece> pieces, Piece turn) {
 			this.board = board;
 			this.gameDesc = gameDesc;
 			this.pieces = pieces;
@@ -40,12 +40,12 @@ public abstract class GameMessage implements Serializable {
 		}
 	}
 
-	public class GameOverMessage extends GameMessage {
+	public class GameOverNotificationMessage extends NotificationMessage {
 		private Board board;
 		private Game.State state;
 		private Piece winner;
 
-		public GameOverMessage(Board board, Game.State state, Piece winner) {
+		public GameOverNotificationMessage(Board board, Game.State state, Piece winner) {
 			this.board = board;
 			this.state = state;
 			this.winner = winner;
@@ -57,11 +57,11 @@ public abstract class GameMessage implements Serializable {
 		}
 	}
 
-	public class MoveStartGameMessage extends GameMessage {
+	public class MoveStartNotificationMessage extends NotificationMessage {
 		private Board board;
 		private Piece turn;
 
-		public MoveStartGameMessage(Board board, Piece turn) {
+		public MoveStartNotificationMessage(Board board, Piece turn) {
 			this.board = board;
 			this.turn = turn;
 		}
@@ -72,12 +72,12 @@ public abstract class GameMessage implements Serializable {
 		}
 	}
 
-	public class MoveEndGameMessage extends GameMessage {
+	public class MoveEndNotificationMessage extends NotificationMessage {
 		private Board board;
 		private Piece turn;
 		private boolean success;
 
-		public MoveEndGameMessage(Board board, Piece turn, boolean success) {
+		public MoveEndNotificationMessage(Board board, Piece turn, boolean success) {
 			this.board = board;
 			this.turn = turn;
 			this.success = success;
@@ -89,11 +89,11 @@ public abstract class GameMessage implements Serializable {
 		}
 	}
 
-	public class ChangeTurnGameMessage extends GameMessage {
+	public class ChangeTurnNotificationMessage extends NotificationMessage {
 		private Board board;
 		private Piece turn;
 
-		public ChangeTurnGameMessage(Board board, Piece turn) {
+		public ChangeTurnNotificationMessage(Board board, Piece turn) {
 			this.board = board;
 			this.turn = turn;
 		}
@@ -104,10 +104,10 @@ public abstract class GameMessage implements Serializable {
 		}
 	}
 
-	public  class ErrorGameMessage extends GameMessage {
+	public  class ErrorNotificationMessage extends NotificationMessage {
 		private String errorMessage;
 
-		public ErrorGameMessage(String message) {
+		public ErrorNotificationMessage(String message) {
 			this.errorMessage = message;
 		}
 

@@ -1,4 +1,4 @@
-package es.ucm.fdi.tp.practica6.bgame.net;
+package es.ucm.fdi.tp.practica6.net;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
