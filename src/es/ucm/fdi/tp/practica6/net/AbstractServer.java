@@ -1,5 +1,7 @@
 package es.ucm.fdi.tp.practica6.net;
 
+import es.ucm.fdi.tp.basecode.bgame.model.GameError;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -44,17 +46,18 @@ public abstract class AbstractServer {
 						Socket s = null;
 						try {
 							s = server.accept();
+							numConnections++;
 						} catch (SocketTimeoutException ste) {
 							log.log(Level.FINE, "Timeout; checking stop flag and re-accepting");
 							continue;
 						}
-						numConnections++;
+
 						log.info("Connection " + numConnections + " accepted by server");
 						SocketEndpoint endpoint = createEndpoint("ServerCon-" + numConnections);
 						endpoint.start(s, timeout);
 					}
 					server.close();
-				} catch (IOException e) {
+				} catch (IOException | GameError e) {
 					log.log(Level.WARNING, "Error while receiving connections", e);
 				}
 			}

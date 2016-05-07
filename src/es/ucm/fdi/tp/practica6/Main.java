@@ -1035,7 +1035,7 @@ public class Main {
 					}
 				} else {
 					v = new VisualController(g, pieces, null);
-					// here we set appropiate game-based board and option-based
+					// here we set appropriate game-based board and option-based
 					// settings
 					gameFactory.createSwingView(g, v, null,
 							gameFactory.createRandomPlayer(),
