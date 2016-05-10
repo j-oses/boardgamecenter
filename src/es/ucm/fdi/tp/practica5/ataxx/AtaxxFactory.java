@@ -1,30 +1,20 @@
 package es.ucm.fdi.tp.practica5.ataxx;
 
+import es.ucm.fdi.tp.basecode.bgame.control.*;
+import es.ucm.fdi.tp.basecode.bgame.model.*;
+import es.ucm.fdi.tp.basecode.bgame.views.GenericConsoleView;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
-import es.ucm.fdi.tp.basecode.bgame.control.ConsolePlayer;
-import es.ucm.fdi.tp.basecode.bgame.control.Controller;
-import es.ucm.fdi.tp.basecode.bgame.control.DummyAIPlayer;
-import es.ucm.fdi.tp.basecode.bgame.control.GameFactory;
-import es.ucm.fdi.tp.basecode.bgame.control.Player;
-import es.ucm.fdi.tp.basecode.bgame.model.AIAlgorithm;
-import es.ucm.fdi.tp.basecode.bgame.model.GameError;
-import es.ucm.fdi.tp.basecode.bgame.model.GameMove;
-import es.ucm.fdi.tp.basecode.bgame.model.GameObserver;
-import es.ucm.fdi.tp.basecode.bgame.model.GameRules;
-import es.ucm.fdi.tp.basecode.bgame.model.Observable;
-import es.ucm.fdi.tp.basecode.bgame.model.Piece;
-import es.ucm.fdi.tp.basecode.bgame.views.GenericConsoleView;
 
 public class AtaxxFactory implements GameFactory {
 	private static final long serialVersionUID = 1L;
 	
 	private static final int MIN_DIM = 5;
 	private static final int DEFAULT_OBSTACLES = 0;// for ez change
-	private int obstacles;
-	private int dim;
+	protected int obstacles;
+	protected int dim;
 
 	/**
 	 * Constructs a factory with a default dimension and obstacles.
