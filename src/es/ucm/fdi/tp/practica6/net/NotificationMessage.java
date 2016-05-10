@@ -21,13 +21,13 @@ public abstract class NotificationMessage implements Serializable {
 
 	protected abstract void notifyObserver(GameObserver observer);
 
-	public class GameStartNotificationMessage extends NotificationMessage {
+	public static class GameStart extends NotificationMessage {
 		private Board board;
 		private String gameDesc;
 		private List<Piece> pieces;
 		private Piece turn;
 
-		public GameStartNotificationMessage(Board board, String gameDesc, List<Piece> pieces, Piece turn) {
+		public GameStart(Board board, String gameDesc, List<Piece> pieces, Piece turn) {
 			this.board = board;
 			this.gameDesc = gameDesc;
 			this.pieces = pieces;
@@ -40,12 +40,12 @@ public abstract class NotificationMessage implements Serializable {
 		}
 	}
 
-	public class GameOverNotificationMessage extends NotificationMessage {
+	public static class GameOver extends NotificationMessage {
 		private Board board;
 		private Game.State state;
 		private Piece winner;
 
-		public GameOverNotificationMessage(Board board, Game.State state, Piece winner) {
+		public GameOver(Board board, Game.State state, Piece winner) {
 			this.board = board;
 			this.state = state;
 			this.winner = winner;
@@ -57,11 +57,11 @@ public abstract class NotificationMessage implements Serializable {
 		}
 	}
 
-	public class MoveStartNotificationMessage extends NotificationMessage {
+	public static class MoveStart extends NotificationMessage {
 		private Board board;
 		private Piece turn;
 
-		public MoveStartNotificationMessage(Board board, Piece turn) {
+		public MoveStart(Board board, Piece turn) {
 			this.board = board;
 			this.turn = turn;
 		}
@@ -72,12 +72,12 @@ public abstract class NotificationMessage implements Serializable {
 		}
 	}
 
-	public class MoveEndNotificationMessage extends NotificationMessage {
+	public static class MoveEnd extends NotificationMessage {
 		private Board board;
 		private Piece turn;
 		private boolean success;
 
-		public MoveEndNotificationMessage(Board board, Piece turn, boolean success) {
+		public MoveEnd(Board board, Piece turn, boolean success) {
 			this.board = board;
 			this.turn = turn;
 			this.success = success;
@@ -89,11 +89,11 @@ public abstract class NotificationMessage implements Serializable {
 		}
 	}
 
-	public class ChangeTurnNotificationMessage extends NotificationMessage {
+	public static class ChangeTurn extends NotificationMessage {
 		private Board board;
 		private Piece turn;
 
-		public ChangeTurnNotificationMessage(Board board, Piece turn) {
+		public ChangeTurn(Board board, Piece turn) {
 			this.board = board;
 			this.turn = turn;
 		}
@@ -104,10 +104,10 @@ public abstract class NotificationMessage implements Serializable {
 		}
 	}
 
-	public  class ErrorNotificationMessage extends NotificationMessage {
+	public static class Error extends NotificationMessage {
 		private String errorMessage;
 
-		public ErrorNotificationMessage(String message) {
+		public Error(String message) {
 			this.errorMessage = message;
 		}
 
