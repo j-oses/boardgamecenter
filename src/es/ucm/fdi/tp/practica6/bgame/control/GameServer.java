@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 /**
  * Created by Álvaro on 06/05/2016.
  */
-public abstract class GameServer extends AbstractServer implements GameObserver {
+public class GameServer extends AbstractServer implements GameObserver {
 	private static final Logger log = Logger.getLogger(GameServer.class.getSimpleName());
 
 	private VisualController controller;
