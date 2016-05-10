@@ -4,7 +4,9 @@ Jorge Osés Grijalba
 2o D.G. Informática - Matemáticas
 
 Changes in the practica4 package:
-- Now a counter isn't set to null but to 0 if the piece count reaches 0.
-- Some whitespacing fixed.
-- 'Professionalified' some method names.
-- Some parameter name changes like i,j->row,col.
+- Now before generating valid moves checks if the board is full to optimize.
+- Fixed a bug where nextPlayer entered on an infinite loop with a full board.
+    - This was done originally because the normal program flow stops before calling nextPlayer if the board is full.
+      However, the minMax algorithm may call nextPlayer even with a full board.
+
+Changes in the practica5 package:
