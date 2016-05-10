@@ -4,7 +4,7 @@ Jorge Osés Grijalba
 2o D.G. Informática - Matemáticas
 
 Changes in the practica4 package:
-- Now before generating valid moves checks if the board is full to optimize.
+- Now before generating valid moves it checks if the board is full to optimize.
 - Fixed a bug where nextPlayer entered on an infinite loop with a full board.
     - This was done originally because the normal program flow stops before calling nextPlayer if the board is full.
       However, the minMax algorithm may call nextPlayer even with a full board.
