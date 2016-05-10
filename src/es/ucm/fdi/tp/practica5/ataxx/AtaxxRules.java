@@ -1,16 +1,12 @@
 package es.ucm.fdi.tp.practica5.ataxx;
 
+import es.ucm.fdi.tp.basecode.bgame.model.*;
+import es.ucm.fdi.tp.basecode.bgame.model.Game.State;
+import es.ucm.fdi.tp.practica5.bgame.model.CountingFiniteRectBoard;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import es.ucm.fdi.tp.basecode.bgame.model.Board;
-import es.ucm.fdi.tp.basecode.bgame.model.Game.State;
-import es.ucm.fdi.tp.basecode.bgame.model.GameMove;
-import es.ucm.fdi.tp.basecode.bgame.model.GameRules;
-import es.ucm.fdi.tp.basecode.bgame.model.Pair;
-import es.ucm.fdi.tp.basecode.bgame.model.Piece;
-import es.ucm.fdi.tp.practica5.bgame.model.CountingFiniteRectBoard;
 
 public class AtaxxRules implements GameRules {
 	protected final Pair<State, Piece> gameInPlayResult = new Pair<State, Piece>(
@@ -266,7 +262,7 @@ public class AtaxxRules implements GameRules {
 		int i = pieces.indexOf(lastPlayer);
 		Piece next = pieces.get((i + 1) % pieces.size());
 
-		while (validMoves(board, pieces, next).size() == 0) {
+		while (!board.isFull() && validMoves(board, pieces, next).size() == 0) {
 			i++;
 			next = pieces.get((i + 1) % pieces.size());
 		}
@@ -289,10 +285,12 @@ public class AtaxxRules implements GameRules {
 			Piece turn) {
 		List<GameMove> moves = new ArrayList<GameMove>();
 
-		for (int i = 0; i < board.getRows(); i++) {
-			for (int j = 0; j < board.getCols(); j++) {
-				if (board.getPosition(i, j) == turn) {
-					moves.addAll(validMoves(board, playersPieces, turn, i, j));
+		if (!board.isFull()) {
+			for (int i = 0; i < board.getRows(); i++) {
+				for (int j = 0; j < board.getCols(); j++) {
+					if (board.getPosition(i, j) != null && turn.equals(board.getPosition(i, j))) {
+						moves.addAll(validMoves(board, playersPieces, turn, i, j));
+					}
 				}
 			}
 		}

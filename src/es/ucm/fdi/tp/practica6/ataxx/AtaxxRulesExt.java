@@ -20,6 +20,10 @@ public class AtaxxRulesExt extends AtaxxRules {
 
 	@Override
 	public double evaluate(Board board, List<Piece> pieces, Piece turn, Piece p) {
+		return mildlyIntelligentEvaluate(board, pieces, turn, p);
+	}
+
+	private double mildlyIntelligentEvaluate(Board board, List<Piece> pieces, Piece turn, Piece p) {
 		int total = 0;
 		int pCount = (board.getPieceCount(p) != null) ? board.getPieceCount(p) : 0 ;
 		for (Piece piece: pieces) {
@@ -33,5 +37,10 @@ public class AtaxxRulesExt extends AtaxxRules {
 		} else {
 			return 0;
 		}
+	}
+
+	private double reallyIntelligentEvaluate(Board board, List<Piece> pieces, Piece turn, Piece p) {
+		// FIXME: not implemented yet
+		return 0;
 	}
 }

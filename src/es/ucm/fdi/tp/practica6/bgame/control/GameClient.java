@@ -12,7 +12,19 @@ import java.net.Socket;
 public class GameClient extends AbstractClient {
     public VisualController clientController;
 
-    @Override
+	public GameClient(String name) {
+		super(name);
+	}
+
+	public GameClient(String hostname, int port, int timeout) throws IOException {
+		super(hostname, port, timeout);
+	}
+
+	public GameClient() throws IOException {
+		super();
+	}
+
+	@Override
     public void start() throws IOException {
         super.start();
     }
@@ -30,5 +42,15 @@ public class GameClient extends AbstractClient {
     @Override
     public void stop() {
         super.stop();
+    }
+
+	@Override
+	public void connectionEstablished() {
+
+	}
+
+	@Override
+    public void dataReceived(Object data) {
+
     }
 }
