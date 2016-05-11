@@ -10,33 +10,33 @@ import java.util.List;
  * Created by Álvaro on 10/05/2016.
  */
 public class AtaxxRulesExt extends AtaxxRules {
-	public enum EvaluationProwess {
+	public enum AILevel {
 		MILDLY_INTELLIGENT, REALLY_INTELLIGENT
 	}
 
-	private EvaluationProwess prowess;
+	private AILevel level;
 
 	public AtaxxRulesExt(int dim) {
-		this(dim, EvaluationProwess.MILDLY_INTELLIGENT);
+		this(dim, AILevel.MILDLY_INTELLIGENT);
 	}
 
-	public AtaxxRulesExt(int dim, EvaluationProwess prowess) {
+	public AtaxxRulesExt(int dim, AILevel level) {
 		super(dim);
-		this.prowess = prowess;
+		this.level = level;
 	}
 
 	public AtaxxRulesExt(int dim, int obstacles) {
-		this(dim, obstacles, EvaluationProwess.MILDLY_INTELLIGENT);
+		this(dim, obstacles, AILevel.MILDLY_INTELLIGENT);
 	}
 
-	public AtaxxRulesExt(int dim, int obstacles, EvaluationProwess prowess) {
+	public AtaxxRulesExt(int dim, int obstacles, AILevel level) {
 		super(dim, obstacles);
-		this.prowess = prowess;
+		this.level = level;
 	}
 
 	@Override
 	public double evaluate(Board board, List<Piece> pieces, Piece turn, Piece p) {
-		switch (prowess) {
+		switch (level) {
 			case REALLY_INTELLIGENT:
 				return reallyIntelligentEvaluate(board, pieces, turn, p);
 			default: // MILDLY_INTELLIGENT
@@ -97,7 +97,59 @@ public class AtaxxRulesExt extends AtaxxRules {
 	 * (-1). The value 0 is neutral.
 	 */
 	private double reallyIntelligentEvaluate(Board board, List<Piece> pieces, Piece turn, Piece p) {
-		// FIXME: not implemented yet
-		return 0;
+		// Takes into account different factors and makes a weighted average to generate the score.
+		double numPiecesEval = mildlyIntelligentEvaluate(board, pieces, turn, p);
+		double proximityEval;	// We want to measure how close the pieces are. The closer, the better.
+		double numHolesEval;		// The more "holes" (empty spaces surrounded by allies), the worse. Counts
+									// "almost holes" too.
+
+		double pieceProximityTotalScore = 0.0;
+		int pCount = (board.getPieceCount(p) != null) ? board.getPieceCount(p) : 0;
+		int numHoles = 0;
+		for (int i = 0; i < board.getRows(); i++) {
+			for (int j = 0; j < board.getCols(); j++) {
+				if (board.getPosition(i, j) == null) {
+					if (numberOfPiecesSurrounding(board, turn, i, j) > 6) {
+						numHoles++;
+					}
+				} else if (turn.equals(board.getPosition(i, j))) {
+					int number = 0;
+					int startI = Math.max(0, i - 1);
+					int startJ = Math.max(0, j - 1);
+					int endI = Math.min(board.getRows() - 1, i + 1);
+					int endJ = Math.min(board.getCols() - 1, j + 1);
+
+					for (int k = startI; k <= endI; k++) {
+						for (int l = startJ; l <= endJ; l++) {
+							if ((k != i || l != j) && !turn.equals(board.getPosition(k, l))) {
+								pieceProximityTotalScore += 0.125;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		proximityEval = pieceProximityTotalScore / (double)pCount;
+		numHolesEval = Math.max(-1, -((double)numHoles * 10 / (double)(board.getCols() * board.getCols())));
+
+		return 0.4 * numPiecesEval + 0.3 * proximityEval + 0.3 * numHolesEval;
+	}
+
+	private int numberOfPiecesSurrounding(Board board, Piece surroundingType, int row, int col) {
+		int number = 0;
+		int startI = Math.max(0, row - 1);
+		int startJ = Math.max(0, col - 1);
+		int endI = Math.min(board.getRows() - 1, row + 1);
+		int endJ = Math.min(board.getCols() - 1, col + 1);
+
+		for (int i = startI; i <= endI; i++) {
+			for (int j = startJ; j <= endJ; j++) {
+				if ((i != row || j != col) && surroundingType.equals(board.getPosition(i, j))) {
+					number++;
+				}
+			}
+		}
+		return number;
 	}
 }
