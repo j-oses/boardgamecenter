@@ -1,6 +1,4 @@
-<<<<<<< HEAD
 package es.ucm.fdi.tp.practica6.bgame.control;
-
 import es.ucm.fdi.tp.basecode.bgame.model.*;
 import es.ucm.fdi.tp.practica5.bgame.control.VisualController;
 import es.ucm.fdi.tp.practica6.net.SocketEndpoint;
@@ -13,6 +11,8 @@ import java.net.SocketTimeoutException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+
 
 /**
  * Created by Jorge on 10-May-16.
@@ -39,15 +39,18 @@ public class GameClient implements GameObserver, SocketEndpoint {
 
         this(DEFAULT_HOSTNAME, DEFAULT_PORT, DEFAULT_TIMEOUT);
     }
-    public GameClient(String name){
+
+    public GameClient(String name) {
         this.name = name;
     }
+
     public GameClient(String hostname, int port, int timeout) {
         this.name = "Client";
         this.hostname = hostname;
         this.port = port;
         this.timeout = timeout;
     }
+
     //might be useless
     public void connect() throws Exception {
         new Thread(new Runnable() {
@@ -77,7 +80,7 @@ public class GameClient implements GameObserver, SocketEndpoint {
         oos.reset();
     }
 
-    public Object getObject() throws ClassNotFoundException,IOException {
+    public Object getObject() throws ClassNotFoundException, IOException {
         return ois.readObject();
     }
 
@@ -167,59 +170,3 @@ public class GameClient implements GameObserver, SocketEndpoint {
 
     }
 }
-=======
-package es.ucm.fdi.tp.practica6.bgame.control;
-
-import es.ucm.fdi.tp.basecode.bgame.model.Board;
-import es.ucm.fdi.tp.basecode.bgame.model.Game;
-import es.ucm.fdi.tp.basecode.bgame.model.GameObserver;
-import es.ucm.fdi.tp.basecode.bgame.model.Piece;
-import es.ucm.fdi.tp.practica5.bgame.control.VisualController;
-import es.ucm.fdi.tp.practica6.net.AbstractClient;
-import es.ucm.fdi.tp.practica6.net.SocketEndpoint;
-
-import java.util.List;
-
-/**
- * Created by Jorge on 10-May-16.
- */
-public class GameClient extends AbstractClient implements GameObserver {
-    public VisualController clientController;
-
-
-    @Override
-    public void onGameStart(Board board, String gameDesc, List<Piece> pieces, Piece turn) {
-
-    }
-
-    @Override
-    public void onGameOver(Board board, Game.State state, Piece winner) {
-
-    }
-
-    @Override
-    public void onMoveStart(Board board, Piece turn) {
-
-    }
-
-    @Override
-    public void onMoveEnd(Board board, Piece turn, boolean success) {
-
-    }
-
-    @Override
-    public void onChangeTurn(Board board, Piece turn) {
-
-    }
-
-    @Override
-    public void onError(String msg) {
-
-    }
-
-    @Override
-    protected SocketEndpoint createEndpoint(String name) {
-        return null;
-    }
-}
->>>>>>> 8795c77ec24ab3d28858de0518bb95cad6fbb5d5
