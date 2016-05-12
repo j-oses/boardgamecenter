@@ -7,9 +7,11 @@ import es.ucm.fdi.tp.basecode.bgame.control.Player;
 import es.ucm.fdi.tp.basecode.bgame.model.*;
 import es.ucm.fdi.tp.basecode.minmax.MinMax;
 import es.ucm.fdi.tp.practica6.ataxx.AtaxxFactoryExtExt;
-import es.ucm.fdi.tp.practica6.ataxx.AtaxxRulesExt;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -20,7 +22,7 @@ import java.util.Scanner;
  */
 public class StatsMain {
 	private static class StatsMaker implements GameObserver {
-		static final int dim = 5;
+		static final int dim = 7;
 		static final int depth = 3;
 		static final int gamesToPlay = 50;
 
@@ -46,14 +48,16 @@ public class StatsMain {
 
 		private void playGame() {
 			// We don't need to see it, so it's console mode
-			GameFactory factory = new AtaxxFactoryExtExt(dim, 0, AtaxxRulesExt.AILevel.REALLY_INTELLIGENT);
-			GameFactory mildlyFactory = new AtaxxFactoryExtExt(dim, 0, AtaxxRulesExt.AILevel.MILDLY_INTELLIGENT);
+			GameFactory factory = new AtaxxFactoryExtExt(dim, 0);
+			// AtaxxFactoryExtExt mildlyFactory = new AtaxxFactoryExtExt(dim, 0);
+			// mildlyFactory.setEvaluator(new PieceCountingEvaluator());
 			Game g = new Game(factory.gameRules());
 			g.addObserver(this);
 
 			ArrayList<Player> players = new ArrayList<>();
 			players.add(factory.createAIPlayer(new MinMax(depth)));
-			players.add(mildlyFactory.createAIPlayer(new MinMax(depth)));
+			// players.add(mildlyFactory.createAIPlayer(new MinMax(depth)));
+			players.add(factory.createRandomPlayer());
 
 			ArrayList<Piece> pieces = new ArrayList<>();
 			pieces.add(new Piece("I")); // Intelligent
