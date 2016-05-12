@@ -81,8 +81,11 @@ public class AtaxxRulesExt extends AtaxxRules {
 
 	/**
 	 * Evaluates how close the player {@link p} is to winning (1) or losing
-	 * (-1). To be used in the automatic players. We hope it can win against
-	 * a mildly intelligent AI, at least, but no tests have been made (yet).
+	 * (-1). To be used in the automatic players. Testing yielded a surprising
+	 * 1.000 victories in 1.000 games against the mildly intelligent player.
+	 * However, testing against the random player yields 839 victories in 1.000
+	 * games (The possible reasons for this are explained in Leeme.txt). Both
+	 * tests were done in a 5x5 board, with 2 players.
 	 * <p>
 	 * The method must be called with a board that is InPlay, it cannot be
 	 * called with a finished game.

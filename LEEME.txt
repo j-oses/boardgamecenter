@@ -10,3 +10,12 @@ Changes in the practica4 package:
       However, the minMax algorithm may call nextPlayer even with a full board.
 
 Changes in the practica5 package:
+
+Comments about the practica6 code:
+- Really intelligent AI player test results:
+    - The AI player is almost flawless (100% winrate) against the mildly intelligent AI player but averages around 85%
+      winrate against the random player.
+    - We think this is consequence of how a minmax algorithm works: the really intelligent player plays as if the other
+      player is going to do the optimal move. The mildly intelligent moves are approximately optimal by the really
+      intelligent algorithm, but the random moves are not nearly optimal. For this reason, the random player does
+      sometimes "surprise" the really intelligent player.

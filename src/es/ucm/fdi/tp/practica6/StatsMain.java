@@ -20,9 +20,9 @@ import java.util.Scanner;
  */
 public class StatsMain {
 	private static class StatsMaker implements GameObserver {
-		static final int dim = 5;
+		static final int dim = 7;
 		static final int depth = 3;
-		static final int gamesToPlay = 50;
+		static final int gamesToPlay = 500;
 
 		private int won;
 		private int draws;
@@ -47,13 +47,14 @@ public class StatsMain {
 		private void playGame() {
 			// We don't need to see it, so it's console mode
 			GameFactory factory = new AtaxxFactoryExtExt(dim, 0, AtaxxRulesExt.AILevel.REALLY_INTELLIGENT);
-			GameFactory mildlyFactory = new AtaxxFactoryExtExt(dim, 0, AtaxxRulesExt.AILevel.MILDLY_INTELLIGENT);
+			// GameFactory mildlyFactory = new AtaxxFactoryExtExt(dim, 0, AtaxxRulesExt.AILevel.MILDLY_INTELLIGENT);
 			Game g = new Game(factory.gameRules());
 			g.addObserver(this);
 
 			ArrayList<Player> players = new ArrayList<>();
 			players.add(factory.createAIPlayer(new MinMax(depth)));
-			players.add(mildlyFactory.createAIPlayer(new MinMax(depth)));
+			// players.add(mildlyFactory.createAIPlayer(new MinMax(depth)));
+			players.add(factory.createRandomPlayer());
 
 			ArrayList<Piece> pieces = new ArrayList<>();
 			pieces.add(new Piece("I")); // Intelligent
