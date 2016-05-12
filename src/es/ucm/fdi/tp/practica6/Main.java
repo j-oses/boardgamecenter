@@ -1,5 +1,6 @@
 package es.ucm.fdi.tp.practica6;
 
+import com.sun.xml.internal.bind.v2.TODO;
 import es.ucm.fdi.tp.basecode.bgame.control.*;
 import es.ucm.fdi.tp.basecode.bgame.model.AIAlgorithm;
 import es.ucm.fdi.tp.basecode.bgame.model.Game;
@@ -992,6 +993,30 @@ public class Main {
 	 * Inicia un juego. Debe llamarse despues de {@link #parseArgs(String[])}
 	 * para que los atributos tengan los valores correctos.
 	 *
+	 */
+	//TODO later implement the following two methods as requested by Samir
+	private static void startServer() {
+		//GameServer c = new GameServer(gameFactory, pieces, serverPort);
+		//	c.start();
+	}
+
+	private static void startClient(){
+		try {
+			//GameClient c = new GameClient(serverHost, serverPort); gameFactory = c.getGameFactoty(); gameFactory.createSwingView(c, c, c.getPlayerPiece(), …); c.start(); } catch (Exception e) {
+			System.err.println("renameMe");
+		} catch(Exception e){//rename exception pls
+			//here do something
+		}
+	}
+	/*TODO SAMIR SAYS :
+	Modificar la pr5 para que use invokeAndWait en lugar de invokeLater en
+	createSwingView.
+	Así no aseguramos que la vista ya se ha registrado
+	como observador en GameClient antes de llamar a c.start(). Si no, puede
+	ser que la vista no reciba la notificación onGameStart.
+	Si en tu implementación hay otros componentes de la vista que registran
+	como observadores del modelo (p.ej., BoardComponent), no lo hagas con
+	invokeLater o invokeAndWait sino llamar directamente a addObserver
 	 */
 	public static void startGame() {
 		Game g = new Game(gameFactory.gameRules());

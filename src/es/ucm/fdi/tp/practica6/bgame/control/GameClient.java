@@ -1,56 +1,54 @@
 package es.ucm.fdi.tp.practica6.bgame.control;
 
+import es.ucm.fdi.tp.basecode.bgame.model.Board;
+import es.ucm.fdi.tp.basecode.bgame.model.Game;
+import es.ucm.fdi.tp.basecode.bgame.model.GameObserver;
+import es.ucm.fdi.tp.basecode.bgame.model.Piece;
 import es.ucm.fdi.tp.practica5.bgame.control.VisualController;
 import es.ucm.fdi.tp.practica6.net.AbstractClient;
+import es.ucm.fdi.tp.practica6.net.SocketEndpoint;
 
-import java.io.IOException;
-import java.net.Socket;
+import java.util.List;
 
 /**
  * Created by Jorge on 10-May-16.
  */
-public class GameClient extends AbstractClient {
+public class GameClient extends AbstractClient implements GameObserver {
     public VisualController clientController;
 
-	public GameClient(String name) {
-		super(name);
-	}
 
-	public GameClient(String hostname, int port, int timeout) throws IOException {
-		super(hostname, port, timeout);
-	}
+    @Override
+    public void onGameStart(Board board, String gameDesc, List<Piece> pieces, Piece turn) {
 
-	public GameClient() throws IOException {
-		super();
-	}
-
-	@Override
-    public void start() throws IOException {
-        super.start();
     }
 
     @Override
-    public void start(Socket socket, int timeout) {
-        super.start(socket, timeout);
+    public void onGameOver(Board board, Game.State state, Piece winner) {
+
     }
 
     @Override
-    public synchronized void sendData(Object o) {
-        super.sendData(o);
+    public void onMoveStart(Board board, Piece turn) {
+
     }
 
     @Override
-    public void stop() {
-        super.stop();
+    public void onMoveEnd(Board board, Piece turn, boolean success) {
+
     }
 
-	@Override
-	public void connectionEstablished() {
+    @Override
+    public void onChangeTurn(Board board, Piece turn) {
 
-	}
+    }
 
-	@Override
-    public void dataReceived(Object data) {
+    @Override
+    public void onError(String msg) {
 
+    }
+
+    @Override
+    protected SocketEndpoint createEndpoint(String name) {
+        return null;
     }
 }

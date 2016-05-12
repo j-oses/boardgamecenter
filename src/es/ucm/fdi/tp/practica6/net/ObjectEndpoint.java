@@ -18,7 +18,7 @@ public abstract class ObjectEndpoint implements SocketEndpoint {
 	protected ObjectOutputStream oos;
 	protected ObjectInputStream ois;
 	protected volatile boolean stopped;
-
+	// client if client, server if server
 	protected String name;
 
 	public ObjectEndpoint(String name) {
