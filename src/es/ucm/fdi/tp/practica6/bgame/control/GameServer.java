@@ -39,7 +39,7 @@ public class GameServer extends AbstractServer implements GameObserver {
 	// ABSTRACT SERVER METHODS
 	@Override
 	protected SocketEndpoint createEndpoint(String name) {
-		return new ObjectEndpoint(name) {
+		return new GameClient(name) {
 			@Override
 			public void connectionEstablished() {
 				endpoints.add(this);
