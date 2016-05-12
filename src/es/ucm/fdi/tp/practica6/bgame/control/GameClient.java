@@ -1,6 +1,9 @@
 package es.ucm.fdi.tp.practica6.bgame.control;
+
 import es.ucm.fdi.tp.basecode.bgame.model.*;
 import es.ucm.fdi.tp.practica5.bgame.control.VisualController;
+import es.ucm.fdi.tp.practica6.net.ConnectionEstablishedMessage;
+import es.ucm.fdi.tp.practica6.net.NotificationMessage;
 import es.ucm.fdi.tp.practica6.net.SocketEndpoint;
 
 import java.io.IOException;
@@ -11,7 +14,6 @@ import java.net.SocketTimeoutException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 
 
 /**
@@ -29,11 +31,12 @@ public class GameClient implements GameObserver, SocketEndpoint {
     private String hostname;
     private int port;
     private int timeout;
-
+    private ConnectionEstablishedMessage gameInfo;
     protected ObjectOutputStream oos;
     protected ObjectInputStream ois;
     protected volatile boolean stopped;
     protected String name;
+
 
     public GameClient() {
 
@@ -80,10 +83,6 @@ public class GameClient implements GameObserver, SocketEndpoint {
         oos.reset();
     }
 
-    public Object getObject() throws ClassNotFoundException, IOException {
-        return ois.readObject();
-    }
-
     //TODO SocketEndpoint Methods
     @Override
     public void start(final Socket socket, final int timeout) {
@@ -95,18 +94,18 @@ public class GameClient implements GameObserver, SocketEndpoint {
                 public void run() {
                     try {
                         ois = new ObjectInputStream(socket.getInputStream());
+
                     } catch (IOException e) {
                         log.log(Level.WARNING, "Failed to read: could not create object input stream");
                     }
                     while (!stopped) {
                         try {
-
-                            dataReceived(getObject());
+                            dataReceived(ois.readObject());
                         } catch (SocketTimeoutException ste) {
                             log.log(Level.FINE, "Failed to read; will retry");
                         } catch (IOException | ClassNotFoundException se) {
                             log.log(Level.WARNING, "Failed to read: bad serialization");
-                            stopped = true;
+                            stop();
                         }
                     }
                     log.log(Level.INFO, "Client exiting gracefully");
@@ -122,21 +121,33 @@ public class GameClient implements GameObserver, SocketEndpoint {
     @Override
     public void connectionEstablished() {
 
-    }
-
-    @Override
-    public void stop() {
-
+        //no idea
     }
 
     @Override
     public void dataReceived(Object data) {
+        if(data instanceof ConnectionEstablishedMessage){
+            //save factory and pieces for later OR we keep the message for later
+           this.gameInfo = (ConnectionEstablishedMessage) data;
+        } else if (data instanceof NotificationMessage){
 
+        }
     }
 
     @Override
     public void sendData(Object data) {
+        try {
+            oos.writeObject(data);
+        } catch (SocketTimeoutException ste) {
+            log.log(Level.INFO, "Failed to write; target must be full!");
+        } catch (IOException ioe) {
+            log.log(Level.WARNING, "Failed to write: bad serialization");
+        }
+    }
 
+    @Override
+    public void stop() {
+        stopped = true;
     }
 
     //TODO GameObserver Methods
