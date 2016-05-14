@@ -85,8 +85,8 @@ public class VisualController extends Controller implements MoveListener,
 		this.owner = owner;
 
 		players = new HashMap<>();
-		for (int i = 0; i < pieces.size(); i++) {
-			this.players.put(pieces.get(i), null);
+		for (Piece p: pieces) {
+			this.players.put(p, PlayerMode.MANUAL);
 		}
 
 		playerForMode = new HashMap<>();

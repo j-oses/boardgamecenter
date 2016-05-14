@@ -7,6 +7,7 @@ import es.ucm.fdi.tp.basecode.bgame.model.Board;
 import es.ucm.fdi.tp.basecode.bgame.model.Game;
 import es.ucm.fdi.tp.basecode.bgame.model.GameObserver;
 import es.ucm.fdi.tp.basecode.bgame.model.Piece;
+import es.ucm.fdi.tp.practica5.bgame.control.VisualController;
 import es.ucm.fdi.tp.practica6.net.AbstractServer;
 import es.ucm.fdi.tp.practica6.net.ConnectionEstablishedMessage;
 import es.ucm.fdi.tp.practica6.net.NotificationMessage;
@@ -22,14 +23,14 @@ import java.util.logging.Logger;
 public class GameServer extends AbstractServer implements GameObserver {
 	private static final Logger log = Logger.getLogger(GameServer.class.getSimpleName());
 
-	private ServerController controller;
+	private VisualController controller;
 
 	private List<SocketEndpoint> endpoints;
 	private int maxConnections;
 	private List<Piece> pieces;
 	private GameFactory factory;
 
-	public GameServer(ServerController controller, List<Piece> pieces, GameFactory factory, int port, int timeout) {
+	public GameServer(VisualController controller, List<Piece> pieces, GameFactory factory, int port, int timeout) {
 		super(port, timeout);
 
 		this.controller = controller;
