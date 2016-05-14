@@ -22,7 +22,7 @@ public class ConnectionEstablishedMessage implements Serializable {
 	public Piece getPiece(){
 		return piece;
 	}
-	public GameFactory getFactory(){
+	public GameFactory getGameFactory(){
 		return factory;
 	}
 	public void createSwingView(Game game, Controller controller, AIAlgorithm aiAlgorithm) {

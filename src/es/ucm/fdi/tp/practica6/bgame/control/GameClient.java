@@ -25,13 +25,12 @@ public class GameClient implements GameObserver, SocketEndpoint {
     private static final String DEFAULT_HOSTNAME = "localhost";
     private static final int DEFAULT_TIMEOUT = 2000;
     private static final Logger log = Logger.getLogger(GameClient.class.getSimpleName());
-
     public VisualController clientController;
 
+    private AIAlgorithm localAlgorithm;
     private String hostname;
     private int port;
     private int timeout;
-    private ConnectionEstablishedMessage gameInfo;
     protected ObjectOutputStream oos;
     protected ObjectInputStream ois;
     protected volatile boolean stopped;
@@ -77,12 +76,6 @@ public class GameClient implements GameObserver, SocketEndpoint {
         }, "Client").start();
     }
 
-    public void sendObject(Object r) throws IOException {
-        oos.writeObject(r);
-        oos.flush();
-        oos.reset();
-    }
-
     //TODO SocketEndpoint Methods
     @Override
     public void start(final Socket socket, final int timeout) {
@@ -120,24 +113,27 @@ public class GameClient implements GameObserver, SocketEndpoint {
 
     @Override
     public void connectionEstablished() {
-
-        //no idea
     }
 
     @Override
     public void dataReceived(Object data) {
-        if(data instanceof ConnectionEstablishedMessage){
-            //save factory and pieces for later OR we keep the message for later
-           this.gameInfo = (ConnectionEstablishedMessage) data;
-        } else if (data instanceof NotificationMessage){
 
+        if(data instanceof ConnectionEstablishedMessage){
+
+            Game g = new Game(((ConnectionEstablishedMessage)data).getGameFactory().gameRules());
+            g.addObserver(this);
+            ((ConnectionEstablishedMessage)data).createSwingView(g,clientController,localAlgorithm);
+        }else if (data instanceof NotificationMessage){
+            //do what notificationsays
         }
     }
 
     @Override
-    public void sendData(Object data) {
+    public void sendData(Object data){
         try {
             oos.writeObject(data);
+            oos.flush();
+            oos.reset();
         } catch (SocketTimeoutException ste) {
             log.log(Level.INFO, "Failed to write; target must be full!");
         } catch (IOException ioe) {
