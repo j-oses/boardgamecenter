@@ -1,3 +1,4 @@
+
 package es.ucm.fdi.tp.practica6.bgame.control;
 
 import es.ucm.fdi.tp.basecode.bgame.control.GameFactory;
@@ -39,7 +40,7 @@ public class GameServer extends AbstractServer implements GameObserver {
 	// ABSTRACT SERVER METHODS
 	@Override
 	protected SocketEndpoint createEndpoint(String name) {
-		return new ObjectEndpoint(name) {
+		return new GameClient(name) {
 			@Override
 			public void connectionEstablished() {
 				endpoints.add(this);
@@ -99,3 +100,5 @@ public class GameServer extends AbstractServer implements GameObserver {
 		endpoint.sendData(message);
 	}
 }
+
+
