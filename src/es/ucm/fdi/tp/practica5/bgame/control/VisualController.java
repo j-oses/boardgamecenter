@@ -1,54 +1,47 @@
 package es.ucm.fdi.tp.practica5.bgame.control;
 
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowFocusListener;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import javax.swing.SwingUtilities;
-
 import es.ucm.fdi.tp.basecode.bgame.control.Controller;
 import es.ucm.fdi.tp.basecode.bgame.control.Player;
-import es.ucm.fdi.tp.basecode.bgame.model.Board;
-import es.ucm.fdi.tp.basecode.bgame.model.Game;
+import es.ucm.fdi.tp.basecode.bgame.model.*;
 import es.ucm.fdi.tp.basecode.bgame.model.Game.State;
-import es.ucm.fdi.tp.basecode.bgame.model.GameError;
-import es.ucm.fdi.tp.basecode.bgame.model.GameMove;
-import es.ucm.fdi.tp.basecode.bgame.model.GameObserver;
-import es.ucm.fdi.tp.basecode.bgame.model.Piece;
 import es.ucm.fdi.tp.practica5.bgame.model.MoveGenerator.MoveListener;
 import es.ucm.fdi.tp.practica5.bgame.views.BoardJPanel;
 import es.ucm.fdi.tp.practica5.bgame.views.GameWindow;
 import es.ucm.fdi.tp.practica5.bgame.views.GameWindow.GameChangesListener;
 import es.ucm.fdi.tp.practica5.bgame.views.SettingsPanel;
 
+import javax.swing.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 /**
  * This controller manages a game which is played with a GUI. Each controller
  * manages a single window.
- * 
- * @author �lvaro & Jorge
  *
+ * @author Álvaro & Jorge
  */
 public class VisualController extends Controller implements MoveListener,
 		GameObserver, GameChangesListener {
 	private GameWindow window;
 	private Piece owner;
-	private HashMap<Piece, Player> players;
-	private HashMap<PlayerMode, Player> playerModes;
+	private HashMap<Piece, PlayerMode> players;
+	private HashMap<PlayerMode, Player> playerForMode;
 	private Player currentPlayer;
+	private PlayerMode currentMode;
 	private boolean isTurn;
 	private boolean hasFocus;
 
 	/**
 	 * An enum which describes the three possible player modes: manual, random
 	 * and AI.
-	 * 
-	 * @author �lvaro
 	 *
+	 * @author Álvaro
 	 */
 	public enum PlayerMode {
-		MANUAL("Manual"), RANDOM("Random"), AI("Intelligent");
+		MANUAL("Manual"), RANDOM("Random"), AI("Intelligent"), REMOTE("Remote");
 
 		private String mode;
 
@@ -62,9 +55,8 @@ public class VisualController extends Controller implements MoveListener,
 
 		/**
 		 * Initializes a new PlayerMode with the given string.
-		 * 
-		 * @param text
-		 *            the string related with the mode.
+		 *
+		 * @param text the string related with the mode.
 		 * @return a new mode.
 		 */
 		public static PlayerMode fromString(String text) {
@@ -82,14 +74,11 @@ public class VisualController extends Controller implements MoveListener,
 
 	/**
 	 * Constructs a new controller.
-	 * 
-	 * @param game
-	 *            the game which this controller will manage.
-	 * @param pieces
-	 *            the players in the game
-	 * @param owner
-	 *            the player to which the associated window will belong.
-	 *            {@code null} if this controller manages multiple players.
+	 *
+	 * @param game   the game which this controller will manage.
+	 * @param pieces the players in the game
+	 * @param owner  the player to which the associated window will belong.
+	 *               {@code null} if this controller manages multiple players.
 	 */
 	public VisualController(Game game, List<Piece> pieces, Piece owner) {
 		super(game, pieces);
@@ -100,16 +89,15 @@ public class VisualController extends Controller implements MoveListener,
 			this.players.put(pieces.get(i), null);
 		}
 
-		playerModes = new HashMap<>();
+		playerForMode = new HashMap<>();
 
 		game.addObserver(this);
 	}
 
 	/**
 	 * Requests a move to the player provided and executes it.
-	 * 
-	 * @param p
-	 *            the player to which the move will be requested.
+	 *
+	 * @param p the player to which the move will be requested.
 	 */
 	@Override
 	public void makeMove(final Player p) {
@@ -146,11 +134,13 @@ public class VisualController extends Controller implements MoveListener,
 
 	@Override
 	public void onGameStart(Board board, String gameDesc, List<Piece> pieces,
-			Piece turn) {
+							Piece turn) {
 		isTurn = (owner == null) || owner.equals(turn);
-		currentPlayer = players.get(turn);
+		currentMode = players.get(turn);
+		currentPlayer = playerForMode.get(currentMode);
 
 		window.setVisible(true);
+		window.setCurrentlyManual(currentMode.equals(PlayerMode.MANUAL));
 		toFrontIfNeeded();
 
 		if (isTurn && currentPlayer != null) {
@@ -179,9 +169,10 @@ public class VisualController extends Controller implements MoveListener,
 	@Override
 	public void onChangeTurn(Board board, Piece turn) {
 		isTurn = (owner == null) || owner.equals(turn);
-		currentPlayer = players.get(turn);
+		currentMode = players.get(turn);
+		currentPlayer = playerForMode.get(currentMode);
 
-		window.setCurrentlyManual(currentPlayer == null);
+		window.setCurrentlyManual(currentMode.equals(PlayerMode.MANUAL));
 
 		toFrontIfNeeded();
 
@@ -206,7 +197,7 @@ public class VisualController extends Controller implements MoveListener,
 
 	@Override
 	public void randomMoveButtonPressed() {
-		Player randomPlayer = playerModes.get(PlayerMode.RANDOM);
+		Player randomPlayer = playerForMode.get(PlayerMode.RANDOM);
 		if (randomPlayer != null) {
 			makeMove(randomPlayer);
 		}
@@ -214,7 +205,7 @@ public class VisualController extends Controller implements MoveListener,
 
 	@Override
 	public void aiMoveButtonPressed() {
-		Player aiPlayer = playerModes.get(PlayerMode.AI);
+		Player aiPlayer = playerForMode.get(PlayerMode.AI);
 		if (aiPlayer != null) {
 			makeMove(aiPlayer);
 		}
@@ -233,27 +224,22 @@ public class VisualController extends Controller implements MoveListener,
 	@Override
 	public void selectedNewGameMode(String pieceId, String mode) {
 		PlayerMode playerMode = PlayerMode.fromString(mode);
-		Player player = playerModes.get(playerMode);
-		players.put(new Piece(pieceId), player);
+		players.put(new Piece(pieceId), playerMode);
 	}
 
 	/**
 	 * Creates a new game window with the provided board panel, players and
 	 * piece.
-	 * 
-	 * @param boardPanel
-	 *            the panel which presents the board.
-	 * @param randomPlayer
-	 *            the player to generate random moves.
-	 * @param aiPlayer
-	 *            the player to generate AI moves.
-	 * @param the
-	 *            player to which the associated window will belong.
-	 *            {@code null} if this controller manages multiple players.
+	 *
+	 * @param boardPanel   the panel which presents the board.
+	 * @param randomPlayer the player to generate random moves.
+	 * @param aiPlayer     the player to generate AI moves.
+	 * @param viewPiece    the player to which the associated window will belong.
+	 *                     {@code null} if this controller manages multiple players.
 	 */
 	public void addGameWindowForPieces(BoardJPanel boardPanel,
-			Player randomPlayer, Player aiPlayer, Piece viewPiece) {
-		ArrayList<String> auxPlayerString = new ArrayList<String>();
+									   Player randomPlayer, Player aiPlayer, Piece viewPiece) {
+		ArrayList<String> auxPlayerString = new ArrayList<>();
 
 		for (Piece key : players.keySet()) {
 			auxPlayerString.add(key.toString());
@@ -262,8 +248,8 @@ public class VisualController extends Controller implements MoveListener,
 		String auxString[] = new String[auxPlayerString.size()];
 		auxString = auxPlayerString.toArray(auxString);
 
-		playerModes.put(PlayerMode.RANDOM, randomPlayer);
-		playerModes.put(PlayerMode.AI, aiPlayer);
+		playerForMode.put(PlayerMode.RANDOM, randomPlayer);
+		playerForMode.put(PlayerMode.AI, aiPlayer);
 
 		String auxOwner;
 		if (owner == null) {
