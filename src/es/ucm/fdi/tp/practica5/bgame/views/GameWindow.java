@@ -1,22 +1,5 @@
 package es.ucm.fdi.tp.practica5.bgame.views;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridBagLayout;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.geom.RectangularShape;
-import java.util.HashMap;
-import java.util.List;
-
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JSplitPane;
-import javax.swing.border.EmptyBorder;
-
 import es.ucm.fdi.tp.basecode.bgame.model.Board;
 import es.ucm.fdi.tp.basecode.bgame.model.Game.State;
 import es.ucm.fdi.tp.basecode.bgame.model.GameObserver;
@@ -25,10 +8,21 @@ import es.ucm.fdi.tp.practica5.bgame.control.VisualController.PlayerMode;
 import es.ucm.fdi.tp.practica5.bgame.views.BoardJPanel.PieceAppearanceMap;
 import es.ucm.fdi.tp.practica5.bgame.views.SettingsPanel.SettingsListener;
 
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.RectangularShape;
+import java.util.HashMap;
+import java.util.List;
+
 /**
  * The frame which manages the whole game UI.
  * 
- * @author Jorge & ¡lvaro
+ * @author Jorge & √Ålvaro
  *
  */
 public class GameWindow extends JFrame implements GameObserver,
