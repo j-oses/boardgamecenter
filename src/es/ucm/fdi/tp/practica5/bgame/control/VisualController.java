@@ -36,8 +36,8 @@ public class VisualController extends Controller implements MoveListener,
 	private Piece owner;
 	private HashMap<Piece, Player> players;
 	private HashMap<PlayerMode, Player> playerModes;
-	private Player currentPlayer;
-	private boolean isTurn;
+	protected Player currentPlayer;
+	protected boolean isTurn;
 	private boolean hasFocus;
 
 	/**
@@ -168,7 +168,6 @@ public class VisualController extends Controller implements MoveListener,
 
 	@Override
 	public void onMoveStart(Board board, Piece turn) {
-
 	}
 
 	@Override

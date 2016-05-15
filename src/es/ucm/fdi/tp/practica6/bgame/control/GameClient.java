@@ -1,7 +1,9 @@
 package es.ucm.fdi.tp.practica6.bgame.control;
 
-import es.ucm.fdi.tp.basecode.bgame.model.*;
-import es.ucm.fdi.tp.practica5.bgame.control.VisualController;
+import es.ucm.fdi.tp.basecode.bgame.model.AIAlgorithm;
+import es.ucm.fdi.tp.basecode.bgame.model.Game;
+import es.ucm.fdi.tp.basecode.bgame.model.GameMove;
+import es.ucm.fdi.tp.basecode.bgame.model.GameObserver;
 import es.ucm.fdi.tp.practica6.net.ConnectionEstablishedMessage;
 import es.ucm.fdi.tp.practica6.net.NotificationMessage;
 import es.ucm.fdi.tp.practica6.net.SocketEndpoint;
@@ -11,7 +13,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,61 +21,31 @@ import java.util.logging.Logger;
 /**
  * Created by Jorge on 10-May-16.
  */
-public class GameClient implements GameObserver, SocketEndpoint {
+public class GameClient implements SocketEndpoint{
 
-    private static final int DEFAULT_PORT = 2020;
-    private static final String DEFAULT_HOSTNAME = "localhost";
-    private static final int DEFAULT_TIMEOUT = 2000;
     private static final Logger log = Logger.getLogger(GameClient.class.getSimpleName());
-    public VisualController clientController;
 
+    private ClientController clientController;
+    private ArrayList<GameObserver> observers;
     private AIAlgorithm localAlgorithm;
-    private String hostname;
-    private int port;
-    private int timeout;
+
+
     protected ObjectOutputStream oos;
     protected ObjectInputStream ois;
     protected volatile boolean stopped;
     protected String name;
-
-
-    public GameClient() {
-
-        this(DEFAULT_HOSTNAME, DEFAULT_PORT, DEFAULT_TIMEOUT);
-    }
-
-    public GameClient(String name) {
+    public GameClient (String name){
         this.name = name;
     }
-
-    public GameClient(String hostname, int port, int timeout) {
+    public GameClient(AIAlgorithm localAlgorithm) {
         this.name = "Client";
-        this.hostname = hostname;
-        this.port = port;
-        this.timeout = timeout;
+        this.localAlgorithm = localAlgorithm;
+        this.clientController = clientController;
+        this.observers = new ArrayList<>();
     }
 
-    //might be useless
-    public void connect() throws Exception {
-        new Thread(new Runnable() {
-            public void run() {
-
-                try {
-                    Socket serverConnection = new Socket(hostname, port);
-                    oos = new ObjectOutputStream(serverConnection.getOutputStream());
-                    ois = new ObjectInputStream(serverConnection.getInputStream());
-                    Object serverResponse = ois.readObject();
-
-                    if (serverResponse instanceof Exception) {
-                        throw (Exception) serverResponse;
-                    }
-                    //first check if ok
-                    //here recieve data and add it to the controller and stuff
-                } catch (Exception e) {
-                    throw new GameError("Error while connecting to the server: " + e.getMessage());
-                }
-            }
-        }, "Client").start();
+    public void moveGenerated(GameMove move){
+        sendData(move);
     }
 
     //TODO SocketEndpoint Methods
@@ -121,10 +93,13 @@ public class GameClient implements GameObserver, SocketEndpoint {
         if(data instanceof ConnectionEstablishedMessage){
 
             Game g = new Game(((ConnectionEstablishedMessage)data).getGameFactory().gameRules());
-            g.addObserver(this);
+            clientController = new ClientController(g,g.getPlayersPieces(),((ConnectionEstablishedMessage)data).getPiece());
+            g.addObserver(clientController);
+            observers.add(clientController);
             ((ConnectionEstablishedMessage)data).createSwingView(g,clientController,localAlgorithm);
+
         }else if (data instanceof NotificationMessage){
-            //do what notificationsays
+            ((NotificationMessage)data).notifyObservers(observers);
         }
     }
 
@@ -144,36 +119,5 @@ public class GameClient implements GameObserver, SocketEndpoint {
     @Override
     public void stop() {
         stopped = true;
-    }
-
-    //TODO GameObserver Methods
-    @Override
-    public void onGameStart(Board board, String gameDesc, List<Piece> pieces, Piece turn) {
-
-    }
-
-    @Override
-    public void onGameOver(Board board, Game.State state, Piece winner) {
-
-    }
-
-    @Override
-    public void onMoveStart(Board board, Piece turn) {
-
-    }
-
-    @Override
-    public void onMoveEnd(Board board, Piece turn, boolean success) {
-
-    }
-
-    @Override
-    public void onChangeTurn(Board board, Piece turn) {
-
-    }
-
-    @Override
-    public void onError(String msg) {
-
     }
 }
