@@ -51,7 +51,7 @@ public class GameClient implements SocketEndpoint{
     //TODO SocketEndpoint Methods
     @Override
     public void start(final Socket socket, final int timeout) {
-        try {
+        try {//test branch comment
             socket.setSoTimeout(timeout);
             oos = new ObjectOutputStream(socket.getOutputStream());
 
