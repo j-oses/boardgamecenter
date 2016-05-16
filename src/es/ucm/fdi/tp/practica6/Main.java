@@ -13,7 +13,6 @@ import es.ucm.fdi.tp.practica5.ttt.TicTacToeFactoryExt;
 import es.ucm.fdi.tp.practica6.ataxx.AtaxxFactoryExtExt;
 import es.ucm.fdi.tp.practica6.bgame.control.GameClient;
 import es.ucm.fdi.tp.practica6.bgame.control.GameServer;
-import es.ucm.fdi.tp.practica6.bgame.control.ServerController;
 import org.apache.commons.cli.*;
 
 import java.io.IOException;
@@ -981,7 +980,7 @@ public class Main {
         Game g = new Game(gameFactory.gameRules());
         List<Piece> pieces = new ArrayList<Piece>();
 
-        ServerController v = new ServerController(g, pieces, null);
+        VisualController v = new VisualController(g, pieces, null);
 
         gameFactory.createSwingView(g, v, null,
                 gameFactory.createRandomPlayer(),

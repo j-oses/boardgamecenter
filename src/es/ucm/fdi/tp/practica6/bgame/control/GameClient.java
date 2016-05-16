@@ -4,6 +4,7 @@ import es.ucm.fdi.tp.basecode.bgame.model.AIAlgorithm;
 import es.ucm.fdi.tp.basecode.bgame.model.Game;
 import es.ucm.fdi.tp.basecode.bgame.model.GameMove;
 import es.ucm.fdi.tp.basecode.bgame.model.GameObserver;
+import es.ucm.fdi.tp.practica5.bgame.model.MoveGenerator;
 import es.ucm.fdi.tp.practica6.net.ConnectionEstablishedMessage;
 import es.ucm.fdi.tp.practica6.net.NotificationMessage;
 import es.ucm.fdi.tp.practica6.net.SocketEndpoint;
@@ -21,7 +22,7 @@ import java.util.logging.Logger;
 /**
  * Created by Jorge on 10-May-16.
  */
-public class GameClient implements SocketEndpoint {
+public class GameClient implements SocketEndpoint, MoveGenerator.MoveListener {
 
 	private static final Logger log = Logger.getLogger(GameClient.class.getSimpleName());
 
@@ -42,11 +43,11 @@ public class GameClient implements SocketEndpoint {
 	public GameClient(AIAlgorithm localAlgorithm) {
 		this.name = "Client";
 		this.localAlgorithm = localAlgorithm;
-		this.clientController = clientController;
 		this.observers = new ArrayList<>();
 	}
 
-	public void moveGenerated(GameMove move) {
+	@Override
+	public void didGenerateMove(GameMove move) {
 		sendData(move);
 	}
 

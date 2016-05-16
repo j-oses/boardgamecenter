@@ -4,28 +4,32 @@ import es.ucm.fdi.tp.basecode.bgame.model.Game;
 import es.ucm.fdi.tp.basecode.bgame.model.GameMove;
 import es.ucm.fdi.tp.basecode.bgame.model.Piece;
 import es.ucm.fdi.tp.practica5.bgame.control.VisualController;
+import es.ucm.fdi.tp.practica5.bgame.model.MoveGenerator;
 
 import java.util.List;
 
 /**
- * Created by Jorge on 15-May-16.
+ * The client controller is a VisualController that only knows that he shouldn't make moves.
+ * When a move is generated it passes it to another moveListener, which will typically be
+ * the GameClient.
  */
 public class ClientController extends VisualController {
-    private GameClient client;
-    public void addClient(GameClient client){
-        this.client = client;
-    }
-    public ClientController(Game game, List<Piece> pieces, Piece owner) {
-        super(game, pieces, owner);
-    }
+	private MoveGenerator.MoveListener moveListener;
 
-    @Override
-    public void didGenerateMove(GameMove move) {
-        // It's not strictly necessary to check for current player, but it's
-        // checked just in case
-        if (isTurn && currentPlayer == null) {
-            client.moveGenerated(move);
-        }
-    }
+	public void setMoveListener(MoveGenerator.MoveListener moveListener) {
+		this.moveListener = moveListener;
+	}
 
+	public ClientController(Game game, List<Piece> pieces, Piece owner) {
+		super(game, pieces, owner);
+	}
+
+	@Override
+	public void didGenerateMove(GameMove move) {
+		// It's not strictly necessary to check for current player, but it's
+		// checked just in case
+		if (isTurn && currentPlayer == null) {
+			moveListener.didGenerateMove(move);
+		}
+	}
 }

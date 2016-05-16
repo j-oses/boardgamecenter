@@ -6,8 +6,8 @@ import es.ucm.fdi.tp.basecode.bgame.model.Game;
 import es.ucm.fdi.tp.basecode.bgame.model.Piece;
 import es.ucm.fdi.tp.basecode.minmax.MinMax;
 import es.ucm.fdi.tp.practica5.ataxx.AtaxxFactoryExt;
+import es.ucm.fdi.tp.practica5.bgame.control.VisualController;
 import es.ucm.fdi.tp.practica6.bgame.control.GameServer;
-import es.ucm.fdi.tp.practica6.bgame.control.ServerController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ public class ServerTestingMain {
 		pieces.add(new Piece("O"));
 		pieces.add(new Piece("A"));
 
-		ServerController v = new ServerController(g, pieces, null);
+		VisualController v = new VisualController(g, pieces, null);
 		// here we set appropriate game-based board and option-based
 		// settings
 		factory.createSwingView(g, v, null,

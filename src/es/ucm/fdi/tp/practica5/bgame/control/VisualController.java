@@ -29,9 +29,9 @@ public class VisualController extends Controller implements MoveListener,
 	private Piece owner;
 	private HashMap<Piece, PlayerMode> players;
 	private HashMap<PlayerMode, Player> playerForMode;
-	private Player currentPlayer;
+	protected Player currentPlayer;
 	private PlayerMode currentMode;
-	private boolean isTurn;
+	protected boolean isTurn;
 	private boolean hasFocus;
 
 	/**

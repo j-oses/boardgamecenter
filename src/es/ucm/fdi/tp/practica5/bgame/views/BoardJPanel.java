@@ -1,27 +1,23 @@
 package es.ucm.fdi.tp.practica5.bgame.views;
 
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.RectangularShape;
-
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-
 import es.ucm.fdi.tp.basecode.bgame.model.Board;
 import es.ucm.fdi.tp.basecode.bgame.model.Piece;
 import es.ucm.fdi.tp.practica5.bgame.model.MoveGenerator;
 import es.ucm.fdi.tp.practica5.bgame.views.PieceJPanel.PieceSelectionListener;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.RectangularShape;
 
 /**
  * A panel which manages a board. It provides basic properties & methods which
  * every board panel should implement. This panel doesn't actually paint
  * anything.
  * 
- * @author ¡lvaro
+ * @author √Ålvaro
  *
  */
 abstract public class BoardJPanel extends JPanel implements
@@ -32,7 +28,7 @@ abstract public class BoardJPanel extends JPanel implements
 	 * An interface which dictates how should each piece be painted, determining
 	 * both its color and its shape.
 	 * 
-	 * @author ¡lvaro
+	 * @author √Ålvaro
 	 *
 	 */
 	public interface PieceAppearanceMap {
