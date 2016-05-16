@@ -6,14 +6,13 @@ import es.ucm.fdi.tp.basecode.bgame.model.GameObserver;
 import es.ucm.fdi.tp.basecode.bgame.model.Piece;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Álvaro on 02/05/2016.
  */
 public abstract class NotificationMessage implements Serializable {
-	public void notifyObservers(ArrayList<GameObserver> observers) {
+	public void notifyObservers(List<GameObserver> observers) {
 		for (GameObserver o : observers) {
 			notifyObserver(o);
 		}

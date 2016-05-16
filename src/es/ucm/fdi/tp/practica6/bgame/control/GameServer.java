@@ -8,10 +8,7 @@ import es.ucm.fdi.tp.basecode.bgame.model.Game;
 import es.ucm.fdi.tp.basecode.bgame.model.GameObserver;
 import es.ucm.fdi.tp.basecode.bgame.model.Piece;
 import es.ucm.fdi.tp.practica5.bgame.control.VisualController;
-import es.ucm.fdi.tp.practica6.net.AbstractServer;
-import es.ucm.fdi.tp.practica6.net.ConnectionEstablishedMessage;
-import es.ucm.fdi.tp.practica6.net.NotificationMessage;
-import es.ucm.fdi.tp.practica6.net.SocketEndpoint;
+import es.ucm.fdi.tp.practica6.net.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +31,7 @@ public class GameServer extends AbstractServer implements GameObserver {
 		super(port, timeout);
 
 		this.controller = controller;
-		this.maxConnections = pieces.size();
+		this.maxConnections = pieces.size() - 1;	// The first piece is the server one
 		this.endpoints = new ArrayList<>();
 		this.pieces = pieces;
 		this.factory = factory;
@@ -43,22 +40,27 @@ public class GameServer extends AbstractServer implements GameObserver {
 	// ABSTRACT SERVER METHODS
 	@Override
 	protected SocketEndpoint createEndpoint(String name) {
-		return new GameClient(name) {
+		return new ObjectEndpoint(name) {
 			@Override
 			public void connectionEstablished() {
-				endpoints.add(this);
-				sendStartupInfoToEndpoint(this);
+				connectionEstablishedToEndpoint(this);
 			}
 
 			@Override
 			public void dataReceived(Object data) {
 				try {
 					Command command = (Command) data;
+					command.execute(controller);
 				} catch (ClassCastException e) {
 					log.warning("The server received an object which is not a command: " + e);
 				}
 			}
 		};
+	}
+
+	// GAME RELATED METHODS
+	private void startGame() {
+		controller.start();
 	}
 
 	// GAME OBSERVER METHODS
@@ -92,14 +94,30 @@ public class GameServer extends AbstractServer implements GameObserver {
 		notifyEndpoints(new NotificationMessage.Error(msg));
 	}
 
+	// CONNECTION HELPING METHODS
 	private void notifyEndpoints(NotificationMessage message) {
 		for (SocketEndpoint endpoint : endpoints) {
 			endpoint.sendData(message);
 		}
 	}
 
+	private void connectionEstablishedToEndpoint(SocketEndpoint endpoint) {
+		if (endpoints.size() < pieces.size() - 1) {
+			endpoints.add(endpoint);
+			sendStartupInfoToEndpoint(endpoint);
+		}
+
+		// Size has changed
+		if (endpoints.size() >= pieces.size() - 1) {
+			// Don't accept more connections and start the game
+			log.info("Stop accepting connections. Starting the game");
+			stop();
+			startGame();
+		}
+	}
+
 	private void sendStartupInfoToEndpoint(SocketEndpoint endpoint) {
-		ConnectionEstablishedMessage message = new ConnectionEstablishedMessage(pieces.get(endpoints.size()), factory);
+		ConnectionEstablishedMessage message = new ConnectionEstablishedMessage(pieces.get(endpoints.size()), pieces, factory);
 		endpoint.sendData(message);
 	}
 }

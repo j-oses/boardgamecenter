@@ -1,34 +1,19 @@
 package es.ucm.fdi.tp.practica5.bgame.views;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.util.ArrayList;
+import es.ucm.fdi.tp.practica5.bgame.control.VisualController;
+import es.ucm.fdi.tp.practica5.bgame.control.VisualController.PlayerMode;
 
-import javax.swing.BoxLayout;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.GroupLayout;
+import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.ScrollPaneLayout;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.DefaultCaret;
-
-import es.ucm.fdi.tp.practica5.bgame.control.VisualController;
-import es.ucm.fdi.tp.practica5.bgame.control.VisualController.PlayerMode;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 /**
  * The settingsPanel contains all the settings for a game.
@@ -232,7 +217,7 @@ public class SettingsPanel extends JPanel {
 				new String[] { "Player", "Mode", "# Pieces" }));
 		setPlayerInfoRenderer();
 
-		playerInfoTable.setAutoCreateRowSorter(true);
+		playerInfoTable.setAutoCreateRowSorter(false);
 	}
 
 	/**

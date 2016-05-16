@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class VisualController extends Controller implements MoveListener,
 		GameObserver, GameChangesListener {
-	private GameWindow window;
+	protected GameWindow window;
 	private Piece owner;
 	private HashMap<Piece, PlayerMode> players;
 	private HashMap<PlayerMode, Player> playerForMode;
@@ -128,7 +128,6 @@ public class VisualController extends Controller implements MoveListener,
 			throw new GameError("There is no window to start");
 		}
 
-		window.setPieces(pieces);
 		super.start();
 	}
 

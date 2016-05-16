@@ -164,8 +164,10 @@ abstract public class BoardJPanel extends JPanel implements
 	 *            wether the piece is selected.
 	 */
 	public void selectPiece(int row, int col, boolean selected) {
-		if (isEnabled() && board.getPosition(row, col) != null) {
-			pieceViews[row][col].setSelected(selected);
+		if (board != null) {
+			if (isEnabled() && board.getPosition(row, col) != null) {
+				pieceViews[row][col].setSelected(selected);
+			}
 		}
 	}
 
@@ -185,9 +187,11 @@ abstract public class BoardJPanel extends JPanel implements
 	 * Deselects all pieces on the board and resets the move generator.
 	 */
 	public void deselectAll() {
-		for (int i = 0; i < board.getRows(); i++) {
-			for (int j = 0; j < board.getCols(); j++) {
-				selectPiece(i, j, false);
+		if (board != null) {
+			for (int i = 0; i < board.getRows(); i++) {
+				for (int j = 0; j < board.getCols(); j++) {
+					selectPiece(i, j, false);
+				}
 			}
 		}
 	}

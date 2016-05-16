@@ -1,15 +1,13 @@
 package es.ucm.fdi.tp.practica5.bgame.views;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-
 import es.ucm.fdi.tp.basecode.bgame.model.Board;
 import es.ucm.fdi.tp.basecode.bgame.model.Piece;
 
+import java.awt.*;
+
 /**
  * Manages and displays a finite rectangular board in the screen.
- * @author ¡lvaro
+ * @author √Ålvaro
  *
  */
 public class FiniteRectBoardJPanel extends BoardJPanel {

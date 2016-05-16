@@ -2,10 +2,12 @@ package es.ucm.fdi.tp.practica6.bgame.control;
 
 import es.ucm.fdi.tp.basecode.bgame.model.Game;
 import es.ucm.fdi.tp.basecode.bgame.model.GameMove;
+import es.ucm.fdi.tp.basecode.bgame.model.GameObserver;
 import es.ucm.fdi.tp.basecode.bgame.model.Piece;
 import es.ucm.fdi.tp.practica5.bgame.control.VisualController;
 import es.ucm.fdi.tp.practica5.bgame.model.MoveGenerator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,12 +18,9 @@ import java.util.List;
 public class ClientController extends VisualController {
 	private MoveGenerator.MoveListener moveListener;
 
-	public void setMoveListener(MoveGenerator.MoveListener moveListener) {
-		this.moveListener = moveListener;
-	}
-
-	public ClientController(Game game, List<Piece> pieces, Piece owner) {
+	public ClientController(Game game, List<Piece> pieces, Piece owner, MoveGenerator.MoveListener moveListener) {
 		super(game, pieces, owner);
+		this.moveListener = moveListener;
 	}
 
 	@Override
@@ -31,5 +30,18 @@ public class ClientController extends VisualController {
 		if (isTurn && currentPlayer == null) {
 			moveListener.didGenerateMove(move);
 		}
+	}
+
+	/**
+	 * We need to get every internal component which is a game observer (including the controller itself).
+	 * @return
+	 */
+	public List<GameObserver> getInternalObservers() {
+		List<GameObserver> observers = new ArrayList<>();
+		observers.add(this);
+		if (window != null) {
+			observers.add(window);
+		}
+		return observers;
 	}
 }
