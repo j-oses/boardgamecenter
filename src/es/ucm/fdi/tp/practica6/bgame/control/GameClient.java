@@ -21,103 +21,105 @@ import java.util.logging.Logger;
 /**
  * Created by Jorge on 10-May-16.
  */
-public class GameClient implements SocketEndpoint{
+public class GameClient implements SocketEndpoint {
 
-    private static final Logger log = Logger.getLogger(GameClient.class.getSimpleName());
+	private static final Logger log = Logger.getLogger(GameClient.class.getSimpleName());
 
-    private ClientController clientController;
-    private ArrayList<GameObserver> observers;
-    private AIAlgorithm localAlgorithm;
+	private ClientController clientController;
+	private ArrayList<GameObserver> observers;
+	private AIAlgorithm localAlgorithm;
 
 
-    protected ObjectOutputStream oos;
-    protected ObjectInputStream ois;
-    protected volatile boolean stopped;
-    protected String name;
-    public GameClient (String name){
-        this.name = name;
-    }
-    public GameClient(AIAlgorithm localAlgorithm) {
-        this.name = "Client";
-        this.localAlgorithm = localAlgorithm;
-        this.clientController = clientController;
-        this.observers = new ArrayList<>();
-    }
+	protected ObjectOutputStream oos;
+	protected ObjectInputStream ois;
+	protected volatile boolean stopped;
+	protected String name;
 
-    public void moveGenerated(GameMove move){
-        sendData(move);
-    }
+	public GameClient(String name) {
+		this.name = name;
+	}
 
-    //TODO SocketEndpoint Methods
-    @Override
-    public void start(final Socket socket, final int timeout) {
-        try {//test branch comment
-            socket.setSoTimeout(timeout);
-            oos = new ObjectOutputStream(socket.getOutputStream());
+	public GameClient(AIAlgorithm localAlgorithm) {
+		this.name = "Client";
+		this.localAlgorithm = localAlgorithm;
+		this.clientController = clientController;
+		this.observers = new ArrayList<>();
+	}
 
-            new Thread(new Runnable() {
-                public void run() {
-                    try {
-                        ois = new ObjectInputStream(socket.getInputStream());
+	public void moveGenerated(GameMove move) {
+		sendData(move);
+	}
 
-                    } catch (IOException e) {
-                        log.log(Level.WARNING, "Failed to read: could not create object input stream");
-                    }
-                    while (!stopped) {
-                        try {
-                            dataReceived(ois.readObject());
-                        } catch (SocketTimeoutException ste) {
-                            log.log(Level.FINE, "Failed to read; will retry");
-                        } catch (IOException | ClassNotFoundException se) {
-                            log.log(Level.WARNING, "Failed to read: bad serialization");
-                            stop();
-                        }
-                    }
-                    log.log(Level.INFO, "Client exiting gracefully");
-                }
-            }, name + "Listener").start();
+	//TODO SocketEndpoint Methods
+	@Override
+	public void start(final Socket socket, final int timeout) {
+		try {
+			socket.setSoTimeout(timeout);
+			oos = new ObjectOutputStream(socket.getOutputStream());
 
-            connectionEstablished();
-        } catch (IOException e) {
-            log.log(Level.WARNING, "Error while handling client connection", e);
-        }
-    }
+			new Thread(new Runnable() {
+				public void run() {
+					try {
+						ois = new ObjectInputStream(socket.getInputStream());
 
-    @Override
-    public void connectionEstablished() {
-    }
+					} catch (IOException e) {
+						log.log(Level.WARNING, "Failed to read: could not create object input stream");
+					}
+					while (!stopped) {
+						try {
+							dataReceived(ois.readObject());
+						} catch (SocketTimeoutException ste) {
+							log.log(Level.FINE, "Failed to read; will retry");
+						} catch (IOException | ClassNotFoundException se) {
+							log.log(Level.WARNING, "Failed to read: bad serialization");
+							stop();
+						}
+					}
+					log.log(Level.INFO, "Client exiting gracefully");
+				}
+			}, name + "Listener").start();
 
-    @Override
-    public void dataReceived(Object data) {
+			connectionEstablished();
+		} catch (IOException e) {
+			log.log(Level.WARNING, "Error while handling client connection", e);
+		}
+	}
 
-        if(data instanceof ConnectionEstablishedMessage){
+	@Override
+	public void connectionEstablished() {
+	}
 
-            Game g = new Game(((ConnectionEstablishedMessage)data).getGameFactory().gameRules());
-            clientController = new ClientController(g,g.getPlayersPieces(),((ConnectionEstablishedMessage)data).getPiece());
-            g.addObserver(clientController);
-            observers.add(clientController);
-            ((ConnectionEstablishedMessage)data).createSwingView(g,clientController,localAlgorithm);
+	@Override
+	public void dataReceived(Object data) {
 
-        }else if (data instanceof NotificationMessage){
-            ((NotificationMessage)data).notifyObservers(observers);
-        }
-    }
+		if (data instanceof ConnectionEstablishedMessage) {
 
-    @Override
-    public void sendData(Object data){
-        try {
-            oos.writeObject(data);
-            oos.flush();
-            oos.reset();
-        } catch (SocketTimeoutException ste) {
-            log.log(Level.INFO, "Failed to write; target must be full!");
-        } catch (IOException ioe) {
-            log.log(Level.WARNING, "Failed to write: bad serialization");
-        }
-    }
+			Game g = new Game(((ConnectionEstablishedMessage) data).getGameFactory().gameRules());
+			clientController = new ClientController(g, g.getPlayersPieces(), ((ConnectionEstablishedMessage) data).getPiece());
+			g.addObserver(clientController);
+			observers.add(clientController);
+			((ConnectionEstablishedMessage) data).createSwingView(g, clientController, localAlgorithm);
 
-    @Override
-    public void stop() {
-        stopped = true;
-    }
+		} else if (data instanceof NotificationMessage) {
+			((NotificationMessage) data).notifyObservers(observers);
+		}
+	}
+
+	@Override
+	public void sendData(Object data) {
+		try {
+			oos.writeObject(data);
+			oos.flush();
+			oos.reset();
+		} catch (SocketTimeoutException ste) {
+			log.log(Level.INFO, "Failed to write; target must be full!");
+		} catch (IOException ioe) {
+			log.log(Level.WARNING, "Failed to write: bad serialization");
+		}
+	}
+
+	@Override
+	public void stop() {
+		stopped = true;
+	}
 }
