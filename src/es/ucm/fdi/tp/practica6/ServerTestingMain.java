@@ -1,11 +1,11 @@
 package es.ucm.fdi.tp.practica6;
 
+import es.ucm.fdi.tp.basecode.bgame.control.Controller;
 import es.ucm.fdi.tp.basecode.bgame.control.GameFactory;
 import es.ucm.fdi.tp.basecode.bgame.model.AIAlgorithm;
 import es.ucm.fdi.tp.basecode.bgame.model.Game;
 import es.ucm.fdi.tp.basecode.bgame.model.Piece;
 import es.ucm.fdi.tp.basecode.minmax.MinMax;
-import es.ucm.fdi.tp.practica5.bgame.control.VisualController;
 import es.ucm.fdi.tp.practica6.ataxx.AtaxxFactoryExtExt;
 import es.ucm.fdi.tp.practica6.bgame.control.GameServer;
 
@@ -26,12 +26,9 @@ public class ServerTestingMain {
 		pieces.add(new Piece("O"));
 		pieces.add(new Piece("A"));
 
-		VisualController v = new VisualController(g, pieces, null);
-		// here we set appropriate game-based board and option-based
-		// settings
-		factory.createSwingView(g, v, null,
-				factory.createRandomPlayer(),
-				factory.createAIPlayer(algorithm));
+		Controller v = new Controller(g, pieces);
+
+		// here we set appropriate game-based board and option-based settings
 		GameServer server = new GameServer(v, pieces, factory, 2020, 2000);
 		g.addObserver(server);
 		server.start();

@@ -1,13 +1,13 @@
 
 package es.ucm.fdi.tp.practica6.bgame.control;
 
+import es.ucm.fdi.tp.basecode.bgame.control.Controller;
 import es.ucm.fdi.tp.basecode.bgame.control.GameFactory;
 import es.ucm.fdi.tp.basecode.bgame.control.commands.Command;
 import es.ucm.fdi.tp.basecode.bgame.model.Board;
 import es.ucm.fdi.tp.basecode.bgame.model.Game;
 import es.ucm.fdi.tp.basecode.bgame.model.GameObserver;
 import es.ucm.fdi.tp.basecode.bgame.model.Piece;
-import es.ucm.fdi.tp.practica5.bgame.control.VisualController;
 import es.ucm.fdi.tp.practica6.net.*;
 import es.ucm.fdi.tp.practica6.ui.ServerWindow;
 
@@ -22,18 +22,23 @@ public class GameServer extends AbstractServer implements GameObserver,ServerWin
 
 	private static final Logger log = Logger.getLogger(GameServer.class.getSimpleName());
 
+<<<<<<< HEAD
 	private VisualController controller;
 	private ServerWindow serverWindow;
+=======
+	private Controller controller;
+
+>>>>>>> origin/master
 	private List<SocketEndpoint> endpoints;
 	private int maxConnections;
 	private List<Piece> pieces;
 	private GameFactory factory;
 
-	public GameServer(VisualController controller, List<Piece> pieces, GameFactory factory, int port, int timeout) {
+	public GameServer(Controller controller, List<Piece> pieces, GameFactory factory, int port, int timeout) {
 		super(port, timeout);
 
 		this.controller = controller;
-		this.maxConnections = pieces.size() - 1;	// The first piece is the server one
+		this.maxConnections = pieces.size();
 		this.endpoints = new ArrayList<>();
 		this.pieces = pieces;
 		this.factory = factory;
@@ -105,13 +110,13 @@ public class GameServer extends AbstractServer implements GameObserver,ServerWin
 	}
 
 	private void connectionEstablishedToEndpoint(SocketEndpoint endpoint) {
-		if (endpoints.size() < pieces.size() - 1) {
+		if (endpoints.size() < pieces.size()) {
 			endpoints.add(endpoint);
 			sendStartupInfoToEndpoint(endpoint);
 		}
 
 		// Size has changed
-		if (endpoints.size() >= pieces.size() - 1) {
+		if (endpoints.size() >= pieces.size()) {
 			// Don't accept more connections and start the game
 			log.info("Stop accepting connections. Starting the game");
 			stop();
@@ -120,7 +125,7 @@ public class GameServer extends AbstractServer implements GameObserver,ServerWin
 	}
 
 	private void sendStartupInfoToEndpoint(SocketEndpoint endpoint) {
-		ConnectionEstablishedMessage message = new ConnectionEstablishedMessage(pieces.get(endpoints.size()), pieces, factory);
+		ConnectionEstablishedMessage message = new ConnectionEstablishedMessage(pieces.get(endpoints.size() - 1), pieces, factory);
 		endpoint.sendData(message);
 	}
 

@@ -335,7 +335,7 @@ public class GameWindow extends JFrame implements GameObserver,
 			changesListener.selectedNewGameMode(pieceId, mode);
 		}
 
-		currentlyManual = (mode == PlayerMode.MANUAL.toString());
+		currentlyManual = (mode.equals(PlayerMode.MANUAL.toString()));
 	}
 
 	/**
@@ -351,7 +351,7 @@ public class GameWindow extends JFrame implements GameObserver,
 	private PieceAppearanceMap pieceAppearanceMap(String pieceId, Color newColor) {
 		final HashMap<Piece, Color> colorHash = new HashMap<>();
 		for (Piece p : pieces) {
-			if (p.getId() == pieceId) {
+			if (p.getId().equals(pieceId)) {
 				colorHash.put(p, newColor);
 			} else {
 				colorHash.put(p, boardPanel.getColorForPiece(p));
