@@ -1,9 +1,6 @@
 package es.ucm.fdi.tp.practica6.bgame.control;
 
-import es.ucm.fdi.tp.basecode.bgame.model.Game;
-import es.ucm.fdi.tp.basecode.bgame.model.GameMove;
-import es.ucm.fdi.tp.basecode.bgame.model.GameObserver;
-import es.ucm.fdi.tp.basecode.bgame.model.Piece;
+import es.ucm.fdi.tp.basecode.bgame.model.*;
 import es.ucm.fdi.tp.practica5.bgame.control.VisualController;
 import es.ucm.fdi.tp.practica5.bgame.model.MoveGenerator;
 
@@ -43,5 +40,11 @@ public class ClientController extends VisualController {
 			observers.add(window);
 		}
 		return observers;
+	}
+
+	@Override
+	public void onChangeTurn(Board board, Piece turn) {
+		
+		super.onChangeTurn(board, turn);
 	}
 }

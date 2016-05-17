@@ -522,7 +522,7 @@ public class SettingsPanel extends JPanel {
 	public int getPlayerRow(String playerId) {
 		int playerRow = 0;
 		for (playerRow = 0; playerRow < playerInfoTable.getRowCount(); playerRow++) {
-			if (playerId == playerInfoTable.getValueAt(playerRow, 0).toString()) {
+			if (playerId.equals(playerInfoTable.getValueAt(playerRow, 0).toString())) {
 				return playerRow;
 			}
 		}

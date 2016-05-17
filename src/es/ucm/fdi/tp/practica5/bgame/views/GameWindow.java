@@ -228,6 +228,10 @@ public class GameWindow extends JFrame implements GameObserver,
 
 	@Override
 	public void onMoveEnd(Board board, Piece turn, boolean success) {
+		boardPanel.setBoard(board);
+		boardPanel.update();
+		revalidate();
+
 		enableUserInput(turn);
 
 		for (Piece p : pieces) {
@@ -237,18 +241,20 @@ public class GameWindow extends JFrame implements GameObserver,
 						settingsPanel.getPlayerRow(p.toString()), count);
 			}
 		}
-
-		boardPanel.update();
 	}
 
 	@Override
 	public void onChangeTurn(Board board, Piece turn) {
+		boardPanel.setBoard(board);
+		boardPanel.update();
+		revalidate();
+
 		currentlyPlaying = turn;
 		
 		String you = (turn.equals(owner) ? " (you) " : " ");
 		boardPanel.setMoveGeneratorPiece(turn);
 		boardPanel.deselectAll();
-		
+
 		if (owner != null) {
 			settingsPanel.setAutoMovesEnabled(false);
 		}

@@ -10,6 +10,11 @@ import java.net.Socket;
  */
 public class ClientTestingMain {
     public static void main(String args[]) {
+        try {
+            Thread.sleep(2500);
+        } catch (InterruptedException e) {
+            System.err.println("Let me fucking sleep man. Not funny.");
+        }
 
         GameClient client = new GameClient(new MinMax());
 
