@@ -18,122 +18,120 @@ import java.util.logging.Logger;
 /**
  * Created by Álvaro on 06/05/2016.
  */
-public class GameServer extends AbstractServer implements GameObserver,ServerWindow.ServerChangesListener {
+public class GameServer extends AbstractServer implements GameObserver, ServerWindow.ServerChangesListener {
 
-	private static final Logger log = Logger.getLogger(GameServer.class.getSimpleName());
+    private static final Logger log = Logger.getLogger(GameServer.class.getSimpleName());
 
-<<<<<<< HEAD
-	private VisualController controller;
-	private ServerWindow serverWindow;
-=======
-	private Controller controller;
 
->>>>>>> origin/master
-	private List<SocketEndpoint> endpoints;
-	private int maxConnections;
-	private List<Piece> pieces;
-	private GameFactory factory;
+    private ServerWindow serverWindow;
 
-	public GameServer(Controller controller, List<Piece> pieces, GameFactory factory, int port, int timeout) {
-		super(port, timeout);
+    private Controller controller;
 
-		this.controller = controller;
-		this.maxConnections = pieces.size();
-		this.endpoints = new ArrayList<>();
-		this.pieces = pieces;
-		this.factory = factory;
-		this.serverWindow = new ServerWindow("Server Window", this);
-	}
+    private List<SocketEndpoint> endpoints;
+    private int maxConnections;
+    private List<Piece> pieces;
+    private GameFactory factory;
 
-	// ABSTRACT SERVER METHODS
-	@Override
-	protected SocketEndpoint createEndpoint(String name) {
-		return new ObjectEndpoint(name) {
-			@Override
-			public void connectionEstablished() {
-				connectionEstablishedToEndpoint(this);
-			}
+    public GameServer(Controller controller, List<Piece> pieces, GameFactory factory, int port, int timeout) {
+        super(port, timeout);
 
-			@Override
-			public void dataReceived(Object data) {
-				try {
-					Command command = (Command) data;
-					command.execute(controller);
-				} catch (ClassCastException e) {
-					log.warning("The server received an object which is not a command: " + e);
-				}
-			}
-		};
-	}
+        this.controller = controller;
+        this.maxConnections = pieces.size();
+        this.endpoints = new ArrayList<>();
+        this.pieces = pieces;
+        this.factory = factory;
+        this.serverWindow = new ServerWindow("Server Window", this);
+    }
 
-	// GAME RELATED METHODS
-	private void startGame() {
-		controller.start();
-	}
+    // ABSTRACT SERVER METHODS
+    @Override
+    protected SocketEndpoint createEndpoint(String name) {
+        return new ObjectEndpoint(name) {
+            @Override
+            public void connectionEstablished() {
+                connectionEstablishedToEndpoint(this);
+            }
 
-	// GAME OBSERVER METHODS
-	@Override
-	public void onGameStart(Board board, String gameDesc, List<Piece> pieces, Piece turn) {
-		notifyEndpoints(new NotificationMessage.GameStart(board, gameDesc, pieces, turn));
-	}
+            @Override
+            public void dataReceived(Object data) {
+                try {
+                    Command command = (Command) data;
+                    command.execute(controller);
+                } catch (ClassCastException e) {
+                    log.warning("The server received an object which is not a command: " + e);
+                }
+            }
+        };
+    }
 
-	@Override
-	public void onGameOver(Board board, Game.State state, Piece winner) {
-		notifyEndpoints(new NotificationMessage.GameOver(board, state, winner));
-	}
+    // GAME RELATED METHODS
+    private void startGame() {
+        controller.start();
+    }
 
-	@Override
-	public void onMoveStart(Board board, Piece turn) {
-		notifyEndpoints(new NotificationMessage.MoveStart(board, turn));
-	}
+    // GAME OBSERVER METHODS
+    @Override
+    public void onGameStart(Board board, String gameDesc, List<Piece> pieces, Piece turn) {
+        notifyEndpoints(new NotificationMessage.GameStart(board, gameDesc, pieces, turn));
+    }
 
-	@Override
-	public void onMoveEnd(Board board, Piece turn, boolean success) {
-		notifyEndpoints(new NotificationMessage.MoveEnd(board, turn, success));
-	}
+    @Override
+    public void onGameOver(Board board, Game.State state, Piece winner) {
+        notifyEndpoints(new NotificationMessage.GameOver(board, state, winner));
+    }
 
-	@Override
-	public void onChangeTurn(Board board, Piece turn) {
-		notifyEndpoints(new NotificationMessage.ChangeTurn(board, turn));
-	}
+    @Override
+    public void onMoveStart(Board board, Piece turn) {
+        notifyEndpoints(new NotificationMessage.MoveStart(board, turn));
+    }
 
-	@Override
-	public void onError(String msg) {
-		notifyEndpoints(new NotificationMessage.Error(msg));
-	}
+    @Override
+    public void onMoveEnd(Board board, Piece turn, boolean success) {
+        notifyEndpoints(new NotificationMessage.MoveEnd(board, turn, success));
+    }
 
-	// CONNECTION HELPING METHODS
-	private void notifyEndpoints(NotificationMessage message) {
-		for (SocketEndpoint endpoint : endpoints) {
-			endpoint.sendData(message);
-		}
-	}
+    @Override
+    public void onChangeTurn(Board board, Piece turn) {
+        notifyEndpoints(new NotificationMessage.ChangeTurn(board, turn));
+    }
 
-	private void connectionEstablishedToEndpoint(SocketEndpoint endpoint) {
-		if (endpoints.size() < pieces.size()) {
-			endpoints.add(endpoint);
-			sendStartupInfoToEndpoint(endpoint);
-		}
+    @Override
+    public void onError(String msg) {
+        notifyEndpoints(new NotificationMessage.Error(msg));
+    }
 
-		// Size has changed
-		if (endpoints.size() >= pieces.size()) {
-			// Don't accept more connections and start the game
-			log.info("Stop accepting connections. Starting the game");
-			stop();
-			startGame();
-		}
-	}
+    // CONNECTION HELPING METHODS
+    private void notifyEndpoints(NotificationMessage message) {
+        for (SocketEndpoint endpoint : endpoints) {
+            endpoint.sendData(message);
+        }
+    }
 
-	private void sendStartupInfoToEndpoint(SocketEndpoint endpoint) {
-		ConnectionEstablishedMessage message = new ConnectionEstablishedMessage(pieces.get(endpoints.size() - 1), pieces, factory);
-		endpoint.sendData(message);
-	}
+    private void connectionEstablishedToEndpoint(SocketEndpoint endpoint) {
+        if (endpoints.size() < pieces.size()) {
+            endpoints.add(endpoint);
+            sendStartupInfoToEndpoint(endpoint);
+        }
 
-	@Override
-	public void onQuitButtonPressed() {
-		//TODO here notify endpoints or some fancy shiet, up 2 u
-		serverWindow.closeWindow();
-	}
+        // Size has changed
+        if (endpoints.size() >= pieces.size()) {
+            // Don't accept more connections and start the game
+            log.info("Stop accepting connections. Starting the game");
+            stop();
+            startGame();
+        }
+    }
+
+    private void sendStartupInfoToEndpoint(SocketEndpoint endpoint) {
+        ConnectionEstablishedMessage message = new ConnectionEstablishedMessage(pieces.get(endpoints.size() - 1), pieces, factory);
+        endpoint.sendData(message);
+    }
+
+    @Override
+    public void onQuitButtonPressed() {
+        //TODO here notify endpoints or some fancy shiet, up 2 u
+        serverWindow.closeWindow();
+    }
 }
 
 
