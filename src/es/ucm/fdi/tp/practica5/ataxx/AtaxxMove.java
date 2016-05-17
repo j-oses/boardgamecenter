@@ -1,12 +1,12 @@
 package es.ucm.fdi.tp.practica5.ataxx;
 
-import java.util.List;
-
 import es.ucm.fdi.tp.basecode.bgame.control.ConsolePlayer;
 import es.ucm.fdi.tp.basecode.bgame.model.Board;
 import es.ucm.fdi.tp.basecode.bgame.model.GameError;
 import es.ucm.fdi.tp.basecode.bgame.model.GameMove;
 import es.ucm.fdi.tp.basecode.bgame.model.Piece;
+
+import java.util.List;
 
 public class AtaxxMove extends GameMove {
 	private static final long serialVersionUID = 1L;
@@ -67,7 +67,7 @@ public class AtaxxMove extends GameMove {
 					+ oriCol + ")!");
 		}
 
-		if (board.getPosition(oriRow, oriCol) != getPiece()) {
+		if (!board.getPosition(oriRow, oriCol).equals(getPiece())) {
 			throw new GameError("the piece in (" + oriRow + "," + oriCol
 					+ ") is not yours!");
 		}
