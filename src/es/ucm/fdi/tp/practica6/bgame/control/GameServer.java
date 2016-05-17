@@ -9,6 +9,7 @@ import es.ucm.fdi.tp.basecode.bgame.model.GameObserver;
 import es.ucm.fdi.tp.basecode.bgame.model.Piece;
 import es.ucm.fdi.tp.practica5.bgame.control.VisualController;
 import es.ucm.fdi.tp.practica6.net.*;
+import es.ucm.fdi.tp.practica6.ui.ServerWindow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,11 +18,12 @@ import java.util.logging.Logger;
 /**
  * Created by Álvaro on 06/05/2016.
  */
-public class GameServer extends AbstractServer implements GameObserver {
+public class GameServer extends AbstractServer implements GameObserver,ServerWindow.ServerChangesListener {
+
 	private static final Logger log = Logger.getLogger(GameServer.class.getSimpleName());
 
 	private VisualController controller;
-
+	private ServerWindow serverWindow;
 	private List<SocketEndpoint> endpoints;
 	private int maxConnections;
 	private List<Piece> pieces;
@@ -35,6 +37,7 @@ public class GameServer extends AbstractServer implements GameObserver {
 		this.endpoints = new ArrayList<>();
 		this.pieces = pieces;
 		this.factory = factory;
+		this.serverWindow = new ServerWindow("Server Window", this);
 	}
 
 	// ABSTRACT SERVER METHODS
@@ -119,6 +122,12 @@ public class GameServer extends AbstractServer implements GameObserver {
 	private void sendStartupInfoToEndpoint(SocketEndpoint endpoint) {
 		ConnectionEstablishedMessage message = new ConnectionEstablishedMessage(pieces.get(endpoints.size()), pieces, factory);
 		endpoint.sendData(message);
+	}
+
+	@Override
+	public void onQuitButtonPressed() {
+		//TODO here notify endpoints or some fancy shiet, up 2 u
+		serverWindow.closeWindow();
 	}
 }
 

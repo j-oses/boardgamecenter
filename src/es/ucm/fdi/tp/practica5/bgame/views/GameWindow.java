@@ -37,6 +37,7 @@ public class GameWindow extends JFrame implements GameObserver,
 	private Piece currentlyPlaying;
 	private GameChangesListener changesListener;
 	private boolean currentlyManual;
+	private JPanel panel1;
 
 	public interface GameChangesListener {
 		/**
