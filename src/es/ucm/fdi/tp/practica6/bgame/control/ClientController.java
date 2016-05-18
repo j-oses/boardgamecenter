@@ -22,9 +22,7 @@ public class ClientController extends VisualController {
 
 	@Override
 	public void didGenerateMove(GameMove move) {
-		// It's not strictly necessary to check for current player, but it's
-		// checked just in case
-		if (isTurn && currentPlayer == null) {
+		if (isTurn) {
 			moveListener.didGenerateMove(move);
 		}
 	}
@@ -40,11 +38,5 @@ public class ClientController extends VisualController {
 			observers.add(window);
 		}
 		return observers;
-	}
-
-	@Override
-	public void onChangeTurn(Board board, Piece turn) {
-		
-		super.onChangeTurn(board, turn);
 	}
 }
