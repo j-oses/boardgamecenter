@@ -41,7 +41,7 @@ public class VisualController extends Controller implements MoveListener,
 	 * @author Álvaro
 	 */
 	public enum PlayerMode {
-		MANUAL("Manual"), RANDOM("Random"), AI("Intelligent"), REMOTE("Remote");
+		MANUAL("Manual"), RANDOM("Random"), AI("Intelligent");
 
 		private String mode;
 

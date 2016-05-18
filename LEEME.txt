@@ -8,8 +8,11 @@ Changes in the practica4 package:
 - Fixed a bug where nextPlayer entered on an infinite loop with a full board.
     - This was done originally because the normal program flow stops before calling nextPlayer if the board is full.
       However, the minMax algorithm may call nextPlayer even with a full board.
+- Fixed several cases of '==' instead '.equals'
 
 Changes in the practica5 package:
 - We added a couple of safety checks in BoardJPanel to prevent a crash when deselecting cells that doesn't exist yet.
+- Fixed several cases of '==' instead '.equals'
+- Made the controller quite cleaner.
 
 Comments about the practica6 code:

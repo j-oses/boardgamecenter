@@ -733,12 +733,12 @@ public class Main {
                 gameFactory = new TicTacToeFactoryExt();
                 break;
             case ATAXX:
-                if (dimRows != null && dimCols != null && dimRows == dimCols
+                if (dimRows != null && dimCols != null && dimRows.equals(dimCols)
                         && obstacles != null) {
                     gameFactory = new AtaxxFactoryExtExt(dimRows, obstacles);
                 } else if (obstacles != null) {
                     gameFactory = new AtaxxFactoryExtExt(obstacles);
-                } else if (dimRows != null && dimCols != null && dimRows == dimCols) {
+                } else if (dimRows != null && dimCols != null && dimRows.equals(dimCols)) {
                     gameFactory = new AtaxxFactoryExtExt(dimRows, 0);
                 } else {
                     gameFactory = new AtaxxFactoryExtExt();

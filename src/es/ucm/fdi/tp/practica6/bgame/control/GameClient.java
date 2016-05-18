@@ -1,15 +1,15 @@
 package es.ucm.fdi.tp.practica6.bgame.control;
 
+import es.ucm.fdi.tp.basecode.bgame.control.Player;
 import es.ucm.fdi.tp.basecode.bgame.control.commands.PlayCommand;
-import es.ucm.fdi.tp.basecode.bgame.model.*;
-import es.ucm.fdi.tp.practica5.bgame.control.VisualPlayer;
-import es.ucm.fdi.tp.practica5.bgame.model.MoveGenerator;
+import es.ucm.fdi.tp.basecode.bgame.model.AIAlgorithm;
+import es.ucm.fdi.tp.basecode.bgame.model.Game;
+import es.ucm.fdi.tp.basecode.bgame.model.GameObserver;
+import es.ucm.fdi.tp.basecode.bgame.model.GameRules;
 import es.ucm.fdi.tp.practica6.net.ConnectionEstablishedMessage;
 import es.ucm.fdi.tp.practica6.net.NotificationMessage;
 import es.ucm.fdi.tp.practica6.net.ObjectEndpoint;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -18,16 +18,13 @@ import java.util.logging.Logger;
 /**
  * Created by Jorge on 10-May-16.
  */
-public class GameClient extends ObjectEndpoint implements MoveGenerator.MoveListener {
-
+public class GameClient extends ObjectEndpoint implements ClientController.MoveMaker {
 	private static final Logger log = Logger.getLogger(GameClient.class.getSimpleName());
 
 	private ClientController clientController;
 	private List<GameObserver> observers;
 	private AIAlgorithm localAlgorithm;
 
-	protected ObjectOutputStream oos;
-	protected ObjectInputStream ois;
 	protected volatile boolean stopped;
 	protected String name;
 
@@ -42,15 +39,7 @@ public class GameClient extends ObjectEndpoint implements MoveGenerator.MoveList
 	}
 
 	@Override
-	public void connectionEstablished() {
-
-	}
-
-	@Override
-	public void didGenerateMove(GameMove move) {
-		PlayCommand command = new PlayCommand(new VisualPlayer(move));
-		sendData(command);
-	}
+	public void connectionEstablished() {}
 
 	@Override
 	public void dataReceived(Object data) {
@@ -64,5 +53,11 @@ public class GameClient extends ObjectEndpoint implements MoveGenerator.MoveList
 		} else if (data instanceof NotificationMessage) {
 			((NotificationMessage)data).notifyObservers(observers);
 		}
+	}
+
+	@Override
+	public void makeMove(Player player) {
+		PlayCommand command = new PlayCommand(player);
+		sendData(command);
 	}
 }
