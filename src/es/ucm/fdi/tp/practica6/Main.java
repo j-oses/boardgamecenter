@@ -853,7 +853,7 @@ public class Main {
             appMode = null;
             String modesVal = line.getOptionValue("am");
             for (AppMode mode : AppMode.values()) {
-                if (modesVal == mode.getId()) {
+                if (modesVal.equals(mode.getId())){
                     appMode = mode;
                     break;
                 }
