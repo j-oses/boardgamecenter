@@ -408,7 +408,6 @@ public class Main {
     /**
      * Builds the obstacles (-o or --obstacles) CLI option.
      *
-     *
      * @return CLI {@link {@link Option} for the obstacles option.
      */
     private static Option constructObstaclesOption() {
@@ -853,7 +852,7 @@ public class Main {
             appMode = null;
             String modesVal = line.getOptionValue("am");
             for (AppMode mode : AppMode.values()) {
-                if (modesVal.equals(mode.getId())){
+                if (modesVal.equals(mode.getId())) {
                     appMode = mode;
                     break;
                 }
@@ -976,12 +975,10 @@ public class Main {
      */
     private static void startServer() {
 
-        AIAlgorithm algorithm = new MinMax();
         Game g = new Game(gameFactory.gameRules());
-
         Controller v = new Controller(g, pieces);
 
-        GameServer server = new GameServer(v, pieces, gameFactory,serverPort, DEFAULT_TIMEOUT);
+        GameServer server = new GameServer(v, pieces, gameFactory, serverPort, DEFAULT_TIMEOUT);
         g.addObserver(server);
         server.start();
     }
@@ -992,11 +989,12 @@ public class Main {
 
             GameClient client = new GameClient(new MinMax());
             client.start(sockety, DEFAULT_TIMEOUT);
-        }catch (IOException ioe){
+        } catch (IOException ioe) {
             System.out.println("Sorry");
         }
     }
-    private static void startWindow(){
+
+    private static void startWindow() {
         Game gw = new Game(gameFactory.gameRules());
 
         VisualController v = null;
@@ -1019,7 +1017,8 @@ public class Main {
         }
         v.start();
     }
-    private static void startConsole(){
+
+    private static void startConsole() {
         Game g = new Game(gameFactory.gameRules());
         Controller c = null;
         ArrayList<Player> players = new ArrayList<>();
@@ -1045,6 +1044,7 @@ public class Main {
         gameFactory.createConsoleView(g, c);
         c.start();
     }
+
     /*TODO SAMIR SAYS :
     Modificar la pr5 para que use invokeAndWait en lugar de invokeLater en
     createSwingView.

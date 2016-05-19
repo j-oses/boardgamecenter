@@ -108,6 +108,7 @@ public class ServerWindow extends JFrame{
         gridBagConstraints.insets = new Insets(3, 3, 3, 3);
         add(serverInfoScrollPanel, gridBagConstraints);
     }
+
     private void buildCommandPanel() {
         commandPanel = new JPanel();
         this.add(commandPanel);
