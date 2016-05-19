@@ -905,7 +905,7 @@ public class Main {
      * Objeto {@link Option} de esta opcion.
      */
     private static Option constructServerHostOption() {
-        return new Option("sh", "-server-host", true, "the name for the host of the game in server or client mode");
+        return new Option("sh", "server-host", true, "the name for the host of the game in server or client mode");
 
     }
 
@@ -978,23 +978,20 @@ public class Main {
 
         AIAlgorithm algorithm = new MinMax();
         Game g = new Game(gameFactory.gameRules());
-        List<Piece> pieces = new ArrayList<Piece>();
 
-        VisualController v = new VisualController(g, pieces, null);
+        Controller v = new Controller(g, pieces);
 
-        gameFactory.createSwingView(g, v, null,
-                gameFactory.createRandomPlayer(),
-                gameFactory.createAIPlayer(algorithm));
         GameServer server = new GameServer(v, pieces, gameFactory,serverPort, DEFAULT_TIMEOUT);
+        g.addObserver(server);
         server.start();
     }
 
     private static void startClient() {
         try {
-            Socket sockety = new Socket("localhost", 2020);
+            Socket sockety = new Socket(serverHost, serverPort);
 
             GameClient client = new GameClient(new MinMax());
-            client.start(sockety, 2000);
+            client.start(sockety, DEFAULT_TIMEOUT);
         }catch (IOException ioe){
             System.out.println("Sorry");
         }
