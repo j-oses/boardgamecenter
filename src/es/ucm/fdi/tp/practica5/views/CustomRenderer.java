@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableCellRenderer;
  * @author Jorge
  *
  */
-class CustomRenderer extends DefaultTableCellRenderer {
+public class CustomRenderer extends DefaultTableCellRenderer {
 	private static final long serialVersionUID = 1L;
 
 	@Override
