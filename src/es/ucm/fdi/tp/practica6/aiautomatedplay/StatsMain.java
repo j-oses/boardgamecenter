@@ -10,7 +10,7 @@ public class StatsMain {
 	private static final int dim = 7;
 	private static final int depth = 2;
 	private static final int gamesToPlay = 100;
-	private final int obstacles = 8;
+	private static final int obstacles = 8;
 
 	public static void main(String args[]) {
 		GameGenerator generator = new GameGenerator(dim, depth, gamesToPlay, obstacles,
