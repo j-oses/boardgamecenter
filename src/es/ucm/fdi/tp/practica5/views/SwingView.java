@@ -22,8 +22,8 @@ import java.util.List;
  */
 public class SwingView implements MoveListener,
 		GameObserver, GameWindow.MoveGenerationChangesListener, GameWindow.QuitRestartListener, GameWindow.GameModeListener {
-	protected Controller controller;
-	protected GameWindow window;
+	private Controller controller;
+	private GameWindow window;
 	private Piece owner;
 	private HashMap<Piece, PlayerMode> players;
 	private HashMap<PlayerMode, Player> playerForMode;
@@ -240,7 +240,7 @@ public class SwingView implements MoveListener,
 		window.setGameModeListener(this);
 		window.setQuitRestartListener(this);
 		window.setMoveGenerationChangesListener(this);
-		
+
 		owner = viewPiece;
 		observable.addObserver(this);
 		observable.addObserver(window);

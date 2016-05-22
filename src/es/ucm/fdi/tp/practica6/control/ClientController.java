@@ -17,15 +17,27 @@ public class ClientController extends Controller {
 		void makeMove(Player player);
 	}
 
-	private MoveMaker moveMaker;
+	public interface StoppingListener {
+		void gameStopped();
+	}
 
-	public ClientController(Game game, List<Piece> pieces, MoveMaker moveMaker) {
+	private MoveMaker moveMaker;
+	private StoppingListener stoppingListener;
+
+	public ClientController(Game game, List<Piece> pieces, MoveMaker moveMaker, StoppingListener stoppingListener) {
 		super(game, pieces);
 		this.moveMaker = moveMaker;
+		this.stoppingListener = stoppingListener;
 	}
 
 	@Override
 	public void makeMove(Player p) {
 		moveMaker.makeMove(p);
+	}
+
+	@Override
+	public void stop() {
+		stoppingListener.gameStopped();
+		super.stop();
 	}
 }

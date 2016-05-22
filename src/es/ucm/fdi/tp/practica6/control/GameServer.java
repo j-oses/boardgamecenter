@@ -89,6 +89,8 @@ public class GameServer extends AbstractServer implements GameObserver, ServerWi
 			serverWindow.addLineToStatus("The game finished with winner '" + winner.getId() + "'.");
 		} else if (state.equals(Game.State.Draw)) {
 			serverWindow.addLineToStatus("The game ended in a draw '" + winner.getId() + "'.");
+		} else {
+			serverWindow.addLineToStatus("The game has been stopped by a client.");
 		}
 	}
 

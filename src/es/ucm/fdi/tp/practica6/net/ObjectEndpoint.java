@@ -14,8 +14,8 @@ import java.util.logging.Logger;
 public abstract class ObjectEndpoint implements SocketEndpoint {
 	protected static final Logger log = Logger.getLogger(AbstractServer.class.getSimpleName());
 
-	protected ObjectOutputStream oos;
-	protected ObjectInputStream ois;
+	private ObjectOutputStream oos;
+	private ObjectInputStream ois;
 	protected volatile boolean stopped;
 
 	protected String name;
