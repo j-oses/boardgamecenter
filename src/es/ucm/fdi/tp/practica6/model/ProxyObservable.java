@@ -10,9 +10,19 @@ import java.util.List;
  * Created by Álvaro on 22/05/2016.
  */
 public class ProxyObservable implements Observable<GameObserver>, GameObserver {
+	/**
+	 * The stored GameObservers which will be notified each time this ProxyObservable is notified by the game.
+	 */
 	private ArrayList<GameObserver> observers;
+
+	/**
+	 * We store the game start notification to notify the observers that were added after the game started.
+	 */
 	private NotificationMessage.GameStart gameStartNotification;
 
+	/**
+	 * Creates a new ProxyObservable with no observers.
+	 */
 	public ProxyObservable() {
 		observers = new ArrayList<>();
 	}

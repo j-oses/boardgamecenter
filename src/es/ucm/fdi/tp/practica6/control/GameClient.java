@@ -3,7 +3,6 @@ package es.ucm.fdi.tp.practica6.control;
 import es.ucm.fdi.tp.basecode.bgame.control.Player;
 import es.ucm.fdi.tp.basecode.bgame.control.commands.PlayCommand;
 import es.ucm.fdi.tp.basecode.bgame.control.commands.QuitCommand;
-import es.ucm.fdi.tp.basecode.bgame.model.AIAlgorithm;
 import es.ucm.fdi.tp.basecode.bgame.model.Game;
 import es.ucm.fdi.tp.basecode.bgame.model.GameRules;
 import es.ucm.fdi.tp.practica6.model.ProxyObservable;
@@ -13,22 +12,23 @@ import es.ucm.fdi.tp.practica6.net.ObjectEndpoint;
 
 import java.util.logging.Logger;
 
-
 /**
- * Created by Jorge on 10-May-16.
+ * The endpoint which represents the client of a server. It receives notifications from the server and sends commands
+ * to it. It is also responsible for creating the view when the adequate message comes.
  */
 public class GameClient extends ObjectEndpoint implements ClientController.MoveMaker, ClientController.StoppingListener {
 	private static final Logger log = Logger.getLogger(GameClient.class.getSimpleName());
 
+	/**
+	 * The proxy between the game and the observers.
+	 */
 	private ProxyObservable proxyGame;
-	private AIAlgorithm localAlgorithm;
 
-	protected volatile boolean stopped;
-	protected String name;
-
-	public GameClient(AIAlgorithm localAlgorithm) {
+	/**
+	 * Creates a new game client whose name is "Client".
+	 */
+	public GameClient() {
 		super("Client");
-		this.localAlgorithm = localAlgorithm;
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class GameClient extends ObjectEndpoint implements ClientController.MoveM
 			proxyGame = new ProxyObservable();
 
 			ClientController ctrl = new ClientController(g, message.getPieces(), this, this);
-			message.createSwingView(proxyGame, ctrl, localAlgorithm);
+			message.createSwingView(proxyGame, ctrl);
 		} else if (data instanceof NotificationMessage) {
 			log.fine("Received notification of type: " + data.getClass().toString());
 			((NotificationMessage)data).notifyObserver(proxyGame);

@@ -968,8 +968,8 @@ public class Main {
     private static void startServer() {
         Game g = new Game(gameFactory.gameRules());
         Controller v = new Controller(g, pieces);
+        GameServer server = new GameServer(v, pieces, gameFactory, aiPlayerAlg, serverPort, DEFAULT_TIMEOUT);
 
-        GameServer server = new GameServer(v, pieces, gameFactory, serverPort, DEFAULT_TIMEOUT);
         g.addObserver(server);
         server.start();
     }
@@ -980,8 +980,7 @@ public class Main {
     private static void startClient() {
         try {
             Socket sockety = new Socket(serverHost, serverPort);
-
-            GameClient client = new GameClient(new MinMax());
+            GameClient client = new GameClient();
             client.start(sockety, DEFAULT_TIMEOUT);
         } catch (IOException ioe) {
             System.out.println("Sorry");

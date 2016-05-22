@@ -64,6 +64,11 @@ public abstract class AbstractServer {
 		}, "Server").start();
 	}
 
+	/**
+	 * Creates a new endpoint with the provided name.
+	 * @param name the endpoint's name.
+	 * @return the new endpoint.
+	 */
 	protected abstract SocketEndpoint createEndpoint(String name);
 
 	/**

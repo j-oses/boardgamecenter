@@ -9,8 +9,8 @@ import java.net.Socket;
 public interface SocketEndpoint {
 	/**
 	 * Call this to start listening on the socket. Any incoming data will result in a call to dataReceived.
-	 * @param socket
-	 * @param timeout
+	 * @param socket the socket on which to start listening.
+	 * @param timeout the timeout for the socket.
 	 */
 	void start(Socket socket, int timeout);
 
@@ -26,13 +26,13 @@ public interface SocketEndpoint {
 
 	/**
 	 * Will be called when data is received.
-	 * @param data
+	 * @param data the obeject received.
 	 */
 	void dataReceived(Object data);
 
 	/**
 	 * Call this to send data to the other side.
-	 * @param data
+	 * @param data the object sent.
 	 */
 	void sendData(Object data);
 }

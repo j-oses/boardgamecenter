@@ -50,6 +50,11 @@ public class GameServer extends AbstractServer implements GameObserver, ServerWi
 	private GameFactory factory;
 
 	/**
+	 * The intelligent player algorithm.
+	 */
+	private AIAlgorithm algorithm;
+
+	/**
 	 * Constructs a new game server.
 	 * @param controller the game controller.
 	 * @param pieces the list of pieces.
@@ -57,7 +62,7 @@ public class GameServer extends AbstractServer implements GameObserver, ServerWi
 	 * @param port the port the endpoints will use to connect to the server.
 	 * @param timeout the timeout for the server connection.
 	 */
-	public GameServer(Controller controller, List<Piece> pieces, GameFactory factory, int port, int timeout) {
+	public GameServer(Controller controller, List<Piece> pieces, GameFactory factory, AIAlgorithm algorithm, int port, int timeout) {
 		super(port, timeout);
 
 		this.controller = controller;
@@ -65,6 +70,7 @@ public class GameServer extends AbstractServer implements GameObserver, ServerWi
 		this.endpoints = new ArrayList<>();
 		this.pieces = pieces;
 		this.factory = factory;
+		this.algorithm = algorithm;
 
 		this.serverWindow = new ServerWindow("Server Window", this);
 		serverWindow.pack();
@@ -187,7 +193,7 @@ public class GameServer extends AbstractServer implements GameObserver, ServerWi
 	 */
 	private void sendStartupInfoToEndpoint(SocketEndpoint endpoint) {
 		ConnectionEstablishedMessage message = new ConnectionEstablishedMessage(pieces.get(endpoints.size() - 1),
-				pieces, factory);
+				pieces, factory, algorithm);
 		endpoint.sendData(message);
 	}
 

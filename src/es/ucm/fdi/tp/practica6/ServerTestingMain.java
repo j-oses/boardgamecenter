@@ -13,9 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Álvaro on 10/05/2016.
+ * This main class is used to create a server with testing purposes.
  */
-
 public class ServerTestingMain {
 	public static void main(String args[]) {
 		GameFactory factory = new AtaxxFactoryExtExt();
@@ -30,7 +29,7 @@ public class ServerTestingMain {
 		Controller v = new Controller(g, pieces);
 
 		// here we set appropriate game-based board and option-based settings
-		GameServer server = new GameServer(v, pieces, factory, 2020, 2000);
+		GameServer server = new GameServer(v, pieces, factory, algorithm, 2020, 2000);
 		g.addObserver(server);
 		server.start();
 	}

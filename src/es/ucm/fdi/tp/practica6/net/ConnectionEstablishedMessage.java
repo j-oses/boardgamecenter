@@ -17,11 +17,13 @@ public class ConnectionEstablishedMessage implements Serializable {
 	private Piece piece;
 	private List<Piece> pieces;
 	private GameFactory factory;
+	private AIAlgorithm algorithm;
 
-	public ConnectionEstablishedMessage(Piece piece, List<Piece> pieces, GameFactory factory) {
+	public ConnectionEstablishedMessage(Piece piece, List<Piece> pieces, GameFactory factory, AIAlgorithm algorithm) {
 		this.piece = piece;
 		this.factory = factory;
 		this.pieces = pieces;
+		this.algorithm = algorithm;
 	}
 
 	public List<Piece> getPieces() {
@@ -36,7 +38,7 @@ public class ConnectionEstablishedMessage implements Serializable {
 		return factory;
 	}
 
-	public void createSwingView(Observable<GameObserver> game, Controller controller, AIAlgorithm aiAlgorithm) {
-		factory.createSwingView(game, controller, piece, factory.createRandomPlayer(), factory.createAIPlayer(aiAlgorithm));
+	public void createSwingView(Observable<GameObserver> game, Controller controller) {
+		factory.createSwingView(game, controller, piece, factory.createRandomPlayer(), factory.createAIPlayer(algorithm));
 	}
 }

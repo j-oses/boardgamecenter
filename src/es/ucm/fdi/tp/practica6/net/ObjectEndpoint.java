@@ -9,17 +9,36 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * A SocketEndpoint that sends and receives objects via serialization
+ * A SocketEndpoint that sends and receives objects via serialization, making no assumptions about the data
+ * to be listened to or sent.
  */
 public abstract class ObjectEndpoint implements SocketEndpoint {
 	protected static final Logger log = Logger.getLogger(AbstractServer.class.getSimpleName());
 
+	/**
+	 * The stream which will be sent to the endpoint on the other side of the connection.
+	 */
 	private ObjectOutputStream oos;
+
+	/**
+	 * The stream which will be read from the endpoint on the other side of the connection.
+	 */
 	private ObjectInputStream ois;
+
+	/**
+	 * Whether the endpoint has stopped reading.
+	 */
 	protected volatile boolean stopped;
 
+	/**
+	 * The name of this endpoint.
+	 */
 	protected String name;
 
+	/**
+	 * Creates a new object endpoint.
+	 * @param name the endpoint name.
+	 */
 	public ObjectEndpoint(String name) {
 		this.name = name;
 	}
