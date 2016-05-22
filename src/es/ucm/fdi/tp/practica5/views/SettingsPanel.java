@@ -149,8 +149,10 @@ public class SettingsPanel extends JPanel {
 	 *            MultiWindow.
 	 */
 	private void buildPlayerInformationPanel(String[] playerIds, String owner) {
-		JScrollPane playerInformationPanel = new JScrollPane();
-		this.add(playerInformationPanel);
+
+		JPanel playerInformationPanel = new JPanel();
+		playerInformationPanel.setLayout(new BorderLayout());
+
 		playerInformationPanel.setBorder(defaultBorder("Player information"));
 
 		playerInfoTable = new CustomJTable();
@@ -159,16 +161,14 @@ public class SettingsPanel extends JPanel {
 
 		buildPlayerInfoTable(tableContent, playerIds, owner);
 
+
 		playerInfoTable.setRowColors(new Color[playerIds.length]);
 
-		GroupLayout playerInformationLayout = new GroupLayout(
-				playerInformationPanel);
-		buildGroupLayout(playerInformationLayout);
 		playerInformationPanel.setPreferredSize(new Dimension(200, 100));
-		playerInformationPanel.setLayout(new ScrollPaneLayout());
-
-		playerInformationPanel.setViewportView(playerInfoTable);
-
+		playerInformationPanel.setLayout(new BorderLayout());
+		JScrollPane tableContainer = new JScrollPane(playerInfoTable);
+		playerInformationPanel.add(tableContainer, BorderLayout.CENTER);
+		this.add(playerInformationPanel);
 	}
 
 	/**

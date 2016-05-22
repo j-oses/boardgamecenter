@@ -130,8 +130,9 @@ public class ServerWindow extends JFrame{
         serverInfoScrollPanel = new JScrollPane();
 
         this.add(serverInfoScrollPanel);
+        this.setTitle("Server");
         serverInfoScrollPanel.setBorder(defaultBorder("Status messages"));
-        serverInfoScrollPanel.setPreferredSize(new Dimension(200, 100));
+        serverInfoScrollPanel.setPreferredSize(new Dimension(400, 200));
 
         JTextArea statusMessagesTxt = new JTextArea();
         statusMessagesTxt.setEditable(false);

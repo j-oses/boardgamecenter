@@ -351,8 +351,7 @@ public class Main {
      */
     private static void parseArgs(String[] args) {
 
-        // define the valid command line options
-        //
+        // define the valid command line option
         Options cmdLineOptions = new Options();
         cmdLineOptions.addOption(constructHelpOption()); // -h or --help
         cmdLineOptions.addOption(constructGameOption()); // -g or --game
@@ -386,9 +385,9 @@ public class Main {
             parseServerPortOption(line);
             parseServerHostOption(line);
 
-            // if there are some remaining arguments, then something wrong is
+            // if there are any remaining arguments, then something wrong is
             // provided in the command line!
-            //
+
             String[] remaining = line.getArgs();
             if (remaining.length > 0) {
                 String error = "Illegal arguments:";
@@ -567,7 +566,6 @@ public class Main {
      */
     private static void parseViewOption(CommandLine line) throws ParseException {
         String viewVal = line.getOptionValue("v", DEFAULT_VIEW.getId());
-        // view type
         for (ViewInfo v : ViewInfo.values()) {
             if (viewVal.equals(v.getId())) {
                 view = v;
