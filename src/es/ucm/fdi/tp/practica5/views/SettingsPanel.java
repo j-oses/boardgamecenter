@@ -1,7 +1,7 @@
 package es.ucm.fdi.tp.practica5.views;
 
-import es.ucm.fdi.tp.practica5.control.VisualController;
-import es.ucm.fdi.tp.practica5.control.VisualController.PlayerMode;
+import es.ucm.fdi.tp.practica5.control.SwingView;
+import es.ucm.fdi.tp.practica5.control.SwingView.PlayerMode;
 
 import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
@@ -60,7 +60,7 @@ public class SettingsPanel extends JPanel {
 		 * 
 		 * @param mode
 		 *            the new player mode. It may only have valid values, to be
-		 *            converted to a {@link VisualController#PlayerMode}.
+		 *            converted to a {@link SwingView#PlayerMode}.
 		 * @param pieceId
 		 *            the piece whose mode is to be changed.
 		 */

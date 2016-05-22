@@ -19,7 +19,6 @@ import java.util.logging.Logger;
 public class GameClient extends ObjectEndpoint implements ClientController.MoveMaker {
 	private static final Logger log = Logger.getLogger(GameClient.class.getSimpleName());
 
-	private ClientController clientController;
 	private ProxyObservable proxyGame;
 	private AIAlgorithm localAlgorithm;
 
@@ -46,8 +45,8 @@ public class GameClient extends ObjectEndpoint implements ClientController.MoveM
 			Game g = new Game(rules);
 			proxyGame = new ProxyObservable();
 
-			clientController = new ClientController(g, message.getPieces(), message.getPiece(), this);
-			message.createSwingView(proxyGame, clientController, localAlgorithm);
+			ClientController ctrl = new ClientController(g, message.getPieces(), this);
+			message.createSwingView(proxyGame, ctrl, localAlgorithm);
 		} else if (data instanceof NotificationMessage) {
 			((NotificationMessage)data).notifyObserver(proxyGame);
 		}

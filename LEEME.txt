@@ -19,5 +19,6 @@ Changes in the practica5 package:
 - Implemented some suggestions on the correction:
     - Antialiasing & small margin when painting.
     - Removed some unnecessary line breaks.
+    - VisualController is not a controller anymore, and it's called SwingView.
 
 Comments about the practica6 code:

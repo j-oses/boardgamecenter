@@ -5,7 +5,7 @@ import es.ucm.fdi.tp.basecode.bgame.control.Player;
 import es.ucm.fdi.tp.basecode.bgame.model.GameObserver;
 import es.ucm.fdi.tp.basecode.bgame.model.Observable;
 import es.ucm.fdi.tp.basecode.bgame.model.Piece;
-import es.ucm.fdi.tp.practica5.control.VisualController;
+import es.ucm.fdi.tp.practica5.control.SwingView;
 import es.ucm.fdi.tp.practica5.views.BoardJPanel;
 import es.ucm.fdi.tp.practica5.views.FiniteRectBoardJPanel;
 
@@ -35,10 +35,10 @@ public class AtaxxFactoryExt extends AtaxxFactory {
 	@Override
 	public void createSwingView(Observable<GameObserver> game, Controller ctrl,
 								Piece viewPiece, Player randPlayer, Player aiPlayer) {
-		VisualController visualCtrl = (VisualController) ctrl;
+		SwingView view = new SwingView(ctrl, viewPiece);
 		BoardJPanel boardPanel = new FiniteRectBoardJPanel();
-		boardPanel.setMoveGenerator(new AtaxxMoveGenerator(visualCtrl));
-		visualCtrl.addGameWindowForPieces(boardPanel, randPlayer, aiPlayer,
+		boardPanel.setMoveGenerator(new AtaxxMoveGenerator(view));
+		view.addGameWindowForPieces(boardPanel, randPlayer, aiPlayer,
 				viewPiece, game);
 	}
 }

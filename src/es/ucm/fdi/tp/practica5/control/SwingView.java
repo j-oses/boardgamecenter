@@ -23,8 +23,9 @@ import java.util.List;
  *
  * @author Álvaro & Jorge
  */
-public class VisualController extends Controller implements MoveListener,
+public class SwingView implements MoveListener,
 		GameObserver, GameChangesListener {
+	protected Controller controller;
 	protected GameWindow window;
 	private Piece owner;
 	private HashMap<Piece, PlayerMode> players;
@@ -72,26 +73,12 @@ public class VisualController extends Controller implements MoveListener,
 		}
 	}
 
-	/**
-	 * Constructs a new controller.
-	 *
-	 * @param game   the game which this controller will manage.
-	 * @param pieces the players in the game
-	 * @param owner  the player to which the associated window will belong.
-	 *               {@code null} if this controller manages multiple players.
-	 */
-	public VisualController(Game game, List<Piece> pieces, Piece owner) {
-		super(game, pieces);
+
+	public SwingView(Controller controller, Piece owner) {
+		this.controller = controller;
 		this.owner = owner;
-
-		players = new HashMap<>();
-		for (Piece p : pieces) {
-			this.players.put(p, PlayerMode.MANUAL);
-		}
-
 		playerForMode = new HashMap<>();
-
-		game.addObserver(this);
+		players = new HashMap<>();
 	}
 
 	/**
@@ -99,12 +86,11 @@ public class VisualController extends Controller implements MoveListener,
 	 *
 	 * @param p the player to which the move will be requested.
 	 */
-	@Override
 	public void makeMove(final Player p) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					game.makeMove(p);
+					controller.makeMove(p);
 				} catch (GameError e) {
 					// It's not a good practice to leave a catch block empty,
 					// but we do this due to the known error in the basecode.
@@ -116,27 +102,26 @@ public class VisualController extends Controller implements MoveListener,
 		});
 	}
 
-	/**
-	 * Starts the controller, checking the correctness of the game and the
-	 * window.
-	 */
-	@Override
-	public void start() {
-		if (game == null || pieces == null) {
-			throw new GameError("There is no game or pieces to start");
-		} else if (window == null) {
-			throw new GameError("There is no window to start");
-		}
-
-		super.start();
-	}
-
 	@Override
 	public void onGameStart(Board board, String gameDesc, List<Piece> pieces,
 							Piece turn) {
+		players = new HashMap<>();
+		for (Piece p : pieces) {
+			this.players.put(p, PlayerMode.MANUAL);
+		}
+		window.setPieces(pieces);
+
+		addSettingsToWindow();
+
 		isTurn = (owner == null) || owner.equals(turn);
 		currentMode = players.get(turn);
 		currentPlayer = playerForMode.get(currentMode);
+
+		if (owner == null) {
+			window.setTitle(gameDesc);
+		} else {
+			window.setTitle(gameDesc + ": " + owner.getId());
+		}
 
 		window.setVisible(true);
 		window.setCurrentlyManual(currentMode.equals(PlayerMode.MANUAL));
@@ -211,12 +196,12 @@ public class VisualController extends Controller implements MoveListener,
 
 	@Override
 	public void quitButtonPressed() {
-		game.stop();
+		controller.stop();
 	}
 
 	@Override
 	public void restartButtonPressed() {
-		game.restart();
+		controller.restart();
 	}
 
 	@Override
@@ -239,27 +224,10 @@ public class VisualController extends Controller implements MoveListener,
 	 */
 	public void addGameWindowForPieces(BoardJPanel boardPanel, Player randomPlayer, Player aiPlayer, Piece viewPiece,
 									   Observable<GameObserver> observable) {
-		ArrayList<String> auxPlayerString = new ArrayList<>();
-
-		for (Piece key : players.keySet()) {
-			auxPlayerString.add(key.toString());
-		}
-
-		String auxString[] = new String[auxPlayerString.size()];
-		auxString = auxPlayerString.toArray(auxString);
-
 		playerForMode.put(PlayerMode.RANDOM, randomPlayer);
 		playerForMode.put(PlayerMode.AI, aiPlayer);
 
-		String auxOwner;
-		if (owner == null) {
-			auxOwner = null;
-		} else {
-			auxOwner = owner.getId();
-		}
-
-		window = new GameWindow(boardPanel, new SettingsPanel(auxString,
-				(randomPlayer == null), (aiPlayer == null), auxOwner), owner);
+		window = new GameWindow(boardPanel, owner);
 		window.addWindowFocusListener(new WindowFocusListener() {
 			@Override
 			public void windowGainedFocus(WindowEvent arg0) {
@@ -271,17 +239,33 @@ public class VisualController extends Controller implements MoveListener,
 				hasFocus = false;
 			}
 		});
-		window.setPieces(pieces);
+
 		window.setGameChangesListener(this);
 		owner = viewPiece;
 		observable.addObserver(this);
 		observable.addObserver(window);
+	}
 
+	private void addSettingsToWindow() {
+		String auxOwner;
 		if (owner == null) {
-			window.setTitle(game.gameDesc());
+			auxOwner = null;
 		} else {
-			window.setTitle(game.gameDesc() + ": " + owner.getId());
+			auxOwner = owner.getId();
 		}
+
+		ArrayList<String> auxPlayerString = new ArrayList<>();
+		for (Piece key : players.keySet()) {
+			auxPlayerString.add(key.toString());
+		}
+
+		String auxString[] = new String[auxPlayerString.size()];
+		auxString = auxPlayerString.toArray(auxString);
+
+		SettingsPanel settings = new SettingsPanel(auxString,
+				(playerForMode.get(PlayerMode.RANDOM) == null),
+				(playerForMode.get(PlayerMode.AI) == null), auxOwner);
+		window.setSettingsPanel(settings);
 	}
 
 	/**

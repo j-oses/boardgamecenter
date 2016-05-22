@@ -4,7 +4,7 @@ import es.ucm.fdi.tp.basecode.bgame.model.Board;
 import es.ucm.fdi.tp.basecode.bgame.model.Game.State;
 import es.ucm.fdi.tp.basecode.bgame.model.GameObserver;
 import es.ucm.fdi.tp.basecode.bgame.model.Piece;
-import es.ucm.fdi.tp.practica5.control.VisualController.PlayerMode;
+import es.ucm.fdi.tp.practica5.control.SwingView.PlayerMode;
 import es.ucm.fdi.tp.practica5.views.BoardJPanel.PieceAppearanceMap;
 import es.ucm.fdi.tp.practica5.views.SettingsPanel.SettingsListener;
 
@@ -37,7 +37,6 @@ public class GameWindow extends JFrame implements GameObserver,
 	private Piece currentlyPlaying;
 	private GameChangesListener changesListener;
 	private boolean currentlyManual;
-	private JPanel panel1;
 
 	public interface GameChangesListener {
 		/**
@@ -82,8 +81,7 @@ public class GameWindow extends JFrame implements GameObserver,
 	 *            the player to which the window belongs. {@code null} if this
 	 *            window manages multiple players.
 	 */
-	public GameWindow(BoardJPanel boardPanel, SettingsPanel otherSettings,
-			Piece owner) {
+	public GameWindow(BoardJPanel boardPanel, Piece owner) {
 		contents = new JSplitPane();
 		contents.setBounds(100, 100, 600, 400);
 		contents.setPreferredSize(new Dimension(600, 400));
@@ -97,10 +95,6 @@ public class GameWindow extends JFrame implements GameObserver,
 		boardContainer.add(boardPanel);
 		contents.setLeftComponent(boardContainer);
 
-		this.settingsPanel = otherSettings;// contains all the other pannels
-		contents.setRightComponent(settingsPanel);
-		settingsPanel.setSettingsListener(this);
-
 		this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 
 		this.addWindowListener(new WindowAdapter() {
@@ -111,6 +105,12 @@ public class GameWindow extends JFrame implements GameObserver,
 
 		this.owner = owner;
 		this.currentlyManual = true;
+	}
+
+	public void setSettingsPanel(SettingsPanel settingsPanel) {
+		this.settingsPanel = settingsPanel;
+		contents.setRightComponent(settingsPanel);
+		settingsPanel.setSettingsListener(this);
 	}
 
 	/**

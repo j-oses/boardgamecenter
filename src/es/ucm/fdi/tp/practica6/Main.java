@@ -7,7 +7,6 @@ import es.ucm.fdi.tp.basecode.bgame.model.GameError;
 import es.ucm.fdi.tp.basecode.bgame.model.Piece;
 import es.ucm.fdi.tp.basecode.minmax.MinMax;
 import es.ucm.fdi.tp.practica5.attt.AdvancedTTTFactoryExt;
-import es.ucm.fdi.tp.practica5.control.VisualController;
 import es.ucm.fdi.tp.practica5.connectn.ConnectNFactoryExt;
 import es.ucm.fdi.tp.practica5.ttt.TicTacToeFactoryExt;
 import es.ucm.fdi.tp.practica6.ataxx.AtaxxFactoryExtExt;
@@ -974,7 +973,6 @@ public class Main {
      * para que los atributos tengan los valores correctos.
      */
     private static void startServer() {
-
         Game g = new Game(gameFactory.gameRules());
         Controller v = new Controller(g, pieces);
 
@@ -995,32 +993,24 @@ public class Main {
     }
 
     private static void startWindow() {
-        Game gw = new Game(gameFactory.gameRules());
-
-        VisualController v = null;
+        Game g = new Game(gameFactory.gameRules());
+        Controller c = new Controller(g, pieces);
 
         if (multiviews) {
-            for (int i = 0; i < pieces.size(); i++) {
-                v = new VisualController(gw, pieces, pieces.get(i));
-                gameFactory.createSwingView(gw, v,
-                        pieces.get(i),// WONT BE NULL
+            for (Piece p: pieces) {
+                gameFactory.createSwingView(g, c, p,
                         gameFactory.createRandomPlayer(),
                         gameFactory.createAIPlayer(aiPlayerAlg));
             }
         } else {
-            v = new VisualController(gw, pieces, null);
-            // here we set appropriate game-based board and option-based
-            // settings
-            gameFactory.createSwingView(gw, v, null,
+            gameFactory.createSwingView(g, c, null,
                     gameFactory.createRandomPlayer(),
                     gameFactory.createAIPlayer(aiPlayerAlg));
         }
-        v.start();
     }
 
     private static void startConsole() {
         Game g = new Game(gameFactory.gameRules());
-        Controller c = null;
         ArrayList<Player> players = new ArrayList<>();
         for (int i = 0; i < pieces.size(); i++) {
             switch (playerModes.get(i)) {
@@ -1040,7 +1030,8 @@ public class Main {
                             "Something went wrong! This program point should be unreachable!");
             }
         }
-        c = new ConsoleCtrlMVC(g, pieces, players, new Scanner(System.in));
+
+        Controller c = new ConsoleCtrlMVC(g, pieces, players, new Scanner(System.in));
         gameFactory.createConsoleView(g, c);
         c.start();
     }

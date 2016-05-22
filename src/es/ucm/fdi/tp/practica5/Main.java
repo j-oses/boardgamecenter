@@ -7,7 +7,6 @@ import es.ucm.fdi.tp.basecode.bgame.model.GameError;
 import es.ucm.fdi.tp.basecode.bgame.model.Piece;
 import es.ucm.fdi.tp.practica5.ataxx.AtaxxFactoryExt;
 import es.ucm.fdi.tp.practica5.attt.AdvancedTTTFactoryExt;
-import es.ucm.fdi.tp.practica5.control.VisualController;
 import es.ucm.fdi.tp.practica5.connectn.ConnectNFactoryExt;
 import es.ucm.fdi.tp.practica5.ttt.TicTacToeFactoryExt;
 import org.apache.commons.cli.*;
@@ -721,11 +720,10 @@ public class Main {
 	 */
 	public static void startGame() {
 		Game g = new Game(gameFactory.gameRules());
+		Controller c = null;
 
 		switch (view) {
 		case CONSOLE:
-
-			Controller c = null;
 			ArrayList<Player> players = new ArrayList<Player>();
 
 			for (int i = 0; i < pieces.size(); i++) {
@@ -746,34 +744,29 @@ public class Main {
 			}
 			c = new ConsoleCtrlMVC(g, pieces, players, new Scanner(System.in));
 			gameFactory.createConsoleView(g, c);
-			c.start();
 			break;
 		case WINDOW:
-			VisualController v = null;
+			c = new Controller(g, pieces);
 
 			if (multiviews) {
 				for (int i = 0; i < pieces.size(); i++) {
-					v = new VisualController(g, pieces, pieces.get(i));
-					gameFactory.createSwingView(g, v,
-							pieces.get(i),// WONT BE NULL
+					gameFactory.createSwingView(g, c,
+							pieces.get(i),
 							gameFactory.createRandomPlayer(),
 							gameFactory.createAIPlayer(aiPlayerAlg));
 				}
 			} else {
-				v = new VisualController(g, pieces, null);
-				// here we set appropiate game-based board and option-based
-				// settings
-				gameFactory.createSwingView(g, v, null,
+				gameFactory.createSwingView(g, c, null,
 						gameFactory.createRandomPlayer(),
 						gameFactory.createAIPlayer(aiPlayerAlg));
 			}
-			v.start();
 			break;
 		default:
 			throw new UnsupportedOperationException(
 					"Something went wrong! This program point should be unreachable!");
 		}
 
+		c.start();
 	}
 
 	/**
