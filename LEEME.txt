@@ -16,5 +16,7 @@ Changes in the practica5 package:
 - Made the controller quite cleaner.
 - Now the addGameWindowForPieces method in VisualController takes an extra argument: an Observable<GameObserver>. This
   is to prevent registering necessarily in a Game. Now you can choose in what Observable to register.
+- Implemented some suggestions on the correction:
+    - Antialiasing & small margin when painting.
 
 Comments about the practica6 code:

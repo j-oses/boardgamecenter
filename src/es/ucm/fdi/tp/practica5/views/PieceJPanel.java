@@ -1,15 +1,11 @@
 package es.ucm.fdi.tp.practica5.views;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.RectangularShape;
-
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 /**
  * A panel which paints a piece.
@@ -201,7 +197,10 @@ public class PieceJPanel extends JPanel {
 		if (shape != null) {
 			Graphics2D g2d = (Graphics2D) g;
 
-			shape.setFrame(0, 0, getWidth(), getHeight());
+			shape.setFrame(1, 1, getWidth() - 3, getHeight() - 3);
+
+			// Setup antialiasing
+			g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 			// Paint the piece with the specified shape, black border and filled
 			// by the specified color.
