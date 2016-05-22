@@ -100,21 +100,14 @@ public class SettingsPanel extends JPanel {
 	 */
 	public SettingsPanel(String[] playerIds, Boolean isAiBanned,
 			Boolean isRandBanned, String owner) {
-
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-		buildStatusMessagesScrollPanel();// initially empty, recieves strings
-		// through news
-		buildPlayerInformationPanel(playerIds, owner);// add string to this
-
-		buildPieceColorsPanel(playerIds);// add string to this
-
+		buildStatusMessagesScrollPanel();
+		buildPlayerInformationPanel(playerIds, owner);
+		buildPieceColorsPanel(playerIds);
 		buildPlayerModesPanel(playerIds, isAiBanned, isRandBanned, owner);
-
 		buildAutomaticMovesPanel(isAiBanned, isRandBanned);
-
 		buildQuitPanel(owner);
-
 	}
 
 	/**

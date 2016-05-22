@@ -18,5 +18,6 @@ Changes in the practica5 package:
   is to prevent registering necessarily in a Game. Now you can choose in what Observable to register.
 - Implemented some suggestions on the correction:
     - Antialiasing & small margin when painting.
+    - Removed some unnecessary line breaks.
 
 Comments about the practica6 code:
