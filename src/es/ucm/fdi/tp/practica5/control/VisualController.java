@@ -85,7 +85,7 @@ public class VisualController extends Controller implements MoveListener,
 		this.owner = owner;
 
 		players = new HashMap<>();
-		for (Piece p: pieces) {
+		for (Piece p : pieces) {
 			this.players.put(p, PlayerMode.MANUAL);
 		}
 
@@ -234,9 +234,11 @@ public class VisualController extends Controller implements MoveListener,
 	 * @param aiPlayer     the player to generate AI moves.
 	 * @param viewPiece    the player to which the associated window will belong.
 	 *                     {@code null} if this controller manages multiple players.
+	 * @param observable   the Observable of GameObserver which will be registered for the events. Usually the game
+	 *                     but may be a proxy.
 	 */
-	public void addGameWindowForPieces(BoardJPanel boardPanel,
-									   Player randomPlayer, Player aiPlayer, Piece viewPiece) {
+	public void addGameWindowForPieces(BoardJPanel boardPanel, Player randomPlayer, Player aiPlayer, Piece viewPiece,
+									   Observable<GameObserver> observable) {
 		ArrayList<String> auxPlayerString = new ArrayList<>();
 
 		for (Piece key : players.keySet()) {
@@ -272,7 +274,8 @@ public class VisualController extends Controller implements MoveListener,
 		window.setPieces(pieces);
 		window.setGameChangesListener(this);
 		owner = viewPiece;
-		game.addObserver(window);// window is registered as game observer
+		observable.addObserver(this);
+		observable.addObserver(window);
 
 		if (owner == null) {
 			window.setTitle(game.gameDesc());

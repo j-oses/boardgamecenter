@@ -33,6 +33,6 @@ public class TicTacToeFactoryExt extends TicTacToeFactory {
 		BoardJPanel boardPanel = new FiniteRectBoardJPanel();
 		boardPanel.setMoveGenerator(new ConnectNMoveGenerator(visualCtrl));
 		visualCtrl.addGameWindowForPieces(boardPanel, randPlayer, aiPlayer,
-				viewPiece);
+				viewPiece, game);
 	}
 }

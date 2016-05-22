@@ -32,6 +32,6 @@ public class AdvancedTTTFactoryExt extends AdvancedTTTFactory {
 		BoardJPanel boardPanel = new FiniteRectBoardJPanel();
 		boardPanel.setMoveGenerator(new AdvancedTTTMoveGenerator(visualCtrl));
 		visualCtrl.addGameWindowForPieces(boardPanel, randPlayer, aiPlayer,
-				viewPiece);
+				viewPiece, game);
 	}
 }

@@ -12,13 +12,7 @@ import java.util.List;
  * Created by Álvaro on 02/05/2016.
  */
 public abstract class NotificationMessage implements Serializable {
-	public void notifyObservers(List<GameObserver> observers) {
-		for (GameObserver o : observers) {
-			notifyObserver(o);
-		}
-	}
-
-	protected abstract void notifyObserver(GameObserver observer);
+	public abstract void notifyObserver(GameObserver observer);
 
 	public static class GameStart extends NotificationMessage {
 		private Board board;
@@ -34,7 +28,7 @@ public abstract class NotificationMessage implements Serializable {
 		}
 
 		@Override
-		protected void notifyObserver(GameObserver observer) {
+		public void notifyObserver(GameObserver observer) {
 			observer.onGameStart(board, gameDesc, pieces, turn);
 		}
 	}
@@ -51,7 +45,7 @@ public abstract class NotificationMessage implements Serializable {
 		}
 
 		@Override
-		protected void notifyObserver(GameObserver observer) {
+		public void notifyObserver(GameObserver observer) {
 			observer.onGameOver(board, state, winner);
 		}
 	}
@@ -66,7 +60,7 @@ public abstract class NotificationMessage implements Serializable {
 		}
 
 		@Override
-		protected void notifyObserver(GameObserver observer) {
+		public void notifyObserver(GameObserver observer) {
 			observer.onMoveStart(board, turn);
 		}
 	}
@@ -83,7 +77,7 @@ public abstract class NotificationMessage implements Serializable {
 		}
 
 		@Override
-		protected void notifyObserver(GameObserver observer) {
+		public void notifyObserver(GameObserver observer) {
 			observer.onMoveEnd(board, turn, success);
 		}
 	}
@@ -98,7 +92,7 @@ public abstract class NotificationMessage implements Serializable {
 		}
 
 		@Override
-		protected void notifyObserver(GameObserver observer) {
+		public void notifyObserver(GameObserver observer) {
 			observer.onChangeTurn(board, turn);
 		}
 	}
@@ -111,7 +105,7 @@ public abstract class NotificationMessage implements Serializable {
 		}
 
 		@Override
-		protected void notifyObserver(GameObserver observer) {
+		public void notifyObserver(GameObserver observer) {
 			observer.onError(errorMessage);
 		}
 	}

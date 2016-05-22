@@ -39,6 +39,6 @@ public class AtaxxFactoryExt extends AtaxxFactory {
 		BoardJPanel boardPanel = new FiniteRectBoardJPanel();
 		boardPanel.setMoveGenerator(new AtaxxMoveGenerator(visualCtrl));
 		visualCtrl.addGameWindowForPieces(boardPanel, randPlayer, aiPlayer,
-				viewPiece);
+				viewPiece, game);
 	}
 }

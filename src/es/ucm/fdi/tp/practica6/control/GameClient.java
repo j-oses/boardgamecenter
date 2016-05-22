@@ -4,14 +4,12 @@ import es.ucm.fdi.tp.basecode.bgame.control.Player;
 import es.ucm.fdi.tp.basecode.bgame.control.commands.PlayCommand;
 import es.ucm.fdi.tp.basecode.bgame.model.AIAlgorithm;
 import es.ucm.fdi.tp.basecode.bgame.model.Game;
-import es.ucm.fdi.tp.basecode.bgame.model.GameObserver;
 import es.ucm.fdi.tp.basecode.bgame.model.GameRules;
+import es.ucm.fdi.tp.practica6.model.ProxyObservable;
 import es.ucm.fdi.tp.practica6.net.ConnectionEstablishedMessage;
 import es.ucm.fdi.tp.practica6.net.NotificationMessage;
 import es.ucm.fdi.tp.practica6.net.ObjectEndpoint;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Logger;
 
 
@@ -22,7 +20,7 @@ public class GameClient extends ObjectEndpoint implements ClientController.MoveM
 	private static final Logger log = Logger.getLogger(GameClient.class.getSimpleName());
 
 	private ClientController clientController;
-	private List<GameObserver> observers;
+	private ProxyObservable proxyGame;
 	private AIAlgorithm localAlgorithm;
 
 	protected volatile boolean stopped;
@@ -35,7 +33,6 @@ public class GameClient extends ObjectEndpoint implements ClientController.MoveM
 	public GameClient(AIAlgorithm localAlgorithm) {
 		super("Client");
 		this.localAlgorithm = localAlgorithm;
-		this.observers = new ArrayList<>();
 	}
 
 	@Override
@@ -47,11 +44,12 @@ public class GameClient extends ObjectEndpoint implements ClientController.MoveM
 			ConnectionEstablishedMessage message = (ConnectionEstablishedMessage)data;
 			GameRules rules = message.getGameFactory().gameRules();
 			Game g = new Game(rules);
+			proxyGame = new ProxyObservable();
+
 			clientController = new ClientController(g, message.getPieces(), message.getPiece(), this);
-			message.createSwingView(g, clientController, localAlgorithm);
-			this.observers = clientController.getInternalObservers();
+			message.createSwingView(proxyGame, clientController, localAlgorithm);
 		} else if (data instanceof NotificationMessage) {
-			((NotificationMessage)data).notifyObservers(observers);
+			((NotificationMessage)data).notifyObserver(proxyGame);
 		}
 	}
 

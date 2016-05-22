@@ -57,8 +57,4 @@ public abstract class AtaxxEvaluator {
 		}
 		return total;
 	}
-
-	protected static int endangeredPieces(Board board, Piece piece) {
-		return 0;
-	}
 }

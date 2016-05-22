@@ -3,7 +3,8 @@ package es.ucm.fdi.tp.practica6.net;
 import es.ucm.fdi.tp.basecode.bgame.control.Controller;
 import es.ucm.fdi.tp.basecode.bgame.control.GameFactory;
 import es.ucm.fdi.tp.basecode.bgame.model.AIAlgorithm;
-import es.ucm.fdi.tp.basecode.bgame.model.Game;
+import es.ucm.fdi.tp.basecode.bgame.model.GameObserver;
+import es.ucm.fdi.tp.basecode.bgame.model.Observable;
 import es.ucm.fdi.tp.basecode.bgame.model.Piece;
 
 import java.io.Serializable;
@@ -35,7 +36,7 @@ public class ConnectionEstablishedMessage implements Serializable {
 		return factory;
 	}
 
-	public void createSwingView(Game game, Controller controller, AIAlgorithm aiAlgorithm) {
+	public void createSwingView(Observable<GameObserver> game, Controller controller, AIAlgorithm aiAlgorithm) {
 		factory.createSwingView(game, controller, piece, factory.createRandomPlayer(), factory.createAIPlayer(aiAlgorithm));
 	}
 }

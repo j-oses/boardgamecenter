@@ -14,5 +14,7 @@ Changes in the practica5 package:
 - We added a couple of safety checks in BoardJPanel to prevent a crash when deselecting cells that doesn't exist yet.
 - Fixed several cases of '==' instead '.equals'
 - Made the controller quite cleaner.
+- Now the addGameWindowForPieces method in VisualController takes an extra argument: an Observable<GameObserver>. This
+  is to prevent registering necessarily in a Game. Now you can choose in what Observable to register.
 
 Comments about the practica6 code:
