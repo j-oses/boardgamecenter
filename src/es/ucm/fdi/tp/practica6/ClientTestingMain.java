@@ -1,7 +1,7 @@
 package es.ucm.fdi.tp.practica6;
 
 import es.ucm.fdi.tp.basecode.minmax.MinMax;
-import es.ucm.fdi.tp.practica6.bgame.control.GameClient;
+import es.ucm.fdi.tp.practica6.control.GameClient;
 
 import java.net.Socket;
 

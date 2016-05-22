@@ -2,13 +2,13 @@ package es.ucm.fdi.tp.practica5.connectn;
 
 import es.ucm.fdi.tp.basecode.bgame.model.Board;
 import es.ucm.fdi.tp.basecode.connectn.ConnectNMove;
-import es.ucm.fdi.tp.practica5.bgame.model.MoveGenerator;
-import es.ucm.fdi.tp.practica5.bgame.views.BoardJPanel;
+import es.ucm.fdi.tp.practica5.model.MoveGenerator;
+import es.ucm.fdi.tp.practica5.views.BoardJPanel;
 
 /**
  * A move generator which translates board events into ConnectN moves.
  * 
- * @author Álvaro
+ * @author ï¿½lvaro
  *
  */
 public class ConnectNMoveGenerator extends MoveGenerator {

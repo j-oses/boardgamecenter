@@ -1,13 +1,13 @@
 package es.ucm.fdi.tp.practica5.ataxx;
 
 import es.ucm.fdi.tp.basecode.bgame.model.Board;
-import es.ucm.fdi.tp.practica5.bgame.model.MoveGenerator;
-import es.ucm.fdi.tp.practica5.bgame.views.BoardJPanel;
+import es.ucm.fdi.tp.practica5.model.MoveGenerator;
+import es.ucm.fdi.tp.practica5.views.BoardJPanel;
 
 /**
  * A move generator which translates board events into Ataxx moves.
  * 
- * @author Álvaro
+ * @author ï¿½lvaro
  *
  */
 public class AtaxxMoveGenerator extends MoveGenerator {

@@ -6,9 +6,9 @@ import es.ucm.fdi.tp.basecode.bgame.model.GameObserver;
 import es.ucm.fdi.tp.basecode.bgame.model.Observable;
 import es.ucm.fdi.tp.basecode.bgame.model.Piece;
 import es.ucm.fdi.tp.basecode.ttt.TicTacToeFactory;
-import es.ucm.fdi.tp.practica5.bgame.control.VisualController;
-import es.ucm.fdi.tp.practica5.bgame.views.BoardJPanel;
-import es.ucm.fdi.tp.practica5.bgame.views.FiniteRectBoardJPanel;
+import es.ucm.fdi.tp.practica5.control.VisualController;
+import es.ucm.fdi.tp.practica5.views.BoardJPanel;
+import es.ucm.fdi.tp.practica5.views.FiniteRectBoardJPanel;
 import es.ucm.fdi.tp.practica5.connectn.ConnectNMoveGenerator;
 
 /**
@@ -16,7 +16,7 @@ import es.ucm.fdi.tp.practica5.connectn.ConnectNMoveGenerator;
  * {@link TicTacToeFactory}. This is necessary due to not having permission to
  * change the basecode package.
  * 
- * @author Álvaro
+ * @author ï¿½lvaro
  *
  */
 public class TicTacToeFactoryExt extends TicTacToeFactory {

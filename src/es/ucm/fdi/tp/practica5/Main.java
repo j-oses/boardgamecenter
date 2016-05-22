@@ -7,7 +7,7 @@ import es.ucm.fdi.tp.basecode.bgame.model.GameError;
 import es.ucm.fdi.tp.basecode.bgame.model.Piece;
 import es.ucm.fdi.tp.practica5.ataxx.AtaxxFactoryExt;
 import es.ucm.fdi.tp.practica5.attt.AdvancedTTTFactoryExt;
-import es.ucm.fdi.tp.practica5.bgame.control.VisualController;
+import es.ucm.fdi.tp.practica5.control.VisualController;
 import es.ucm.fdi.tp.practica5.connectn.ConnectNFactoryExt;
 import es.ucm.fdi.tp.practica5.ttt.TicTacToeFactoryExt;
 import org.apache.commons.cli.*;

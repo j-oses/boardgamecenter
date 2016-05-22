@@ -5,7 +5,7 @@ import es.ucm.fdi.tp.basecode.bgame.model.*;
 import es.ucm.fdi.tp.basecode.minmax.MinMax;
 import es.ucm.fdi.tp.practica6.ataxx.AtaxxFactoryExtExt;
 import es.ucm.fdi.tp.practica6.ataxx.evaluator.ComplexEvaluator;
-import es.ucm.fdi.tp.practica6.bgame.control.EvaluatorAIPlayer;
+import es.ucm.fdi.tp.practica6.control.EvaluatorAIPlayer;
 
 import java.io.IOException;
 import java.io.InputStream;

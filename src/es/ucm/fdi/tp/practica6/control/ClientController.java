@@ -1,10 +1,10 @@
-package es.ucm.fdi.tp.practica6.bgame.control;
+package es.ucm.fdi.tp.practica6.control;
 
 import es.ucm.fdi.tp.basecode.bgame.control.Player;
 import es.ucm.fdi.tp.basecode.bgame.model.Game;
 import es.ucm.fdi.tp.basecode.bgame.model.GameObserver;
 import es.ucm.fdi.tp.basecode.bgame.model.Piece;
-import es.ucm.fdi.tp.practica5.bgame.control.VisualController;
+import es.ucm.fdi.tp.practica5.control.VisualController;
 
 import java.util.ArrayList;
 import java.util.List;

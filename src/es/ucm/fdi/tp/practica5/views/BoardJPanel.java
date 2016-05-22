@@ -1,9 +1,9 @@
-package es.ucm.fdi.tp.practica5.bgame.views;
+package es.ucm.fdi.tp.practica5.views;
 
 import es.ucm.fdi.tp.basecode.bgame.model.Board;
 import es.ucm.fdi.tp.basecode.bgame.model.Piece;
-import es.ucm.fdi.tp.practica5.bgame.model.MoveGenerator;
-import es.ucm.fdi.tp.practica5.bgame.views.PieceJPanel.PieceSelectionListener;
+import es.ucm.fdi.tp.practica5.model.MoveGenerator;
+import es.ucm.fdi.tp.practica5.views.PieceJPanel.PieceSelectionListener;
 
 import javax.swing.*;
 import java.awt.*;

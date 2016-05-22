@@ -1,12 +1,12 @@
-package es.ucm.fdi.tp.practica5.bgame.views;
+package es.ucm.fdi.tp.practica5.views;
 
 import es.ucm.fdi.tp.basecode.bgame.model.Board;
 import es.ucm.fdi.tp.basecode.bgame.model.Game.State;
 import es.ucm.fdi.tp.basecode.bgame.model.GameObserver;
 import es.ucm.fdi.tp.basecode.bgame.model.Piece;
-import es.ucm.fdi.tp.practica5.bgame.control.VisualController.PlayerMode;
-import es.ucm.fdi.tp.practica5.bgame.views.BoardJPanel.PieceAppearanceMap;
-import es.ucm.fdi.tp.practica5.bgame.views.SettingsPanel.SettingsListener;
+import es.ucm.fdi.tp.practica5.control.VisualController.PlayerMode;
+import es.ucm.fdi.tp.practica5.views.BoardJPanel.PieceAppearanceMap;
+import es.ucm.fdi.tp.practica5.views.SettingsPanel.SettingsListener;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

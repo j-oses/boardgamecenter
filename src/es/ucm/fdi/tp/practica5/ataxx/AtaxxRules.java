@@ -2,7 +2,7 @@ package es.ucm.fdi.tp.practica5.ataxx;
 
 import es.ucm.fdi.tp.basecode.bgame.model.*;
 import es.ucm.fdi.tp.basecode.bgame.model.Game.State;
-import es.ucm.fdi.tp.practica5.bgame.model.CountingFiniteRectBoard;
+import es.ucm.fdi.tp.practica5.model.CountingFiniteRectBoard;
 
 import java.util.ArrayList;
 import java.util.Collections;

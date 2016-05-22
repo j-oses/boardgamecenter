@@ -1,4 +1,4 @@
-package es.ucm.fdi.tp.practica6.bgame.control;
+package es.ucm.fdi.tp.practica6.control;
 
 import es.ucm.fdi.tp.basecode.bgame.control.Player;
 import es.ucm.fdi.tp.basecode.bgame.control.commands.PlayCommand;
