@@ -18,13 +18,29 @@ import java.util.logging.Logger;
 public class GameServer extends AbstractServer implements GameObserver, ServerWindow.ServerChangesListener {
 
 	private static final Logger log = Logger.getLogger(GameServer.class.getSimpleName());
-
+	/**
+	 * Contains the server's UI
+	 */
 	private ServerWindow serverWindow;
+	/**
+	 * Controller for the game which will be played
+	 */
 	private Controller controller;
-
+	/**
+	 * The server will communicate with its clients through these SocketEndPoints
+	 */
 	private List<SocketEndpoint> endpoints;
+	/**
+	 * The maximum number of connections that the server will accept;
+	 */
 	private int maxConnections;
+	/**
+	 * List of the game's pieces
+	 */
 	private List<Piece> pieces;
+	/**
+	 * The game's factory, will be sent along the pieces to allow the client to start the game
+	 */
 	private GameFactory factory;
 
 	public GameServer(Controller controller, List<Piece> pieces, GameFactory factory, int port, int timeout) {
@@ -115,12 +131,21 @@ public class GameServer extends AbstractServer implements GameObserver, ServerWi
 	}
 
 	// CONNECTION HELPING METHODS
+
+	/**
+	 * Notifies the clients (through the endPoints) that something(message) has happened.
+	 * @param message
+     */
 	private void notifyEndpoints(NotificationMessage message) {
 		for (SocketEndpoint endpoint : endpoints) {
 			endpoint.sendData(message);
 		}
 	}
 
+	/**
+	 * A message sent to the endpoints to tell them that the connection has been established
+	 * @param endpoint
+	 */
 	private void connectionEstablishedToEndpoint(SocketEndpoint endpoint) {
 		if (endpoints.size() < maxConnections) {
 			endpoints.add(endpoint);
@@ -138,6 +163,10 @@ public class GameServer extends AbstractServer implements GameObserver, ServerWi
 		}
 	}
 
+	/**
+	 * A message sent  at the start to the clients used exclusively to start and set up the game
+	 * @param endpoint
+	 */
 	private void sendStartupInfoToEndpoint(SocketEndpoint endpoint) {
 		ConnectionEstablishedMessage message = new ConnectionEstablishedMessage(pieces.get(endpoints.size() - 1),
 				pieces, factory);

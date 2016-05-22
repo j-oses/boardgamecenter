@@ -246,6 +246,9 @@ public class SwingView implements MoveListener,
 		observable.addObserver(window);
 	}
 
+	/**
+	 * Adds the setingsPanel to the window when it has the necessary info(pieces)
+	 */
 	private void addSettingsToWindow() {
 		String auxOwner;
 		if (owner == null) {

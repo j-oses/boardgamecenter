@@ -963,12 +963,7 @@ public class Main {
     }
 
     /**
-     * Starts a game. Should be called after {@link #parseArgs(String[])} so
-     * some fields are set to their appropriate values.
-     * <p>
-     * <p>
-     * Inicia un juego. Debe llamarse despues de {@link #parseArgs(String[])}
-     * para que los atributos tengan los valores correctos.
+     * Starts the application in server mode
      */
     private static void startServer() {
         Game g = new Game(gameFactory.gameRules());
@@ -979,6 +974,9 @@ public class Main {
         server.start();
     }
 
+    /**
+     * Starts the application in client mode
+     */
     private static void startClient() {
         try {
             Socket sockety = new Socket(serverHost, serverPort);
@@ -990,6 +988,9 @@ public class Main {
         }
     }
 
+    /**
+     * Starts the application in window mdoe
+     */
     private static void startWindow() {
         Game g = new Game(gameFactory.gameRules());
         Controller c = new Controller(g, pieces);
@@ -1007,6 +1008,9 @@ public class Main {
         }
     }
 
+    /**
+     * Starts the application in console mode(legacy)
+     */
     private static void startConsole() {
         Game g = new Game(gameFactory.gameRules());
         ArrayList<Player> players = new ArrayList<>();
@@ -1034,15 +1038,13 @@ public class Main {
         c.start();
     }
 
-    /*TODO SAMIR SAYS :
-    Modificar la pr5 para que use invokeAndWait en lugar de invokeLater en
-    createSwingView.
-    Así no aseguramos que la vista ya se ha registrado
-    como observador en GameClient antes de llamar a c.start(). Si no, puede
-    ser que la vista no reciba la notificación onGameStart.
-    Si en tu implementación hay otros componentes de la vista que registran
-    como observadores del modelo (p.ej., BoardComponent), no lo hagas con
-    invokeLater o invokeAndWait sino llamar directamente a addObserver
+    /**
+     * Starts a game. Should be called after {@link #parseArgs(String[])} so
+     * some fields are set to their appropriate values.
+     * <p>
+     * <p>
+     * Inicia un juego. Debe llamarse despues de {@link #parseArgs(String[])}
+     * para que los atributos tengan los valores correctos.
      */
     public static void startGame() {
 

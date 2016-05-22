@@ -10,16 +10,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * A graphical console
+ * A graphical console for the server based on the example uploaded to Campus Virtual
  */
 public class ServerWindow extends JFrame{
-
+    /**
+     * SCroll Panel which will display useful info messages
+     */
     private JScrollPane serverInfoScrollPanel;
+    /**
+     * Name for the server as a listener for events
+     */
     protected String name;
     private JPanel commandPanel;
 
     private ServerChangesListener server;
 
+    /**
+     * Interface which listens to the changes of the server
+     */
     public interface ServerChangesListener{
         /**
          * Notifies the receiver of the quit button pressing.
@@ -28,15 +36,11 @@ public class ServerWindow extends JFrame{
 
     }
 
-
     /**
-     * Creates a new graphical console and registers server as the listener for the events
+     * Construct a new ServerWindow from all of its atributes
+     * @param name
+     * @param server
      */
-    public ServerWindow(String name) {
-
-        this.name = name;
-    }
-
     public ServerWindow(String name, ServerChangesListener server) {
 
         this.name = name;
@@ -82,6 +86,10 @@ public class ServerWindow extends JFrame{
                 title, TitledBorder.LEADING, TitledBorder.TOP, null, new Color(
                 0, 0, 0));
     }
+
+    /**
+     * Initializes the components of the window
+     */
     private void initComponents() {
 
         GridBagConstraints gridBagConstraints;
@@ -109,6 +117,9 @@ public class ServerWindow extends JFrame{
         add(serverInfoScrollPanel, gridBagConstraints);
     }
 
+    /**
+     * Builds a panel where buttons witch actions will be built
+     */
     private void buildCommandPanel() {
         commandPanel = new JPanel();
         this.add(commandPanel);
@@ -126,6 +137,9 @@ public class ServerWindow extends JFrame{
 
     }
 
+    /**
+     * Builds the scroll panel which will contain all of the text for the events of the server and notifications
+     */
     private void buildServerInfoScrollPanel() {
         serverInfoScrollPanel = new JScrollPane();
 

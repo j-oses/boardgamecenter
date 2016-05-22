@@ -26,10 +26,6 @@ public class GameClient extends ObjectEndpoint implements ClientController.MoveM
 	protected volatile boolean stopped;
 	protected String name;
 
-	public GameClient(String name) {
-		super(name);
-	}
-
 	public GameClient(AIAlgorithm localAlgorithm) {
 		super("Client");
 		this.localAlgorithm = localAlgorithm;

@@ -15,6 +15,7 @@ import java.util.List;
 /**
  * Created by Álvaro on 10/05/2016.
  */
+
 public class ServerTestingMain {
 	public static void main(String args[]) {
 		GameFactory factory = new AtaxxFactoryExtExt();
