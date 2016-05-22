@@ -1,14 +1,11 @@
-package es.ucm.fdi.tp.practica5.control;
+package es.ucm.fdi.tp.practica5.views;
 
 import es.ucm.fdi.tp.basecode.bgame.control.Controller;
 import es.ucm.fdi.tp.basecode.bgame.control.Player;
 import es.ucm.fdi.tp.basecode.bgame.model.*;
 import es.ucm.fdi.tp.basecode.bgame.model.Game.State;
+import es.ucm.fdi.tp.practica5.control.VisualPlayer;
 import es.ucm.fdi.tp.practica5.model.MoveGenerator.MoveListener;
-import es.ucm.fdi.tp.practica5.views.BoardJPanel;
-import es.ucm.fdi.tp.practica5.views.GameWindow;
-import es.ucm.fdi.tp.practica5.views.GameWindow.GameChangesListener;
-import es.ucm.fdi.tp.practica5.views.SettingsPanel;
 
 import javax.swing.*;
 import java.awt.event.WindowEvent;
@@ -24,7 +21,7 @@ import java.util.List;
  * @author Álvaro & Jorge
  */
 public class SwingView implements MoveListener,
-		GameObserver, GameChangesListener {
+		GameObserver, GameWindow.MoveGenerationChangesListener, GameWindow.QuitRestartListener, GameWindow.GameModeListener {
 	protected Controller controller;
 	protected GameWindow window;
 	private Piece owner;
@@ -240,7 +237,10 @@ public class SwingView implements MoveListener,
 			}
 		});
 
-		window.setGameChangesListener(this);
+		window.setGameModeListener(this);
+		window.setQuitRestartListener(this);
+		window.setMoveGenerationChangesListener(this);
+		
 		owner = viewPiece;
 		observable.addObserver(this);
 		observable.addObserver(window);

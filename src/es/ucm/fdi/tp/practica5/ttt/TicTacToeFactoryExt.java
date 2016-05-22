@@ -7,7 +7,7 @@ import es.ucm.fdi.tp.basecode.bgame.model.Observable;
 import es.ucm.fdi.tp.basecode.bgame.model.Piece;
 import es.ucm.fdi.tp.basecode.ttt.TicTacToeFactory;
 import es.ucm.fdi.tp.practica5.connectn.ConnectNMoveGenerator;
-import es.ucm.fdi.tp.practica5.control.SwingView;
+import es.ucm.fdi.tp.practica5.views.SwingView;
 import es.ucm.fdi.tp.practica5.views.BoardJPanel;
 import es.ucm.fdi.tp.practica5.views.FiniteRectBoardJPanel;
 

@@ -1,7 +1,6 @@
 package es.ucm.fdi.tp.practica5.views;
 
-import es.ucm.fdi.tp.practica5.control.SwingView;
-import es.ucm.fdi.tp.practica5.control.SwingView.PlayerMode;
+import es.ucm.fdi.tp.practica5.views.SwingView.PlayerMode;
 
 import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
@@ -36,12 +35,12 @@ public class SettingsPanel extends JPanel {
 		/**
 		 * Notifies the receiver that the random move button has been clicked.
 		 */
-		public void onRandomMove();
+		void onRandomMove();
 
 		/**
 		 * Notifies the receiver that the AI move button has been clicked.
 		 */
-		public void onAiMove();
+		void onAiMove();
 
 		/**
 		 * Notifies the receiver that a color change has been requested by the
@@ -52,7 +51,7 @@ public class SettingsPanel extends JPanel {
 		 * @param color
 		 *            the new color of the piece.
 		 */
-		public void onColorChange(String pieceId, Color color);
+		void onColorChange(String pieceId, Color color);
 
 		/**
 		 * Notifies the receiver that a player mode change has been requested by
@@ -64,17 +63,17 @@ public class SettingsPanel extends JPanel {
 		 * @param pieceId
 		 *            the piece whose mode is to be changed.
 		 */
-		public void onModeChange(String mode, String pieceId);
+		void onModeChange(String mode, String pieceId);
 
 		/**
 		 * Notifies the receiver that the quit button has been clicked.
 		 */
-		public void onQuit();
+		void onQuit();
 
 		/**
 		 * Notifies the receiver that the restart button has been clicked.
 		 */
-		public void onRestart();
+		void onRestart();
 	}
 
 	private SettingsListener listener;
@@ -190,7 +189,7 @@ public class SettingsPanel extends JPanel {
 
 			int i = 0;
 			for (String player : playerIds) {
-				tableContent[i][0] = player.toString();
+				tableContent[i][0] = player;
 				tableContent[i][1] = "Manual";
 				tableContent[i][2] = "";
 				i++;
@@ -198,8 +197,8 @@ public class SettingsPanel extends JPanel {
 		} else {
 			int i = 0;
 			for (String player : playerIds) {
-				tableContent[i][0] = player.toString();
-				if (player.toString() == owner) {
+				tableContent[i][0] = player;
+				if (player.equals(owner)) {
 					tableContent[i][1] = "Manual";
 					tableContent[i][2] = "";
 				}
@@ -360,7 +359,7 @@ public class SettingsPanel extends JPanel {
 			}
 		});
 		playerModesPanel.add(setButton);
-	};
+	}
 
 	/**
 	 * Builds the automatic moves Panel which contains two buttons for one-time
@@ -407,7 +406,7 @@ public class SettingsPanel extends JPanel {
 		});
 
 		automaticMovesPanel.add(btnIntelligent);
-	};
+	}
 
 	/**
 	 * Adds the one-time move RandomButton to the automaticMovesPanel, which
@@ -567,7 +566,7 @@ public class SettingsPanel extends JPanel {
 	 * @param playerComboBox
 	 *            the combo box to be configured.
 	 */
-	public void setPlayerComboBox(String[] players,
+	private void setPlayerComboBox(String[] players,
 			JComboBox<String> playerComboBox) {
 		playerComboBox.setModel(new DefaultComboBoxModel<String>(players));
 	}

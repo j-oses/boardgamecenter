@@ -6,8 +6,7 @@ import es.ucm.fdi.tp.basecode.bgame.model.GameObserver;
 import es.ucm.fdi.tp.basecode.bgame.model.Observable;
 import es.ucm.fdi.tp.basecode.bgame.model.Piece;
 import es.ucm.fdi.tp.basecode.connectn.ConnectNFactory;
-import es.ucm.fdi.tp.practica5.ataxx.AtaxxMoveGenerator;
-import es.ucm.fdi.tp.practica5.control.SwingView;
+import es.ucm.fdi.tp.practica5.views.SwingView;
 import es.ucm.fdi.tp.practica5.views.BoardJPanel;
 import es.ucm.fdi.tp.practica5.views.FiniteRectBoardJPanel;
 

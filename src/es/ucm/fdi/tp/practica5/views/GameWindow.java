@@ -4,7 +4,7 @@ import es.ucm.fdi.tp.basecode.bgame.model.Board;
 import es.ucm.fdi.tp.basecode.bgame.model.Game.State;
 import es.ucm.fdi.tp.basecode.bgame.model.GameObserver;
 import es.ucm.fdi.tp.basecode.bgame.model.Piece;
-import es.ucm.fdi.tp.practica5.control.SwingView.PlayerMode;
+import es.ucm.fdi.tp.practica5.views.SwingView.PlayerMode;
 import es.ucm.fdi.tp.practica5.views.BoardJPanel.PieceAppearanceMap;
 import es.ucm.fdi.tp.practica5.views.SettingsPanel.SettingsListener;
 
@@ -35,20 +35,12 @@ public class GameWindow extends JFrame implements GameObserver,
 	private List<Piece> pieces;
 	private Piece owner;
 	private Piece currentlyPlaying;
-	private GameChangesListener changesListener;
+	private MoveGenerationChangesListener moveGenerationListener;
+	private QuitRestartListener quitRestartListener;
+	private GameModeListener gameModeListener;
 	private boolean currentlyManual;
 
-	public interface GameChangesListener {
-		/**
-		 * Notifies the receiver of the random move button pressing.
-		 */
-		void randomMoveButtonPressed();
-
-		/**
-		 * Notifies the receiver of the AI move button pressing.
-		 */
-		void aiMoveButtonPressed();
-
+	public interface QuitRestartListener {
 		/**
 		 * Notifies the receiver of the quit button being pressed.
 		 */
@@ -58,10 +50,24 @@ public class GameWindow extends JFrame implements GameObserver,
 		 * Notifies the receiver of the restart button being pressed.
 		 */
 		void restartButtonPressed();
+	}
+
+	public interface MoveGenerationChangesListener {
+		/**
+		 * Notifies the receiver of the random move button pressing.
+		 */
+		void randomMoveButtonPressed();
 
 		/**
+		 * Notifies the receiver of the AI move button pressing.
+		 */
+		void aiMoveButtonPressed();
+	}
+
+	public interface GameModeListener {
+		/**
 		 * Notifies the receiver that a new mode has been selected for a player.
-		 * 
+		 *
 		 * @param pieceId
 		 *            the id of the player whose mode should be changed.
 		 * @param mode
@@ -124,13 +130,33 @@ public class GameWindow extends JFrame implements GameObserver,
 	}
 
 	/**
-	 * Sets the game changes listener.
+	 * Sets the move generation changes listener.
 	 * 
 	 * @param changesListener
 	 *            the new listener.
 	 */
-	public void setGameChangesListener(GameChangesListener changesListener) {
-		this.changesListener = changesListener;
+	public void setMoveGenerationChangesListener(MoveGenerationChangesListener listener) {
+		this.moveGenerationListener = listener;
+	}
+
+	/**
+	 * Sets the quit & restart listener.
+	 *
+	 * @param changesListener
+	 *            the new listener.
+	 */
+	public void setQuitRestartListener(QuitRestartListener listener) {
+		this.quitRestartListener = listener;
+	}
+
+	/**
+	 * Sets the game changes listener.
+	 *
+	 * @param changesListener
+	 *            the new listener.
+	 */
+	public void setGameModeListener(GameModeListener listener) {
+		this.gameModeListener = listener;
 	}
 
 	/**
@@ -152,7 +178,7 @@ public class GameWindow extends JFrame implements GameObserver,
 	 * Disables user input that affects other windows aside from his own during
 	 * moves
 	 */
-	public void disableUserInput() {
+	private void disableUserInput() {
 		boardPanel.setEnabled(false);
 		settingsPanel.setPanelsEnabled(false);
 	}
@@ -164,7 +190,7 @@ public class GameWindow extends JFrame implements GameObserver,
 	 * @param turn
 	 *            the piece which is currently playing.
 	 */
-	public void enableUserInput(Piece turn) {
+	private void enableUserInput(Piece turn) {
 		boolean enableMoveInput = ((owner == null) || owner.equals(turn))
 				&& currentlyManual;
 		boardPanel.setEnabled(enableMoveInput);
@@ -282,17 +308,17 @@ public class GameWindow extends JFrame implements GameObserver,
 	// SETTINGS LISTENER METHODS
 	@Override
 	public void onRandomMove() {
-		if (changesListener != null) {
+		if (moveGenerationListener != null) {
 			disableUserInput();
-			changesListener.randomMoveButtonPressed();
+			moveGenerationListener.randomMoveButtonPressed();
 		}
 	}
 
 	@Override
 	public void onAiMove() {
-		if (changesListener != null) {
+		if (moveGenerationListener != null) {
 			disableUserInput();
-			changesListener.aiMoveButtonPressed();
+			moveGenerationListener.aiMoveButtonPressed();
 		}
 	}
 
@@ -305,22 +331,24 @@ public class GameWindow extends JFrame implements GameObserver,
 			settingsPanel.addLineToStatus(currentlyPlaying.toString()
 					+ " has quit!");
 
-			if (changesListener != null) {
-				changesListener.quitButtonPressed();
+			if (quitRestartListener != null) {
+				quitRestartListener.quitButtonPressed();
 			}
 		}
 	}
 
 	@Override
 	public void onRestart() {
-		changesListener.restartButtonPressed();
+		if (quitRestartListener != null) {
+			quitRestartListener.quitButtonPressed();
+		}
 	}
 
 	@Override
 	public void onColorChange(String pieceId, Color color) {
 		boardPanel.setAppearanceMap(pieceAppearanceMap(pieceId, color));
 		settingsPanel.updatePlayerColor(
-				settingsPanel.getPlayerRow(pieceId.toString()), color);
+				settingsPanel.getPlayerRow(pieceId), color);
 
 		boardPanel.update();
 
@@ -329,10 +357,10 @@ public class GameWindow extends JFrame implements GameObserver,
 	@Override
 	public void onModeChange(String mode, String pieceId) {
 		settingsPanel.updatePlayerMode(
-				settingsPanel.getPlayerRow(pieceId.toString()), mode);
+				settingsPanel.getPlayerRow(pieceId), mode);
 
-		if (changesListener != null) {
-			changesListener.selectedNewGameMode(pieceId, mode);
+		if (gameModeListener != null) {
+			gameModeListener.selectedNewGameMode(pieceId, mode);
 		}
 
 		currentlyManual = (mode.equals(PlayerMode.MANUAL.toString()));
