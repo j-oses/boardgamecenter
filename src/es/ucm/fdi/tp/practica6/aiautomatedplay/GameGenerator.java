@@ -53,15 +53,11 @@ public class GameGenerator extends Player implements GameObserver {
 		this.listener = listener;
 	}
 
-	public void playGames() {
+	public boolean playGames() {
 		won = 0;
 		draws = 0;
 		played = 0;
 
-		playGame();
-	}
-
-	private void playGame() {
 		AtaxxFactoryExtExt factory = new AtaxxFactoryExtExt(dim, obstacles);
 		factory.setEvaluator(ev1);
 		AtaxxFactoryExtExt secondFactory = new AtaxxFactoryExtExt(dim, obstacles);
@@ -116,6 +112,8 @@ public class GameGenerator extends Player implements GameObserver {
 		if (listener != null) {
 			listener.didEndPlayingGames(played, won, draws);
 		}
+
+		return won >= played - draws - won;
 	}
 
 	@Override
