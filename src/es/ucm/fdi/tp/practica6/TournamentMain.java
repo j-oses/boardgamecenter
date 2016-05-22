@@ -11,7 +11,6 @@ import es.ucm.fdi.tp.practica6.control.EvaluatorAIPlayer;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,12 +57,6 @@ public class TournamentMain {
 			playingIndex = 2;
 			results = new ArrayList<>();
 
-			stdout = System.out;
-			System.setOut(new PrintStream(new OutputStream() {
-				@Override
-				public void write(int arg0) throws IOException { }
-			}));
-
 			generateGames();
 			playNextGame();
 		}
@@ -87,6 +80,10 @@ public class TournamentMain {
 			Collections.shuffle(matches);
 
 			stdout.println("STARTING ROUND OF " + matches.size());
+		}
+
+		private void playRound() {
+			
 		}
 
 		private void playNextGame() {
