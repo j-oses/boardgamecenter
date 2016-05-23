@@ -11,11 +11,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Álvaro on 22/05/2016.
+ * A class which plays a certain number of Ataxx games with the given conditions.
  */
 public class GameGenerator extends Player implements GameObserver {
+	/**
+	 * Transmits the game results.
+	 */
 	public interface GameGeneratorListener {
+		/**
+		 * Notifies the receiver that a single game has finished.
+		 * @param played the number of games played.
+		 * @param wonByPlayer1 the number of games won by player 1.
+		 * @param draws the number of draws.
+		 */
 		void gameFinished(int played, int wonByPlayer1, int draws);
+
+		/**
+		 * Notifies the receiver that all the games has finished.
+		 * @param played the number of games played.
+		 * @param wonByPlayer1 the number of games won by player 1.
+		 * @param draws the number of draws.
+		 */
 		void didEndPlayingGames(int played, int wonByPlayer1, int draws);
 	}
 
@@ -39,6 +55,15 @@ public class GameGenerator extends Player implements GameObserver {
 	private Board board;
 	private GameMove nextMove;
 
+	/**
+	 * Creates a new game generator.
+	 * @param dim the dimension of the board.
+	 * @param depth the depth of the minmax algorithm.
+	 * @param gamesToPlay the number of games to be played.
+	 * @param obstacles the number of obstacles in each board.
+	 * @param evaluator1 the evaluator for the first player.
+	 * @param evaluator2 the evaluator for the second player.
+	 */
 	public GameGenerator(int dim, int depth, int gamesToPlay, int obstacles, AtaxxEvaluator evaluator1,
 						 AtaxxEvaluator evaluator2) {
 		this.dim = dim;
@@ -49,10 +74,18 @@ public class GameGenerator extends Player implements GameObserver {
 		this.ev2 = evaluator2;
 	}
 
+	/**
+	 * Sets the listener for the game results.
+	 * @param listener the new listener.
+	 */
 	public void setListener(GameGeneratorListener listener) {
 		this.listener = listener;
 	}
 
+	/**
+	 * Plays a series of games.
+	 * @return wether the first player won.
+	 */
 	public boolean playGames() {
 		won = 0;
 		draws = 0;
@@ -113,7 +146,7 @@ public class GameGenerator extends Player implements GameObserver {
 			listener.didEndPlayingGames(played, won, draws);
 		}
 
-		return won >= played - draws - won;
+		return won > played - draws - won;	// In case of a tie, the win goes to the second player.
 	}
 
 	@Override

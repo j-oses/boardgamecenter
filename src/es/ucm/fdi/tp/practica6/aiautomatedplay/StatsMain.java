@@ -3,8 +3,8 @@ package es.ucm.fdi.tp.practica6.aiautomatedplay;
 import es.ucm.fdi.tp.practica6.ataxx.evaluator.ComplexEvaluator;
 
 /**
- * The purpose of this game is to play ataxx a given number of times and to output the victory stats of, for example,
- * the mildly intelligent player against the really intelligent player.
+ * The purpose of this class is to play ataxx a given number of times and to output the victory stats of two intelligent
+ * players playing with different parameters.
  */
 public class StatsMain {
 	private static final int dim = 7;

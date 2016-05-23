@@ -8,10 +8,10 @@ import es.ucm.fdi.tp.practica5.ataxx.AtaxxFactoryExt;
 import es.ucm.fdi.tp.practica6.ataxx.evaluator.AtaxxEvaluator;
 
 /**
- * Created by Álvaro on 10/05/2016.
+ * The practica6 version of the AtaxxFactory class.
  */
 public class AtaxxFactoryExtExt extends AtaxxFactoryExt {
-	AtaxxEvaluator evaluator;
+	private AtaxxEvaluator evaluator;
 
 	public AtaxxFactoryExtExt(Integer dim, Integer obstacles) {
 		super(dim, obstacles);

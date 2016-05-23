@@ -70,7 +70,11 @@ public class SwingView implements MoveListener,
 		}
 	}
 
-
+	/**
+	 * Creates a swing view with the associated controller and owner.
+	 * @param controller the controller which manages the game.
+	 * @param owner the owner of the window. {@code null} if is a multiview window.
+	 */
 	public SwingView(Controller controller, Piece owner) {
 		this.controller = controller;
 		this.owner = owner;
