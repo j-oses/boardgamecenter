@@ -7,24 +7,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/*
-RESULTS:
-0.0, 0.875
-0.125, 0.75
-0.375, 0.625
-0.173, 0.107
-0.625, 0.375
-0.0, 0.375
-0.125, 0.125
-0.25, 0.75
-0.375, 0.25
-
-0.380, 0.120
-0.25, 0.25
-*/
-
 /**
- * This class plays a tournament between 64 different ComplexEvaluators, and logs the winner.
+ * This class plays a tournament between 64 different ComplexEvaluators, and logs the winner. Although the results are
+ * too disperse, the average of 10 tournaments has been the parameters (0.2, 0.5)
  */
 public class TournamentMain {
 	/**
