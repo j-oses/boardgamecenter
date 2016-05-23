@@ -1,4 +1,4 @@
-package es.ucm.fdi.tp.practica5.model;
+package es.ucm.fdi.tp.practica6.model;
 
 import es.ucm.fdi.tp.basecode.bgame.model.FiniteRectBoard;
 import es.ucm.fdi.tp.basecode.bgame.model.Piece;

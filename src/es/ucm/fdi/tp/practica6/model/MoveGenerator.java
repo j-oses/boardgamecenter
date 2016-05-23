@@ -1,9 +1,9 @@
-package es.ucm.fdi.tp.practica5.model;
+package es.ucm.fdi.tp.practica6.model;
 
 import es.ucm.fdi.tp.basecode.bgame.model.Board;
 import es.ucm.fdi.tp.basecode.bgame.model.GameMove;
 import es.ucm.fdi.tp.basecode.bgame.model.Piece;
-import es.ucm.fdi.tp.practica5.views.BoardJPanel;
+import es.ucm.fdi.tp.practica6.views.BoardJPanel;
 
 /**
  * This class managed the generation of moves for a game. It is intended to be

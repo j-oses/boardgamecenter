@@ -6,12 +6,12 @@ import es.ucm.fdi.tp.basecode.bgame.model.Game;
 import es.ucm.fdi.tp.basecode.bgame.model.GameError;
 import es.ucm.fdi.tp.basecode.bgame.model.Piece;
 import es.ucm.fdi.tp.basecode.minmax.MinMax;
-import es.ucm.fdi.tp.practica5.attt.AdvancedTTTFactoryExt;
-import es.ucm.fdi.tp.practica5.connectn.ConnectNFactoryExt;
-import es.ucm.fdi.tp.practica5.ttt.TicTacToeFactoryExt;
-import es.ucm.fdi.tp.practica6.ataxx.AtaxxFactoryExtExt;
+import es.ucm.fdi.tp.practica6.ataxx.AtaxxFactoryExt;
+import es.ucm.fdi.tp.practica6.attt.AdvancedTTTFactoryExt;
+import es.ucm.fdi.tp.practica6.connectn.ConnectNFactoryExt;
 import es.ucm.fdi.tp.practica6.control.GameClient;
 import es.ucm.fdi.tp.practica6.control.GameServer;
+import es.ucm.fdi.tp.practica6.ttt.TicTacToeFactoryExt;
 import org.apache.commons.cli.*;
 
 import java.io.IOException;
@@ -731,13 +731,13 @@ public class Main {
             case ATAXX:
                 if (dimRows != null && dimCols != null && dimRows.equals(dimCols)
                         && obstacles != null) {
-                    gameFactory = new AtaxxFactoryExtExt(dimRows, obstacles);
+                    gameFactory = new AtaxxFactoryExt(dimRows, obstacles);
                 } else if (obstacles != null) {
-                    gameFactory = new AtaxxFactoryExtExt(obstacles);
+                    gameFactory = new AtaxxFactoryExt(obstacles);
                 } else if (dimRows != null && dimCols != null && dimRows.equals(dimCols)) {
-                    gameFactory = new AtaxxFactoryExtExt(dimRows, 0);
+                    gameFactory = new AtaxxFactoryExt(dimRows, 0);
                 } else {
-                    gameFactory = new AtaxxFactoryExtExt();
+                    gameFactory = new AtaxxFactoryExt();
                 }
                 break;
             default:

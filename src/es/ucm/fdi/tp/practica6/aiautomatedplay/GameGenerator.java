@@ -4,7 +4,7 @@ import es.ucm.fdi.tp.basecode.bgame.control.AIPlayer;
 import es.ucm.fdi.tp.basecode.bgame.control.Player;
 import es.ucm.fdi.tp.basecode.bgame.model.*;
 import es.ucm.fdi.tp.basecode.minmax.MinMax;
-import es.ucm.fdi.tp.practica6.ataxx.AtaxxFactoryExtExt;
+import es.ucm.fdi.tp.practica6.ataxx.AtaxxFactoryExt;
 import es.ucm.fdi.tp.practica6.ataxx.evaluator.AtaxxEvaluator;
 
 import java.util.ArrayList;
@@ -91,9 +91,9 @@ public class GameGenerator extends Player implements GameObserver {
 		draws = 0;
 		played = 0;
 
-		AtaxxFactoryExtExt factory = new AtaxxFactoryExtExt(dim, obstacles);
+		AtaxxFactoryExt factory = new AtaxxFactoryExt(dim, obstacles);
 		factory.setEvaluator(ev1);
-		AtaxxFactoryExtExt secondFactory = new AtaxxFactoryExtExt(dim, obstacles);
+		AtaxxFactoryExt secondFactory = new AtaxxFactoryExt(dim, obstacles);
 		secondFactory.setEvaluator(ev2);
 
 		Game g = new Game(factory.gameRules());

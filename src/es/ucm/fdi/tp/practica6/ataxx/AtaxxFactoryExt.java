@@ -1,13 +1,13 @@
-package es.ucm.fdi.tp.practica5.ataxx;
+package es.ucm.fdi.tp.practica6.ataxx;
 
+import es.ucm.fdi.tp.basecode.bgame.control.AIPlayer;
 import es.ucm.fdi.tp.basecode.bgame.control.Controller;
 import es.ucm.fdi.tp.basecode.bgame.control.Player;
-import es.ucm.fdi.tp.basecode.bgame.model.GameObserver;
-import es.ucm.fdi.tp.basecode.bgame.model.Observable;
-import es.ucm.fdi.tp.basecode.bgame.model.Piece;
-import es.ucm.fdi.tp.practica5.views.SwingView;
-import es.ucm.fdi.tp.practica5.views.BoardJPanel;
-import es.ucm.fdi.tp.practica5.views.FiniteRectBoardJPanel;
+import es.ucm.fdi.tp.basecode.bgame.model.*;
+import es.ucm.fdi.tp.practica6.ataxx.evaluator.AtaxxEvaluator;
+import es.ucm.fdi.tp.practica6.views.BoardJPanel;
+import es.ucm.fdi.tp.practica6.views.FiniteRectBoardJPanel;
+import es.ucm.fdi.tp.practica6.views.SwingView;
 
 /**
  * A class which provides the functionality intended for {@link AtaxxFactory}.
@@ -20,6 +20,8 @@ import es.ucm.fdi.tp.practica5.views.FiniteRectBoardJPanel;
 public class AtaxxFactoryExt extends AtaxxFactory {
 	private static final long serialVersionUID = 1L;
 
+	private AtaxxEvaluator evaluator;
+
 	public AtaxxFactoryExt(Integer dim, Integer obstacles) {
 		super(dim, obstacles);
 	}
@@ -30,6 +32,24 @@ public class AtaxxFactoryExt extends AtaxxFactory {
 
 	public AtaxxFactoryExt() {
 		super();
+	}
+
+	public void setEvaluator(AtaxxEvaluator evaluator) {
+		this.evaluator = evaluator;
+	}
+
+	@Override
+	public GameRules gameRules() {
+		if (evaluator != null) {
+			return new AtaxxRules(dim, obstacles, evaluator);
+		} else {
+			return new AtaxxRules(dim, obstacles);
+		}
+	}
+
+	@Override
+	public Player createAIPlayer(AIAlgorithm alg) {
+		return new AIPlayer(alg);
 	}
 
 	@Override

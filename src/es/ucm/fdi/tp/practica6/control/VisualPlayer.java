@@ -1,4 +1,4 @@
-package es.ucm.fdi.tp.practica5.control;
+package es.ucm.fdi.tp.practica6.control;
 
 import java.util.List;
 

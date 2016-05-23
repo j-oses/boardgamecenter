@@ -1,11 +1,11 @@
-package es.ucm.fdi.tp.practica5.views;
+package es.ucm.fdi.tp.practica6.views;
 
 import es.ucm.fdi.tp.basecode.bgame.control.Controller;
 import es.ucm.fdi.tp.basecode.bgame.control.Player;
 import es.ucm.fdi.tp.basecode.bgame.model.*;
 import es.ucm.fdi.tp.basecode.bgame.model.Game.State;
-import es.ucm.fdi.tp.practica5.control.VisualPlayer;
-import es.ucm.fdi.tp.practica5.model.MoveGenerator.MoveListener;
+import es.ucm.fdi.tp.practica6.control.VisualPlayer;
+import es.ucm.fdi.tp.practica6.model.MoveGenerator.MoveListener;
 
 import javax.swing.*;
 import java.awt.event.WindowEvent;

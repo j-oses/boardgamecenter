@@ -1,6 +1,6 @@
-package es.ucm.fdi.tp.practica5.views;
+package es.ucm.fdi.tp.practica6.views;
 
-import es.ucm.fdi.tp.practica5.views.SwingView.PlayerMode;
+import es.ucm.fdi.tp.practica6.views.SwingView.PlayerMode;
 
 import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;

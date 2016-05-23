@@ -1,4 +1,4 @@
-package es.ucm.fdi.tp.practica5.views;
+package es.ucm.fdi.tp.practica6.views;
 
 import es.ucm.fdi.tp.basecode.bgame.model.Board;
 import es.ucm.fdi.tp.basecode.bgame.model.Piece;

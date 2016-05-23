@@ -6,7 +6,7 @@ import es.ucm.fdi.tp.basecode.bgame.model.AIAlgorithm;
 import es.ucm.fdi.tp.basecode.bgame.model.Game;
 import es.ucm.fdi.tp.basecode.bgame.model.Piece;
 import es.ucm.fdi.tp.basecode.minmax.MinMax;
-import es.ucm.fdi.tp.practica6.ataxx.AtaxxFactoryExtExt;
+import es.ucm.fdi.tp.practica6.ataxx.AtaxxFactoryExt;
 import es.ucm.fdi.tp.practica6.control.GameServer;
 
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class ServerTestingMain {
 	public static void main(String args[]) {
-		GameFactory factory = new AtaxxFactoryExtExt();
+		GameFactory factory = new AtaxxFactoryExt();
 		AIAlgorithm algorithm = new MinMax(3);
 		Game g = new Game(factory.gameRules());
 		List<Piece> pieces = new ArrayList<>();
