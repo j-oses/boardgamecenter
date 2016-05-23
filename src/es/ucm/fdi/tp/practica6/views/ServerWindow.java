@@ -1,4 +1,4 @@
-package es.ucm.fdi.tp.practica6.ui;
+package es.ucm.fdi.tp.practica6.views;
 
 
 import javax.swing.*;

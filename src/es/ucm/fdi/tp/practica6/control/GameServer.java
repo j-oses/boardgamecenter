@@ -6,7 +6,7 @@ import es.ucm.fdi.tp.basecode.bgame.control.GameFactory;
 import es.ucm.fdi.tp.basecode.bgame.control.commands.Command;
 import es.ucm.fdi.tp.basecode.bgame.model.*;
 import es.ucm.fdi.tp.practica6.net.*;
-import es.ucm.fdi.tp.practica6.ui.ServerWindow;
+import es.ucm.fdi.tp.practica6.views.ServerWindow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -153,7 +153,7 @@ public class GameServer extends AbstractServer implements GameObserver, ServerWi
 		if (state.equals(Game.State.Won)) {
 			serverWindow.addLineToStatus("The game finished with winner '" + winner.getId() + "'.");
 		} else if (state.equals(Game.State.Draw)) {
-			serverWindow.addLineToStatus("The game ended in a draw '" + winner.getId() + "'.");
+			serverWindow.addLineToStatus("The game ended in a draw.");
 		} else { // Game stopped
 			serverWindow.addLineToStatus("The game has been stopped by a client.");
 			restart();
