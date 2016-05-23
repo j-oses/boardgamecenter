@@ -164,7 +164,7 @@ public class Main {
      */
     private enum AlgorithmForAIPlayer {
         NONE("none", "No AI Algorithm"), MINMAX("minmax", "MinMax"), MINMAXAB("minmaxab",
-                "MinMax with Alhpa-Beta Prunning");
+                "MinMax with Alpha-Beta Prunning");
 
         private String id;
         private String desc;
@@ -835,7 +835,6 @@ public class Main {
      */
     private static Option constructAppModeOption() {
         return new Option("am", "app-mode", true, "The way the app is started : 'normal', 'server' or 'client'");
-
     }
 
     /**
@@ -844,7 +843,6 @@ public class Main {
      * @param line * CLI {@link CommandLine} object;
      */
     private static void parseAppModeOption(CommandLine line) throws ParseException {
-
         if (line.hasOption("am")) {
             appMode = null;
             String modesVal = line.getOptionValue("am");
@@ -861,7 +859,6 @@ public class Main {
         } else {
             appMode = DEFAULT_APPMODE;
         }
-
     }
 
     /**
@@ -889,8 +886,6 @@ public class Main {
         } catch (NumberFormatException e) {
             throw new ParseException("Invalid port number : " + serverPort);
         }
-
-
     }
 
     /**
@@ -1005,6 +1000,7 @@ public class Main {
                     gameFactory.createRandomPlayer(),
                     gameFactory.createAIPlayer(aiPlayerAlg));
         }
+        c.start();
     }
 
     /**

@@ -91,7 +91,14 @@ public class SwingView implements MoveListener,
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					controller.makeMove(p);
+					new SwingWorker<Void, Void>() {
+						@Override
+						protected Void doInBackground() throws Exception {
+							controller.makeMove(p);
+							return null;
+						}
+					}.execute();
+					// controller.makeMove(p);
 				} catch (GameError e) {
 					// It's not a good practice to leave a catch block empty,
 					// but we do this due to the known error in the basecode.
@@ -189,7 +196,7 @@ public class SwingView implements MoveListener,
 
 	@Override
 	public void aiMoveButtonPressed() {
-		Player aiPlayer = playerForMode.get(PlayerMode.AI);
+		final Player aiPlayer = playerForMode.get(PlayerMode.AI);
 		if (aiPlayer != null) {
 			makeMove(aiPlayer);
 		}

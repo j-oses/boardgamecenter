@@ -272,10 +272,6 @@ public class GameWindow extends JFrame implements GameObserver,
 
 	@Override
 	public void onChangeTurn(Board board, Piece turn) {
-		boardPanel.setBoard(board);
-		boardPanel.update();
-		revalidate();
-
 		currentlyPlaying = turn;
 		
 		String you = (turn.equals(owner) ? " (you) " : " ");
@@ -340,7 +336,7 @@ public class GameWindow extends JFrame implements GameObserver,
 	@Override
 	public void onRestart() {
 		if (quitRestartListener != null) {
-			quitRestartListener.quitButtonPressed();
+			quitRestartListener.restartButtonPressed();
 		}
 	}
 
