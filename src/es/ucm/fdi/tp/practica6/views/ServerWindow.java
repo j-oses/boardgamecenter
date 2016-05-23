@@ -8,6 +8,8 @@ import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * A graphical console for the server based on the example uploaded to Campus Virtual.
@@ -114,6 +116,12 @@ public class ServerWindow extends JFrame {
 		gridBagConstraints.weighty = 1.0;
 		gridBagConstraints.insets = new Insets(3, 3, 3, 3);
 		add(serverInfoScrollPanel, gridBagConstraints);
+
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent windowEvent) {
+				onQuit();
+			}
+		});
 	}
 
 	/**
@@ -128,11 +136,15 @@ public class ServerWindow extends JFrame {
 		btnQuit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (btnQuit.isEnabled()) {
-					serverListener.onQuitButtonPressed();
+					onQuit();
 				}
 			}
 		});
 		commandPanel.add(btnQuit);
+	}
+
+	private void onQuit() {
+		serverListener.onQuitButtonPressed();
 	}
 
 	/**

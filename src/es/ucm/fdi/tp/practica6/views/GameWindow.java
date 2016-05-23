@@ -101,8 +101,7 @@ public class GameWindow extends JFrame implements GameObserver,
 		boardContainer.add(boardPanel);
 		contents.setLeftComponent(boardContainer);
 
-		this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-
+		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent windowEvent) {
 				onQuit();

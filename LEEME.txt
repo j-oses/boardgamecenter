@@ -16,9 +16,32 @@ Changes in the practica5 package:
 - Made the controller quite cleaner.
 - Now the addGameWindowForPieces method in VisualController takes an extra argument: an Observable<GameObserver>. This
   is to prevent registering necessarily in a Game. Now you can choose in what Observable to register.
-- Implemented some suggestions on the correction:
+- Implemented some suggestions from the correction:
     - Antialiasing & small margin when painting.
     - Removed some unnecessary line breaks.
     - VisualController is not a controller anymore, and it's called SwingView.
+    - ConnectN now starts correctly.
+- The AI player banned and the random player banned were swapped.
+- The quit confirmation window answer was ignored when closed with the default close button (the red X).
+- A remark on the correction: we pass playerIds instead pieces to the pieces listener to make it easy to swap them by
+  player names (instead the piece ids) in the future.
 
 Comments about the practica6 code:
+- We have several versions of the evaluate function for ataxx, which we have encapsulated on an Evaluator class. The
+  ComplexEvaluator takes two parameters to perform the evaluation (which are weights of the different factors). We have
+  been making tests and the best evaluator seems to be the one with parameters (0.2, 0.5) but in fact (0.2, 0.2) for
+  example is also pretty good. The PieceCountingEvaluator is the one suggested by the pdf file.
+- The aiautomatedplay package contains the classes we have used to pit the intelligent players against themselves.
+- The ClientTestingMain & ServerTestingMain are simple mains for testing an ataxx game.
+- We have used with very little to no modifications the AbstractServer & SocketEndpoint & ObjectEndpoint classes from
+  the Campus Virtual.
+- As the expected behaviour of the server were not detailed in the pdf file, we have implemented the following:
+    - The server starts a game when the expected clients have been connected (as many as pieces), and refuses any
+      further connection attempt.
+    - The client has access to a quit button on its turn. If clicked, the server will stop the game and kick all the
+      remaining players. A warning will be shown to each client (but the one who clicked close).
+    - The server will reset after kicking all the players, returning to the first step.
+    - If the quit button on the server is clicked, it will kick all the players and close himself.
+    - When a client's game is stopped, the client terminates.
+
+Note: the new package organization (practica4/practica5/practica6) will be implemented the 29th. 
