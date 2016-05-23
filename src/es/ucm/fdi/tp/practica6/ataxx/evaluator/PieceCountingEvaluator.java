@@ -7,8 +7,7 @@ import java.util.List;
 
 /**
  * A evaluator whose evaluation function only returns the number of pieces compared
- * with the total pieces. Testing yields 615 wins in 1.000 games of this algorithm against
- * a single random player, on a 5x5 board.
+ * with the total pieces.
  */
 public class PieceCountingEvaluator extends AtaxxEvaluator {
 	public PieceCountingEvaluator() {

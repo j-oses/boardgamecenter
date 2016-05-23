@@ -1,24 +1,35 @@
 package es.ucm.fdi.tp.practica6.ataxx.evaluator;
 
 import es.ucm.fdi.tp.basecode.bgame.model.Board;
-import es.ucm.fdi.tp.basecode.bgame.model.Pair;
 import es.ucm.fdi.tp.basecode.bgame.model.Piece;
 
 import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by Álvaro on 12/05/2016.
+ * An Ataxx evaluator which takes into account different weighted factors to generate the score. The factors are:
+ * - Number of pieces in the board.
+ * - How grouped the pieces are.
+ * - How many "holes" (empty spaces surrounded by allies) are in the board.
  */
 public class ComplexEvaluator extends AtaxxEvaluator {
 	private double pieceCountWeight;
 	private double proximityWeight;
 	private double holesWeight;
 
+	/**
+	 * Creates a complex evaluator with default value for the parameters.
+	 */
 	public ComplexEvaluator() {
 		this(0.2, 0.5);
 	}
 
+	/**
+	 * Creates a complex evaluator with the provided weights for each factor.
+	 * @param pieceCountWeight the weight of the number of pieces.
+	 * @param proximityWeight the weight of the grouping.
+	 * @throws IllegalArgumentException if the weights are negative or if their sum is greater than 1.
+	 */
 	public ComplexEvaluator(double pieceCountWeight, double proximityWeight) {
 		if (pieceCountWeight < 0.0 || proximityWeight < 0.0) {
 			throw new IllegalArgumentException("The weights must be positive");
@@ -29,10 +40,6 @@ public class ComplexEvaluator extends AtaxxEvaluator {
 		this.pieceCountWeight = pieceCountWeight;
 		this.proximityWeight = proximityWeight;
 		this.holesWeight = 1.0 - pieceCountWeight - proximityWeight;
-	}
-
-	public ComplexEvaluator(Pair<Double, Double> weights) {
-		this(weights.getFirst(), weights.getSecond());
 	}
 
 	@Override
