@@ -2,6 +2,7 @@ package es.ucm.fdi.tp.practica6.ataxx;
 
 import es.ucm.fdi.tp.basecode.bgame.control.AIPlayer;
 import es.ucm.fdi.tp.basecode.bgame.control.Controller;
+import es.ucm.fdi.tp.basecode.bgame.control.DummyAIPlayer;
 import es.ucm.fdi.tp.basecode.bgame.control.Player;
 import es.ucm.fdi.tp.basecode.bgame.model.*;
 import es.ucm.fdi.tp.practica6.ataxx.evaluator.AtaxxEvaluator;
@@ -49,7 +50,11 @@ public class AtaxxFactoryExt extends AtaxxFactory {
 
 	@Override
 	public Player createAIPlayer(AIAlgorithm alg) {
-		return new AIPlayer(alg);
+		if (alg != null) {
+			return new AIPlayer(alg);
+		} else {
+			return new DummyAIPlayer(createRandomPlayer(), 1000);
+		}
 	}
 
 	@Override

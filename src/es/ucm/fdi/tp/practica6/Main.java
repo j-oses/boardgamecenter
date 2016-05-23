@@ -719,7 +719,7 @@ public class Main {
                 gameFactory = new AdvancedTTTFactoryExt();
                 break;
             case CONNECT_N:
-                if (dimRows != null && dimCols != null && dimRows == dimCols) {
+                if (dimRows != null && dimCols != null && dimRows.equals(dimCols)) {
                     gameFactory = new ConnectNFactoryExt(dimRows);
                 } else {
                     gameFactory = new ConnectNFactoryExt();
@@ -1013,7 +1013,6 @@ public class Main {
             switch (playerModes.get(i)) {
                 case AI:
                     System.out.println(aiPlayerAlg);
-
                     players.add(gameFactory.createAIPlayer(aiPlayerAlg));
                     break;
                 case MANUAL:
@@ -1042,7 +1041,6 @@ public class Main {
      * para que los atributos tengan los valores correctos.
      */
     public static void startGame() {
-
         switch (appMode) {
             case NORMAL:
                 switch (view) {
