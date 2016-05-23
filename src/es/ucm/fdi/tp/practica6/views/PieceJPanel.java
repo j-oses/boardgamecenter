@@ -10,7 +10,7 @@ import java.awt.geom.RectangularShape;
 /**
  * A panel which paints a piece.
  * 
- * @author �lvaro
+ * @author Álvaro
  *
  */
 public class PieceJPanel extends JPanel {
@@ -19,7 +19,7 @@ public class PieceJPanel extends JPanel {
 	/**
 	 * The listener for clicks on pieces.
 	 * 
-	 * @author �lvaro
+	 * @author Álvaro
 	 *
 	 */
 	public interface PieceSelectionListener {

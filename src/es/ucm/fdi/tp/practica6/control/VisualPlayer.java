@@ -1,16 +1,16 @@
 package es.ucm.fdi.tp.practica6.control;
 
-import java.util.List;
-
 import es.ucm.fdi.tp.basecode.bgame.control.Player;
 import es.ucm.fdi.tp.basecode.bgame.model.Board;
 import es.ucm.fdi.tp.basecode.bgame.model.GameMove;
 import es.ucm.fdi.tp.basecode.bgame.model.GameRules;
 import es.ucm.fdi.tp.basecode.bgame.model.Piece;
 
+import java.util.List;
+
 /**
  * This is a Player subclass which simply wraps an already generated move. 
- * @author �lvaro
+ * @author Álvaro
  *
  */
 public class VisualPlayer extends Player {

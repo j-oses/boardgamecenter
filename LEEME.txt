@@ -44,4 +44,4 @@ Comments about the practica6 code:
     - If the quit button on the server is clicked, it will kick all the players and close himself.
     - When a client's game is stopped, the client terminates.
 
-Note: the new package organization (practica4/practica5/practica6) will be implemented the 29th. 
+Note: the new package organization (practica4/practica5/practica6) will be implemented the 29th.
