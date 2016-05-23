@@ -72,8 +72,9 @@ public class SwingView implements MoveListener,
 
 	/**
 	 * Creates a swing view with the associated controller and owner.
+	 *
 	 * @param controller the controller which manages the game.
-	 * @param owner the owner of the window. {@code null} if is a multiview window.
+	 * @param owner      the owner of the window. {@code null} if is a multiview window.
 	 */
 	public SwingView(Controller controller, Piece owner) {
 		this.controller = controller;
@@ -90,22 +91,13 @@ public class SwingView implements MoveListener,
 	public void makeMove(final Player p) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				try {
-					new SwingWorker<Void, Void>() {
-						@Override
-						protected Void doInBackground() throws Exception {
-							controller.makeMove(p);
-							return null;
-						}
-					}.execute();
-					// controller.makeMove(p);
-				} catch (GameError e) {
-					// It's not a good practice to leave a catch block empty,
-					// but we do this due to the known error in the basecode.
-					// The exception catched here is already catched inside the
-					// Game class and this controller already reacts to the
-					// error when notified as a GameObserver.
-				}
+				new SwingWorker<Void, Void>() {
+					@Override
+					protected Void doInBackground() throws Exception {
+						controller.makeMove(p);
+						return null;
+					}
+				}.execute();
 			}
 		});
 	}
