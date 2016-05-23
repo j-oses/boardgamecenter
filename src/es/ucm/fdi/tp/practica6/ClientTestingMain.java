@@ -15,7 +15,7 @@ public class ClientTestingMain {
             Socket sockety = new Socket("localhost", 2020);
             client.start(sockety, 2000);
         } catch (Exception e) {
-            System.out.println("Sorry");
+            System.out.println("Sorry, something wrong happened: " + e);
         }
 
     }

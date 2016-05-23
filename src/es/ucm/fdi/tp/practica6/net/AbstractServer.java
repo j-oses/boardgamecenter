@@ -65,6 +65,14 @@ public abstract class AbstractServer {
 	}
 
 	/**
+	 * Restarts a stopped server
+	 */
+	protected void restart() {
+		stopped = false;
+		start();
+	}
+
+	/**
 	 * Creates a new endpoint with the provided name.
 	 * @param name the endpoint's name.
 	 * @return the new endpoint.

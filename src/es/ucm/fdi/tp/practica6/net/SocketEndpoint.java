@@ -26,7 +26,7 @@ public interface SocketEndpoint {
 
 	/**
 	 * Will be called when data is received.
-	 * @param data the obeject received.
+	 * @param data the object received.
 	 */
 	void dataReceived(Object data);
 

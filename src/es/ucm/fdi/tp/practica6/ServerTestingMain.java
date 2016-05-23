@@ -18,13 +18,13 @@ import java.util.List;
 public class ServerTestingMain {
 	public static void main(String args[]) {
 		GameFactory factory = new AtaxxFactoryExtExt();
-		AIAlgorithm algorithm = new MinMax();
+		AIAlgorithm algorithm = new MinMax(3);
 		Game g = new Game(factory.gameRules());
 		List<Piece> pieces = new ArrayList<>();
 
 		pieces.add(new Piece("X"));
 		pieces.add(new Piece("O"));
-		pieces.add(new Piece("A"));
+		// pieces.add(new Piece("A"));
 
 		Controller v = new Controller(g, pieces);
 

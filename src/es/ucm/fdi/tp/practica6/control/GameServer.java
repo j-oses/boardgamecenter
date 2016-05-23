@@ -55,6 +55,11 @@ public class GameServer extends AbstractServer implements GameObserver, ServerWi
 	private AIAlgorithm algorithm;
 
 	/**
+	 * Whether this server has never been reseted.
+	 */
+	boolean firstRun = true;
+
+	/**
 	 * Constructs a new game server.
 	 * @param controller the game controller.
 	 * @param pieces the list of pieces.
@@ -102,7 +107,22 @@ public class GameServer extends AbstractServer implements GameObserver, ServerWi
 					serverWindow.addLineToStatus(warning);
 				}
 			}
+
+			@Override
+			public synchronized void sendData(Object o) {
+				super.sendData(o);
+			}
 		};
+	}
+
+	/**
+	 * Restarts the server.
+	 */
+	@Override
+	protected void restart() {
+		serverWindow.addLineToStatus("Resetting the server...");
+		endpoints = new ArrayList<>();
+		super.restart();
 	}
 
 	// GAME RELATED METHODS
@@ -111,7 +131,12 @@ public class GameServer extends AbstractServer implements GameObserver, ServerWi
 	 * Starts a game
 	 */
 	private void startGame() {
-		controller.start();
+		if (firstRun) {
+			controller.start();
+			firstRun = false;
+		} else {
+			controller.restart();
+		}
 		serverWindow.addLineToStatus("Game started!");
 	}
 
@@ -129,8 +154,9 @@ public class GameServer extends AbstractServer implements GameObserver, ServerWi
 			serverWindow.addLineToStatus("The game finished with winner '" + winner.getId() + "'.");
 		} else if (state.equals(Game.State.Draw)) {
 			serverWindow.addLineToStatus("The game ended in a draw '" + winner.getId() + "'.");
-		} else {
+		} else { // Game stopped
 			serverWindow.addLineToStatus("The game has been stopped by a client.");
+			restart();
 		}
 	}
 
