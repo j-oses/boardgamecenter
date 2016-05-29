@@ -12,7 +12,7 @@ public class AtaxxFactory implements GameFactory {
 	private static final long serialVersionUID = 1L;
 	
 	private static final int MIN_DIM = 5;
-	private static final int DEFAULT_OBSTACLES = 0;// for ez change
+	private static final int DEFAULT_OBSTACLES = 0;
 	protected int obstacles;
 	protected int dim;
 

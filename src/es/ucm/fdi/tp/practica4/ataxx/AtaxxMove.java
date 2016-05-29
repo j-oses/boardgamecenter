@@ -190,7 +190,7 @@ public class AtaxxMove extends GameMove {
 		if (getPiece() == null) {
 			return help();
 		} else {
-			return "Place a piece '" + getPiece() + "' at (" + row + "," + col
+			return "Move a piece '" + getPiece() + "' from (" + oriRow + "," + oriCol + ") to (" + row + "," + col
 					+ ")";
 		}
 	}
