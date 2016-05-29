@@ -870,7 +870,7 @@ public class Main {
      * @return CLI {@link {@link Option} for the server port option
      */
     private static Option constructServerPortOption() {
-        return new Option("sp", "-server-port", true, "the port the app listens to if server or talks to if client.");
+        return new Option("sp", "server-port", true, "the port the app listens to if server or talks to if client.");
 
     }
 
