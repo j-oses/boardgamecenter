@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static com.sun.deploy.panel.JreLocator.DEFAULT_TIMEOUT;
+
 
 /**
  * This is the class with the main method for the board games application.
@@ -227,6 +227,10 @@ public class Main {
      * Default server ID to use in server or client mode;
      */
     final private static String DEFAULT_SERVERHOST = "localhost";
+    /**
+     * Default server timeout to use in server or client mdoe;
+     */
+    final private static Integer DEFAULT_TIMEOUT = 2000;
     /**
      * This field includes a game factory that is constructed after parsing the
      * command-line arguments. Depending on the game selected with the -g option
