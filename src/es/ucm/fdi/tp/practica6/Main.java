@@ -14,7 +14,6 @@ import es.ucm.fdi.tp.practica6.control.GameServer;
 import es.ucm.fdi.tp.practica6.ttt.TicTacToeFactoryExt;
 import org.apache.commons.cli.*;
 
-import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -981,8 +980,8 @@ public class Main {
             Socket sockety = new Socket(serverHost, serverPort);
             GameClient client = new GameClient();
             client.start(sockety, DEFAULT_TIMEOUT);
-        } catch (IOException ioe) {
-            System.out.println("Sorry");
+        } catch (Exception e) {
+            System.out.println("Sorry, something very bad happened: " + e);
         }
     }
 
