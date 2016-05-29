@@ -1,7 +1,7 @@
-Jorge Osés Grijalba
-Álvaro Rodríguez García
+Jorge OsÃ©s Grijalba
+Ã�lvaro RodrÃ­guez GarcÃ­a
 
-2o D.G. Informática - Matemáticas
+2o D.G. InformÃ¡tica - MatemÃ¡ticas
 
 Changes in the practica4 package:
 - Now before generating valid moves it checks if the board is full to optimize.
@@ -44,4 +44,7 @@ Comments about the practica6 code:
     - If the quit button on the server is clicked, it will kick all the players and close himself.
     - When a client's game is stopped, the client terminates.
 
-Note: the new package organization (practica4/practica5/practica6) will be implemented the 29th.
+Changes in the last version:
+- Solved extraneous import (it was an autoimport fail by intelliJ)
+- Packages structured
+- Changed gameMove toString
